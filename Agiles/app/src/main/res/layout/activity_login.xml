@@ -39,12 +39,21 @@
                 android:id="@+id/txtPass"
                 android:layout_gravity="center"/>
 
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="30dp"
+                android:textAllCaps="true"
+                android:textColor="@color/text"
+                android:text=""/>
+
         <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimaryDark"
                 android:id="@+id/btnLogin"
-                android:text="Sign in"
+                android:text="Entrar"
                 android:layout_marginHorizontal="50dp"
                 android:layout_gravity="center"/>
     </LinearLayout>
