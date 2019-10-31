@@ -35,9 +35,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:textColor="@color/text"
+                android:inputType="textPassword"
                 android:layout_marginHorizontal="50dp"
                 android:id="@+id/txtPass"
                 android:layout_gravity="center"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="10dp"
+                android:textAllCaps="true"
+                android:textColor="@color/text"
+                android:id="@+id/incorrecto"
+                android:text=""/>
 
         <TextView
                 android:layout_width="wrap_content"
