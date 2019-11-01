@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:padding="16dp">
+
+    <androidx.cardview.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/cardview"
+            android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            card_view:cardCornerRadius="4dp">
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/card"
+                android:padding="16dp"
+                android:background="@drawable/ic_launcher_background"
+        >
+
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/materia_foto"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginRight="16dp"
+                    android:src="@drawable/ic_launcher_foreground"
+            />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/materia_nombre"
+                    android:layout_toRightOf="@+id/materia_foto"
+                    android:layout_alignParentTop="true"
+                    android:textSize="30sp"
+                    android:text="Si tu estas"
+            />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/materia_fecha"
+                    android:layout_toRightOf="@+id/materia_foto"
+                    android:layout_below="@+id/materia_nombre"
+                    android:textSize="20sp"
+                    android:text="viendo esto"
+            />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/materia_hora"
+                    android:layout_toRightOf="@+id/materia_foto"
+                    android:layout_below="@+id/materia_fecha"
+                    android:textSize="20sp"
+                    android:text="algo salio mal"
+            />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/materia_salon"
+                    android:layout_toRightOf="@+id/materia_foto"
+                    android:layout_below="@+id/materia_hora"
+                    android:textSize="20sp"
+                    android:text=":("
+            />
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

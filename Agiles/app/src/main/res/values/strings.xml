@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ProyectoMovilAgiles</string>
+    <string name="salir">Salir</string>
 </resources>
