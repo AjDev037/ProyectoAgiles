@@ -2,6 +2,7 @@ package com.example.proyectomovilagiles
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Layout
@@ -9,14 +10,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat.startActivity
 import kotlinx.android.synthetic.main.activity_menu_materias.*
 import kotlinx.android.synthetic.main.materia_cardview.view.*
 import objetos.Materia
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class MenuMaterias : AppCompatActivity() {
 
     var listaMaterias = ArrayList<Materia>()
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu_materias)
@@ -24,6 +31,15 @@ class MenuMaterias : AppCompatActivity() {
         crearMaterias()
 
         val preferencias = MyPreference(this)
+
+        val fechaActual = LocalDateTime.now()
+        val formateadorFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+        val formateadorHora = DateTimeFormatter.ofPattern("HH:mm")
+
+        val fechaFormateada = fechaActual.format(formateadorFecha)
+        val horaFormateada = fechaActual.format(formateadorHora)
+
+        Toast.makeText(this, fechaFormateada + "\n" + horaFormateada, Toast.LENGTH_SHORT).show()
 
         var adaptador = AdaptadorMateria(this, listaMaterias)
         listview.adapter = adaptador
@@ -34,6 +50,14 @@ class MenuMaterias : AppCompatActivity() {
             val intent = Intent(this,Login::class.java)
             startActivity(intent)
         }
+    }
+
+    fun siguienteMateria(){
+
+
+    }
+
+    fun compararHora(){
 
     }
 
@@ -70,7 +94,12 @@ class MenuMaterias : AppCompatActivity() {
             vista.materia_salon.text = materia.salon
 
             vista.setOnClickListener{
-                //TODO("Call next activity")
+                val intent = Intent(contexto, MateriaCalendario::class.java)
+
+                //TODO("Add extras for next activity")
+
+                contexto?.startActivity(intent)
+
             }
 
             return vista
