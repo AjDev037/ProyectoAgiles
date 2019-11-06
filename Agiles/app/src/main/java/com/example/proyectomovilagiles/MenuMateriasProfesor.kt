@@ -37,8 +37,8 @@ class MenuMateriasProfesor : AppCompatActivity() {
     }
 
     fun crearMaterias(){
-        var materia1 = Materia("Materia1", "Hoy", "Hora Actual", "1800s", R.drawable.ic_backgroundtest);
-        var materia2 = Materia("Materia2", "Manana", "Hora Actual", "1800s", R.drawable.ic_backgroundtest);
+        var materia1 = Materia("Materia1", "Hoy", "Hora Actual", "1800s", R.drawable.ic_backgroundtest)
+        var materia2 = Materia("Materia2", "Manana", "Hora Actual", "1800s", R.drawable.ic_backgroundtest)
 
         listaMaterias.add(materia1)
         listaMaterias.add(materia2)
@@ -64,8 +64,8 @@ class MenuMateriasProfesor : AppCompatActivity() {
             vista.card.setBackgroundResource(materia.imagen!!)
             vista.materia_foto.setImageResource(materia.imagen!!)
             vista.materia_nombre.text = materia.nombre
-            vista.materia_fecha.text = materia.fecha
-            vista.materia_hora.text = materia.hora
+            vista.materia_fecha.text = "miaw"
+            vista.materia_hora.text = "miaw"
             vista.materia_salon.text = materia.salon
 
             vista.setOnClickListener{
