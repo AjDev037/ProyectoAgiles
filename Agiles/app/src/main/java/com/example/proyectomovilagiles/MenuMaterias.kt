@@ -13,6 +13,7 @@ import android.widget.BaseAdapter
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat.startActivity
+import dataBaseObjects.DAOMaterias
 import kotlinx.android.synthetic.main.activity_menu_materias.*
 import kotlinx.android.synthetic.main.materia_cardview.view.*
 import objetos.Materia
@@ -22,27 +23,18 @@ import java.time.format.DateTimeFormatter
 class MenuMaterias : AppCompatActivity() {
 
     var listaMaterias = ArrayList<Materia>()
+    var mats = ArrayList<Materia>()
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu_materias)
 
-        crearMaterias()
-
         val preferencias = MyPreference(this)
 
-        val fechaActual = LocalDateTime.now()
-        val formateadorFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy")
-        val formateadorHora = DateTimeFormatter.ofPattern("HH:mm")
 
-        val diaActual = fechaActual.dayOfWeek
-        val fechaFormateada = fechaActual.format(formateadorFecha)
-        val horaFormateada = fechaActual.format(formateadorHora)
-
-        Toast.makeText(this, fechaFormateada + "\n" + horaFormateada + "\n" + diaActual, Toast.LENGTH_SHORT).show()
-
-        var adaptador = AdaptadorMateria(this, listaMaterias)
+        mats = DAOMaterias.getMaterias()
+        var adaptador = AdaptadorMateria(this, mats)
         listview.adapter = adaptador
 
         btnSalir.setOnClickListener {
