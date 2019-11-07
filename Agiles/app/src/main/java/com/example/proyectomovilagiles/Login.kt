@@ -7,7 +7,9 @@ import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_login.*
 
 class Login : AppCompatActivity() {
-
+    //Booleano que muestra donde buscara los datos la app,
+    // si es falso es para alumnos, si es verdadero es para profesores.
+    var tipo: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +26,14 @@ class Login : AppCompatActivity() {
             var contra = preferencias.getPass()
             if(validacion(id!!,contra!!)){
                 startActivity(intent)
+            }
+        }
+
+        btnTipo.setOnClickListener{
+            if(tipo){
+                btnTipo.text = "Soy Alumno"
+            }else{
+                btnTipo.text = "Soy Profesor"
             }
         }
 

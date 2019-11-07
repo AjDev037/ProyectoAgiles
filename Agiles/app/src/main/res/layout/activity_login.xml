@@ -67,6 +67,24 @@
                 android:text="Entrar"
                 android:layout_marginHorizontal="50dp"
                 android:layout_gravity="center"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="100dp"
+                android:textAllCaps="true"
+                android:textColor="@color/text"
+                android:text=""/>
+
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryDark"
+                android:id="@+id/btnTipo"
+                android:text="Soy Alumno"
+                android:layout_marginHorizontal="50dp"
+                android:layout_gravity="center"/>
     </LinearLayout>
 
 </LinearLayout>
