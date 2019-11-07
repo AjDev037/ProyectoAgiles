@@ -4,6 +4,8 @@ import java.io.Serializable
 
 class Maestro(var nombre: String, var id: String, var contrasena: String) : Serializable {
 
+    constructor():this("","","")
+
     constructor(id: String) : this("", id, "")
 
     override fun equals(other: Any?): Boolean {

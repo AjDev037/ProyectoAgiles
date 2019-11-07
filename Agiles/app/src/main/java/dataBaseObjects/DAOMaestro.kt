@@ -1,29 +1,35 @@
 package dataBaseObjects
 
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import objetos.Maestro
 
 object DAOMaestro {
 
     var listaMaestros = ArrayList<Maestro>()
 
-    private fun crearMaestrosScript(){
+     fun crearMaestrosScript(){
 
-        listaMaestros.clear()
+        val database = FirebaseDatabase.getInstance()
+        val referencia = database.getReference("Maestros")
+        referencia.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {}
 
-        var maestro1 = Maestro("Maestro1","000001111","contrasena1")
-        var maestro2 = Maestro("Maestro2","000002222","contrasena2")
-        var maestro3 = Maestro("Maestro3","000003333","contrasena3")
-        var maestro4 = Maestro("Maestro4","000004444","contrasena4")
-        var maestro5 = Maestro("Maestro5","000005555","contrasena5")
+            override fun onDataChange(p0: DataSnapshot) {
+                if (p0.exists()) {
+                    var children = p0.children
 
 
-        listaMaestros.add(maestro1)
-        listaMaestros.add(maestro2)
-        listaMaestros.add(maestro3)
-        listaMaestros.add(maestro4)
-        listaMaestros.add(maestro5)
-
+                    for (child in children) {
+                        var maestro = child.getValue(Maestro::class.java)
+                        println(maestro!!.nombre)
+                        listaMaestros.add(maestro)
+                    }
+                }
+            }
+        })
 
     }
 
@@ -32,6 +38,8 @@ object DAOMaestro {
         crearMaestrosScript()
         return listaMaestros
     }
+
+
 
     fun agregarMaestro(profe:Maestro){
         val database = FirebaseDatabase.getInstance()
