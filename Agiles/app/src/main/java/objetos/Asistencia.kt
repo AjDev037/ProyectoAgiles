@@ -2,7 +2,7 @@ package objetos
 
 import java.io.Serializable
 
-class Asistencia(var alumno: Alumno, var estado: Byte, var hora:String) : Serializable {
+class Asistencia(var alumno: Alumno, var estado: Int, var hora:String) : Serializable {
     /*Estado: 1 = Asistencia
               0 = Retardo
              -1 = Falta

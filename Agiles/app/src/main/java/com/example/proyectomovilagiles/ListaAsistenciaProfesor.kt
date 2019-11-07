@@ -45,9 +45,9 @@ class ListaAsistenciaProfesor : AppCompatActivity() {
 
             if (vista != null) {
                 vista.nomAlumno.text = asi.alumno.nombre
-                if(asi.estado == 0.toByte()){
+                if(asi.estado == 0){
                     vista.txtAsistencia.text = "Retardo"
-                }else if(asi.estado == 1.toByte()){
+                }else if(asi.estado == 1){
                     vista.txtAsistencia.text = "Asistencia"
                 }else{
                     vista.txtAsistencia.text = "Falta"

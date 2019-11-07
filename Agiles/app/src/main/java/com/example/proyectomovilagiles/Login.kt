@@ -63,6 +63,7 @@ class Login : AppCompatActivity() {
                     startActivity(intent)
                 }else{
                     val intent = Intent(this, MenuMateriasAlumno::class.java)
+                    intent.putExtra("id",id)
                     startActivity(intent)
                 }
                 preferencias.setId(id)
