@@ -1,5 +1,6 @@
 package dataBaseObjects
 
+import com.google.firebase.database.FirebaseDatabase
 import objetos.Alumno
 
 object DAOAlumnos {
@@ -16,6 +17,7 @@ object DAOAlumnos {
         var alumno4 = Alumno("Alumno4","00000444444","contrasena4")
         var alumno5 = Alumno("Alumno5","00000555555","contrasena5")
 
+
         listaAlumnos.add(alumno1)
         listaAlumnos.add(alumno2)
         listaAlumnos.add(alumno3)
@@ -29,6 +31,12 @@ object DAOAlumnos {
         //TODO: Conectarse a la base de datos y regresar la lista
         crearAlumnosScript()
         return listaAlumnos
+    }
+
+    fun agregarAlumno(al:Alumno){
+        val database = FirebaseDatabase.getInstance()
+        val referencia = database.reference.child("Alumnos").child(al.id)
+        referencia.setValue(al)
     }
 
     fun getAlumno(id:String): Alumno {

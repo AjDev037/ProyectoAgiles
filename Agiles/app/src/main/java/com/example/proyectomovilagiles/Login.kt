@@ -3,8 +3,10 @@ package com.example.proyectomovilagiles
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import dataBaseObjects.DAOAlumnos
 import dataBaseObjects.DAOMaestro
 import kotlinx.android.synthetic.main.activity_login.*
+import objetos.Alumno
 import objetos.Maestro
 
 class Login : AppCompatActivity() {
@@ -12,6 +14,7 @@ class Login : AppCompatActivity() {
     // si es falso es para alumnos, si es verdadero es para profesores.
     var tipo: Boolean = false
     var maestro = Maestro()
+    var alumno = Alumno()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,12 +70,25 @@ class Login : AppCompatActivity() {
 
     fun validacion(id:String, pass:String):Boolean{
 
-        var maistro = DAOMaestro.getMaestro(id)
-        if(maistro.contrasena.equals(pass)){
-            maestro = maistro
-            return true
+
+        if(tipo){
+            var maistro = DAOMaestro.getMaestro(id)
+            if(maistro.contrasena.equals(pass)){
+                maestro = maistro
+                return true
+            }else{
+                return false
+            }
         }else{
+            var alu = DAOAlumnos.getAlumno(id)
+            if(alu.contrasena.equals(pass)){
+                alumno = alu
+                return true
+            }else{
+
+            }
             return false
         }
+
     }
 }
