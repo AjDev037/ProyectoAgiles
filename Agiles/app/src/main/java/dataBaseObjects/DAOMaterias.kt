@@ -1,5 +1,6 @@
 package dataBaseObjects
 
+import objetos.Alumno
 import objetos.Maestro
 import objetos.Materia
 
@@ -25,6 +26,36 @@ object DAOMaterias {
         //TODO: Conectarse a la base de datos y regresar la lista
         crearMaestrosScript()
         return listaMaterias
+    }
+
+    fun getMateriasAlumno(id:String):ArrayList<Materia>{
+        crearMaestrosScript()
+
+        var alumno: Alumno = DAOAlumnos.getAlumno(id)
+        var listaMateriasAlumno = ArrayList<Materia>()
+
+        for(materia in listaMaterias){
+            if(materia.alumnos!!.contains(alumno)){
+                listaMateriasAlumno.add(materia)
+            }
+        }
+
+        return listaMateriasAlumno
+    }
+
+    fun getMateriasProfesor(id:String ):ArrayList<Materia>{
+        crearMaestrosScript()
+
+        var maestro: Maestro = DAOMaestro.getMaestro(id)
+        var listaMateriasMaestro = ArrayList<Materia>()
+
+        for(materia in listaMaterias){
+            if(materia.maestro!! == maestro){
+                listaMateriasMaestro.add(materia)
+            }
+        }
+
+        return listaMateriasMaestro
     }
 
     fun getMateria(id:String): Materia {

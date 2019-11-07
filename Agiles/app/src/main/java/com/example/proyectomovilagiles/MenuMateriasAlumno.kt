@@ -5,23 +5,19 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat.startActivity
 import dataBaseObjects.DAOMaterias
 import kotlinx.android.synthetic.main.activity_menu_materias.*
 import kotlinx.android.synthetic.main.materia_cardview.view.*
 import objetos.Materia
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
-class MenuMaterias : AppCompatActivity() {
+class MenuMateriasAlumno : AppCompatActivity() {
 
+    var siguienteMateria:Materia? = null
     var listaMaterias = ArrayList<Materia>()
     var mats = ArrayList<Materia>()
 
@@ -33,25 +29,41 @@ class MenuMaterias : AppCompatActivity() {
         val preferencias = MyPreference(this)
 
 
-        mats = DAOMaterias.getMaterias()
+        mats = DAOMaterias.getMateriasAlumno(preferencias.getId()!!)
+        
         var adaptador = AdaptadorMateria(this, mats)
         listview.adapter = adaptador
 
         btnSalir.setOnClickListener {
             preferencias.setPass("")
-            preferencias.setUser("")
+            preferencias.setId("")
             val intent = Intent(this,Login::class.java)
             startActivity(intent)
         }
     }
 
-    fun siguienteMateria(){
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun siguienteMateria(): Materia{
 
+        var actual:Materia? = null
 
-    }
+        for (i in 0..mats.size){
+            for (j in 0..mats[i].horario!!.dias.size){
 
-    fun compararHora(){
+                if(mats[i].horario!!.dias[i].diaSemana == getDiaActual()){
 
+                    if(mats[i].horario!!.dias[i].ini >= getHoraActual())
+
+                        if(actual == null){
+                            actual = mats[i]
+                        } else if (actual.horario!!.dias[i].ini > mats[i].horario!!.dias[i].ini) {
+                            actual = mats[i]
+                        }
+                }
+            }
+        }
+
+        return actual!!
     }
 
     fun crearMaterias(){

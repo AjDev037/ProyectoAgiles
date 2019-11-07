@@ -12,7 +12,7 @@
         <activity android:name=".ListaAsistenciaProfesor"></activity>
         <activity android:name=".ListaClasesProfesor" />
         <activity android:name=".MateriaCalendario" />
-        <activity android:name=".MenuMaterias" />
+        <activity android:name=".MenuMateriasAlumno" />
         <activity android:name=".MenuMateriasProfesor" />
         <activity android:name=".Login">
             <intent-filter>
