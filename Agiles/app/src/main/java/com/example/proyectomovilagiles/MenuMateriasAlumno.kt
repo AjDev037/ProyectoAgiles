@@ -13,6 +13,8 @@ import androidx.annotation.RequiresApi
 import dataBaseObjects.DAOMaterias
 import kotlinx.android.synthetic.main.activity_menu_materias.*
 import kotlinx.android.synthetic.main.materia_cardview.view.*
+import objetos.Dia
+import objetos.Horario
 import objetos.Materia
 
 class MenuMateriasAlumno : AppCompatActivity() {
@@ -100,6 +102,8 @@ class MenuMateriasAlumno : AppCompatActivity() {
         listaMaterias.add(materia2)
     }
 
+
+
     private class AdaptadorMateria:BaseAdapter{
 
         var contexto: Context? = null
@@ -120,8 +124,11 @@ class MenuMateriasAlumno : AppCompatActivity() {
            // vista.card.setBackgroundResource(materia.imagen!!)
            // vista.materia_foto.setImageResource(materia.imagen!!)
             vista.materia_nombre.text = materia.nombre
-            vista.materia_fecha.text = "miaw"
-            vista.materia_hora.text = "miaw"
+
+            var sf = siguienteFecha(materia.horario!!)
+            
+            vista.materia_fecha.text = sf.diaSemana
+            vista.materia_hora.text = sf.ini
             vista.materia_salon.text = materia.salon
 
             vista.setOnClickListener{
@@ -134,6 +141,23 @@ class MenuMateriasAlumno : AppCompatActivity() {
             }
 
             return vista
+        }
+
+        fun siguienteFecha(horario: Horario): Dia {
+
+            var diaSiguiente:Dia? = null
+
+            for (i in horario.dias){
+                if(i.getDiaSemanaAsDOW() >= getDiaActualAsDOW()){
+                    diaSiguiente = i
+                }
+            }
+
+            if(diaSiguiente == null){
+                diaSiguiente = horario.dias[0]
+            }
+
+            return diaSiguiente!!
         }
 
         override fun getItem(position: Int): Any {

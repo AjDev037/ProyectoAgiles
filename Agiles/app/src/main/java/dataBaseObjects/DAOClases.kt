@@ -1,32 +1,54 @@
 package dataBaseObjects
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import objetos.Clase
 
 object DAOClases {
 
     var listaClases = ArrayList<Clase>()
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun crearClasesScript(){
 
         listaClases.clear()
 
         //IM NOT SURE THIS IS RIGHT, PLEAS SEND HELP AND PATS
-        var clase1 = Clase (DAODias.getDia(1), DAOAsistencias.getAsistencias(),"salon")
-        var clase2 = Clase(DAODias.getDia(4),DAOAsistencias.getAsistencias(),"salon2")
+        var clase1 = Clase (DAODias.getDia(1), "07/11/19",DAOAsistencias.getAsistencias(),"salon")
+        var clase2 = Clase(DAODias.getDia(4), "07/11/19",DAOAsistencias.getAsistencias(),"salon2")
 
         listaClases.add(clase1)
         listaClases.add(clase2)
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun getClases():ArrayList<Clase>{
         //TODO: Conectarse a la base de datos y regresar la lista
         crearClasesScript()
         return listaClases
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getClases(fecha:String):ArrayList<Clase>{
+        crearClasesScript()
+
+        var listaClasesFecha = ArrayList<Clase>()
+
+        for(i in listaClases){
+            if (i.fecha == fecha){
+                listaClasesFecha.add(i)
+            }
+        }
+
+        return listaClasesFecha
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
     fun getClase(index:Int): Clase {
         crearClasesScript()
         return listaClases.get(index)
     }
+
+
 }

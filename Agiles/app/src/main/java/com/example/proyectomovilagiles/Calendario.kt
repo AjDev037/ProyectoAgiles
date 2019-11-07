@@ -2,6 +2,7 @@ package com.example.proyectomovilagiles
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import java.time.DayOfWeek
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
@@ -32,4 +33,11 @@ fun getDiaActual():String {
     val diaFormateado = diaActual.toString()
 
     return diaFormateado
+}
+
+fun getDiaActualAsDOW():DayOfWeek{
+    val fechaActual = LocalDateTime.now()
+    val diaActual = fechaActual.getDayOfWeek()
+
+    return diaActual
 }
