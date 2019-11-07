@@ -1,4 +1,43 @@
 package dataBaseObjects
 
+import objetos.Dia
+import objetos.Horario
+
 object DAOHorarios {
+
+    var listaHorarios = ArrayList<Horario>()
+
+    private fun crearHorariosScript(){
+
+        listaHorarios.clear()
+
+        var listaDiasTemp = ArrayList<Dia>()
+
+        listaDiasTemp.add(DAODias.getDia(0))
+        listaDiasTemp.add(DAODias.getDia(1))
+        listaDiasTemp.add(DAODias.getDia(2))
+
+        var horario1 = Horario (listaDiasTemp)
+
+        listaDiasTemp.clear()
+        listaDiasTemp.add(DAODias.getDia(3))
+        listaDiasTemp.add(DAODias.getDia(4))
+
+        var horario2 = Horario (listaDiasTemp)
+
+        listaHorarios.add(horario1)
+        listaHorarios.add(horario2)
+
+    }
+
+    fun getHorarios():ArrayList<Horario>{
+        //TODO: Conectarse a la base de datos y regresar la lista
+        crearHorariosScript()
+        return listaHorarios
+    }
+
+    fun getHorario(index:Int): Horario {
+        crearHorariosScript()
+        return listaHorarios.get(index)
+    }
 }

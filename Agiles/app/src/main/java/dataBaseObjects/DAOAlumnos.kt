@@ -32,6 +32,7 @@ object DAOAlumnos {
     }
 
     fun getAlumno(id:String): Alumno {
+        crearAlumnosScript()
         return listaAlumnos.get(listaAlumnos.indexOf(Alumno(id)))
     }
 }

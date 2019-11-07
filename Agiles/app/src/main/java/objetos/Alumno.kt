@@ -1,8 +1,10 @@
 package objetos
 
-class Alumno(var nombre:String, var id:String, var contrasena:String){
+import java.io.Serializable
 
-    constructor(id: String) :this ("" ,id, "")
+class Alumno(var nombre: String, var id: String, var contrasena: String) : Serializable {
+
+    constructor(id: String) : this("", id, "")
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

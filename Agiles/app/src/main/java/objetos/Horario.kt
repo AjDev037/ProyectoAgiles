@@ -1,3 +1,5 @@
 package objetos
 
-class Horario (var dias:ArrayList<Dia>)
+import java.io.Serializable
+
+class Horario(var dias: ArrayList<Dia>) : Serializable

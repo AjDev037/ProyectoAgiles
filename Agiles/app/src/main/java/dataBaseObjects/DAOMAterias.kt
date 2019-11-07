@@ -1,4 +1,0 @@
-package dataBaseObjects
-
-object DAOMAterias {
-}

@@ -1,3 +1,7 @@
 package objetos
 
-class Clase(var dia:Dia,var asistencias:ArrayList<Asistencia>)
+import java.io.Serializable
+
+class Clase(var dia: Dia, var asistencias: ArrayList<Asistencia>) : Serializable {
+
+}
