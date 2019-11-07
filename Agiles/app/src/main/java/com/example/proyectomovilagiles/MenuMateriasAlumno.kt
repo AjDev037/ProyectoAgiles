@@ -17,7 +17,7 @@ import objetos.Materia
 
 class MenuMateriasAlumno : AppCompatActivity() {
 
-    var siguienteMateria:Materia? = null
+    var siguiente:Materia? = null
     var listaMaterias = ArrayList<Materia>()
     var mats = ArrayList<Materia>()
 
@@ -28,33 +28,37 @@ class MenuMateriasAlumno : AppCompatActivity() {
 
         val preferencias = MyPreference(this)
 
-
         mats = DAOMaterias.getMateriasAlumno(preferencias.getId()!!)
-        
+
+        siguiente = getSiguienteCardMateria()
+        if (siguiente != null) {
+            mats.add(0, siguiente!!)
+        }
+
         var adaptador = AdaptadorMateria(this, mats)
         listview.adapter = adaptador
 
         btnSalir.setOnClickListener {
             preferencias.setPass("")
             preferencias.setId("")
-            val intent = Intent(this,Login::class.java)
+            val intent = Intent(this, Login::class.java)
             startActivity(intent)
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun siguienteMateria(): Materia{
+    fun getSiguienteCardMateria(): Materia? {
 
-        var actual:Materia? = null
+        var actual: Materia? = null
 
-        for (i in 0..mats.size){
-            for (j in 0..mats[i].horario!!.dias.size){
+        for (i in 0 until mats.size) {
+            for (j in 0 until mats[i].horario!!.dias.size) {
 
-                if(mats[i].horario!!.dias[i].diaSemana == getDiaActual()){
+                if (mats[i].horario!!.dias[i].diaSemana == getDiaActual()) {
 
-                    if(mats[i].horario!!.dias[i].ini >= getHoraActual())
+                    if (mats[i].horario!!.dias[i].ini >= getHoraActual())
 
-                        if(actual == null){
+                        if (actual == null) {
                             actual = mats[i]
                         } else if (actual.horario!!.dias[i].ini > mats[i].horario!!.dias[i].ini) {
                             actual = mats[i]
@@ -63,23 +67,44 @@ class MenuMateriasAlumno : AppCompatActivity() {
             }
         }
 
-        return actual!!
+        return actual
     }
 
-    fun crearMaterias(){
-        var materia1 = Materia("Materia1", "Hoy", "Hora Actual", "1800s", R.drawable.ic_backgroundtest)
-        var materia2 = Materia("Materia2", "Manana", "Hora Actual", "1800s", R.drawable.ic_backgroundtest)
+    /*
+    fun crearCardMateria(materia: Materia) {
+        //card.setBackgroundResource(materia.imagen!!)
+        //materia_foto.setImageResource(materia.imagen!!)
+        materia_nombre.text = materia.nombre
+        materia_fecha.text = "miaw"
+        materia_hora.text = "miaw"
+        materia_salon.text = materia.salon
+
+        card.setOnClickListener {
+            val intent = Intent(this, MateriaCalendario::class.java)
+
+            //TODO("Add extras for next activity")
+
+            startActivity(intent)
+        }
+    }
+     */
+
+    fun crearMaterias() {
+        var materia1 =
+            Materia("Materia1", "Hoy", "Hora Actual", "1800s", R.drawable.ic_backgroundtest)
+        var materia2 =
+            Materia("Materia2", "Manana", "Hora Actual", "1800s", R.drawable.ic_backgroundtest)
 
         listaMaterias.add(materia1)
         listaMaterias.add(materia2)
     }
 
-    private class AdaptadorMateria:BaseAdapter{
+    private class AdaptadorMateria : BaseAdapter {
 
         var contexto: Context? = null
         var materias = ArrayList<Materia>()
 
-        constructor(context: Context, materias: ArrayList<Materia>){
+        constructor(context: Context, materias: ArrayList<Materia>) {
             contexto = context
             this.materias = materias
         }
@@ -98,7 +123,7 @@ class MenuMateriasAlumno : AppCompatActivity() {
             vista.materia_hora.text = "miaw"
             vista.materia_salon.text = materia.salon
 
-            vista.setOnClickListener{
+            vista.setOnClickListener {
                 val intent = Intent(contexto, MateriaCalendario::class.java)
 
                 //TODO("Add extras for next activity")

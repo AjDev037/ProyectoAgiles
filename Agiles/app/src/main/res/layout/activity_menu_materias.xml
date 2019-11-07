@@ -1,26 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         tools:context=".MenuMateriasAlumno">
 
+    <!--
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:id="@+id/card"
+            android:padding="5dp"
+            android:background="@drawable/ic_launcher_background"
+            android:layout_margin="5dp"
+            >
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/materia_foto"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="16dp"
+                android:src="@drawable/ic_launcher_foreground"
+                />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/materia_nombre"
+                android:layout_toRightOf="@+id/materia_foto"
+                android:layout_alignParentTop="true"
+                android:textSize="20sp"
+                android:text="Si tu estas"
+                />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/materia_fecha"
+                android:layout_toRightOf="@+id/materia_foto"
+                android:layout_below="@+id/materia_nombre"
+                android:textSize="15sp"
+                android:text="viendo esto"
+                />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/materia_hora"
+                android:layout_toRightOf="@+id/materia_foto"
+                android:layout_below="@+id/materia_fecha"
+                android:textSize="15sp"
+                android:text="algo salio mal"
+                />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/materia_salon"
+                android:layout_toRightOf="@+id/materia_foto"
+                android:layout_below="@+id/materia_hora"
+                android:textSize="15sp"
+                android:text=":("
+                />
+
+    </RelativeLayout>
+
+
+    <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_margin="5dp"
+            android:background="@color/colorPrimaryDark" />
+    -->
     <ListView
+            android:id="@+id/listview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:id="@+id/listview"
-            android:layout_margin="8dp"/>
+            android:layout_margin="8dp"
+            android:layout_weight="1" />
 
 
     <Button
+            android:id="@+id/btnSalir"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
             android:background="@color/colorPrimaryDark"
-            android:id="@+id/btnSalir"
-            android:text="@string/salir"
-            android:layout_gravity="center"/>
+            android:text="@string/salir" />
 
 </LinearLayout>
