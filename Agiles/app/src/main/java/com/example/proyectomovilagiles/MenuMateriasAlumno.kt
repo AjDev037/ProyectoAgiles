@@ -40,7 +40,7 @@ class MenuMateriasAlumno : AppCompatActivity() {
         }
 
 
-        var adaptador = AdaptadorMateria(this, mats)
+        var adaptador = AdaptadorMateria(this, mats,id)
         listview.adapter = adaptador
 
         btnSalir.setOnClickListener {
@@ -61,7 +61,7 @@ class MenuMateriasAlumno : AppCompatActivity() {
             //Y recorremos los dias de la materia
             for (j in 0 until mats[i].horario!!.dias.size) {
                 //Si el dia de la semana es igual al actual
-                if(mats[i].horario!!.dias[i].diaSemana == getDiaActual()){
+                if(mats[i].horario!!.dias[j].diaSemana == getDiaActual()){
                     //Y la hora del dia es mayor que la actual
                     if(mats[i].horario!!.dias[i].ini >= getHoraActual())
                         //Y si actual es nulo
@@ -113,10 +113,12 @@ class MenuMateriasAlumno : AppCompatActivity() {
 
         var contexto: Context? = null
         var materias = ArrayList<Materia>()
+        var id = ""
 
-        constructor(context: Context, materias: ArrayList<Materia>){
+        constructor(context: Context, materias: ArrayList<Materia>,id:String){
             contexto = context
             this.materias = materias
+            this.id = id
         }
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
@@ -138,10 +140,10 @@ class MenuMateriasAlumno : AppCompatActivity() {
             vista.materia_salon.text = materia.salon
 
             vista.setOnClickListener{
-                val intent = Intent(contexto, MateriaCalendario::class.java)
-
+                val intent = Intent(contexto, ListaClasesAlumno::class.java)
+                intent.putExtra("clases",materia.clases)
                 //TODO("Add extras for next activity")
-
+                intent.putExtra("id",id)
                 contexto?.startActivity(intent)
 
             }

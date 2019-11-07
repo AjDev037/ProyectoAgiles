@@ -14,7 +14,9 @@ object DAOMaterias {
 
      fun crearMaestrosScript(){
 
-/*        val database = FirebaseDatabase.getInstance()
+
+
+        val database = FirebaseDatabase.getInstance()
         val referencia = database.getReference("Materias")
         referencia.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {}
@@ -31,9 +33,9 @@ object DAOMaterias {
                     }
                 }
             }
-        })*/
+        })
 
-         listaMaterias.clear()
+ /*        listaMaterias.clear()
 
          var materia1 = Materia("00000001","Metodos Agiles","1824", null, DAOAlumnos.getAlumnos(),
              DAOMaestro.getMaestro("000001111"), null, DAOHorarios.getHorario(0),DAOClases.getClases() )
@@ -68,7 +70,7 @@ object DAOMaterias {
          agregarMaterias(materia0)
 
          listaMaterias.add(materia1)
-         listaMaterias.add(materia2)
+         listaMaterias.add(materia2)*/
 
     }
 
@@ -100,6 +102,7 @@ object DAOMaterias {
     }
 
     fun getMateriasProfesor(id:String ):ArrayList<Materia>{
+
         crearMaestrosScript()
 
         var maestro: Maestro = DAOMaestro.getMaestro(id)
@@ -117,5 +120,9 @@ object DAOMaterias {
     fun getMateria(id:String): Materia {
         crearMaestrosScript()
         return listaMaterias.get(listaMaterias.indexOf(Materia(id)))
+    }
+
+    fun limpiar(){
+        listaMaterias.clear()
     }
 }

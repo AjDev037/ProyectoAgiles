@@ -4,6 +4,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background"
+        tools:context=".AsistenciaAlumno"
         >
 
     <LinearLayout
@@ -11,7 +12,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="8dp"
             android:layout_marginLeft="8dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
         <LinearLayout
                 android:layout_width="match_parent"
@@ -23,22 +24,21 @@
                 android:orientation="vertical">
 
             <TextView
-                    android:id="@+id/txtFecha"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Clase:"
+                    android:text="Alumno:"
                     android:textColor="@color/textMain"
                     android:textSize="20dp"
                     android:textStyle="bold" />
 
             <TextView
-                    android:id="@+id/diaClase"
+                    android:id="@+id/nomAlumno"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="DiaSemana"
+                    android:text="Nombre"
                     android:textColor="@color/textMain"
                     android:textSize="20dp"
-                    android:textStyle="bold" />
+                    />
 
         </LinearLayout>
 
@@ -51,25 +51,58 @@
                 android:gravity="center_vertical"
                 android:orientation="vertical">
 
+
+
             <TextView
-                    android:id="@+id/salonClase"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Salon"
+                    android:text="Estado:"
                     android:textColor="@color/textMain"
                     android:textSize="20dp"
                     android:textStyle="bold" />
 
             <TextView
-                    android:id="@+id/horas"
+                    android:id="@+id/txtAsistencia"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="HoraInicio - Hora Final"
+                    android:text="Asistencia"
                     android:textColor="@color/textMain"
                     android:textSize="20dp"
-                    android:textStyle="bold" />
+/>
 
         </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Hora:"
+                    android:textColor="@color/textMain"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+            <TextView
+                    android:id="@+id/txtHora"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Hora"
+                    android:textColor="@color/textMain"
+                    android:textSize="20dp"
+ />
+
+        </LinearLayout>
+
 
     </LinearLayout>
 </LinearLayout>

@@ -1,10 +1,8 @@
 package com.example.proyectomovilagiles
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,30 +10,36 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import kotlinx.android.synthetic.main.activity_lista_clases.*
+import kotlinx.android.synthetic.main.activity_lista_clases_alumno.*
 import kotlinx.android.synthetic.main.llenar_clases.view.*
+import objetos.Asistencia
 import objetos.Clase
 
-class ListaClasesProfesor : AppCompatActivity() {
+class ListaClasesAlumno : AppCompatActivity() {
 
     var clases = ArrayList<Clase>()
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_lista_clases)
+        setContentView(R.layout.activity_lista_clases_alumno)
 
         clases = intent.getSerializableExtra("clases") as ArrayList<Clase>
-        var adaptador = AdaptadorClientes(this,clases)
-        listasClases.adapter = adaptador
-
+        var nom = intent.getStringExtra("id")
+        var adaptador = ListaClasesAlumno.AdaptadorClases(this, clases,nom)
+        listasClasesAlumno.adapter = adaptador
     }
-    private class AdaptadorClientes : BaseAdapter {
+
+    private class AdaptadorClases : BaseAdapter {
 
         var context: Context
         var clases: ArrayList<Clase>? = null
+        var id  = ""
 
-        constructor(context: Context, clases: ArrayList<Clase>) {
+        constructor(context: Context, clases: ArrayList<Clase>, nom:String) {
             this.context = context
             this.clases = clases
+            id = nom
         }
 
 
@@ -52,8 +56,14 @@ class ListaClasesProfesor : AppCompatActivity() {
             }
 
             vista.setOnClickListener {
-                val intent = Intent(context, ListaAsistenciaProfesor::class.java)
-                intent.putExtra("asist",cla.asistencias)
+                val intent = Intent(context, AsistenciaAlumno::class.java)
+                var auxiliar = Asistencia()
+                for(x in cla.asistencias){
+                    if(x.alumno.id.equals(id)){
+                        auxiliar = x
+                    }
+                }
+                intent.putExtra("asist",auxiliar)
                 (context as Activity).startActivity(intent)
             }
             return vista
@@ -72,5 +82,4 @@ class ListaClasesProfesor : AppCompatActivity() {
             return clases?.size ?: 0
         }
     }
-
 }
