@@ -63,14 +63,14 @@ class MenuMateriasAlumno : AppCompatActivity() {
                 //Si el dia de la semana es igual al actual
                 if(mats[i].horario!!.dias[j].diaSemana == getDiaActual()){
                     //Y la hora del dia es mayor que la actual
-                    if(mats[i].horario!!.dias[i].ini >= getHoraActual())
+                    if(mats[i].horario!!.dias[j].ini >= getHoraActual())
                         //Y si actual es nulo
                         if(actual == null){
                             //Guardamos esa materia en actual
                             actual = mats[i]
                         //Si no, comparamos la hora de este dia y materia con el que ya teniamos guardado
                         //para ver si esta clase iria antes
-                        } else if (actual.horario!!.dias[i].ini > mats[i].horario!!.dias[i].ini) {
+                        } else if (actual.horario!!.dias[j].ini > mats[i].horario!!.dias[j].ini) {
                             //Si es asi, cambiamos actual a esta otra materia
                             actual = mats[i]
                         }
