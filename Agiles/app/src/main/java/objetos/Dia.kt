@@ -5,7 +5,8 @@ import java.time.DayOfWeek
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-class Dia(var diaSemana: String, var ini: String, var fin: String) : Serializable {
+class Dia (var diaSemana:String, var ini:String, var fin:String): Serializable {
+    constructor():this("","","")
 
     fun getDiaSemanaAsDOW(): DayOfWeek {
 

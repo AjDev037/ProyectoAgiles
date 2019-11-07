@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import dataBaseObjects.DAOAlumnos
 import dataBaseObjects.DAOMaestro
+import dataBaseObjects.DAOMaterias
 import kotlinx.android.synthetic.main.activity_login.*
 import objetos.Alumno
 import objetos.Maestro
@@ -22,6 +23,7 @@ class Login : AppCompatActivity() {
 
         DAOMaestro.crearMaestrosScript()
         DAOAlumnos.crearAlumnosScript()
+        DAOMaterias.crearMaestrosScript()
 
         val preferencias = MyPreference(this)
 
@@ -60,6 +62,7 @@ class Login : AppCompatActivity() {
             if(validacion(id,pass)){
                 if(tipo){
                     val intent = Intent(this, MenuMateriasProfesor::class.java)
+                    intent.putExtra("id",id)
                     startActivity(intent)
                 }else{
                     val intent = Intent(this, MenuMateriasAlumno::class.java)

@@ -24,8 +24,7 @@ object DAOMaestro {
 
                     for (child in children) {
                         var maestro = child.getValue(Maestro::class.java)
-                        println(maestro!!.nombre)
-                        listaMaestros.add(maestro)
+                        listaMaestros.add(maestro!!)
                     }
                 }
             }

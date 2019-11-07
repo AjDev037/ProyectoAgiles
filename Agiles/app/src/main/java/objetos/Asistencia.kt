@@ -7,6 +7,7 @@ class Asistencia(var alumno: Alumno, var estado: Int, var hora:String) : Seriali
               0 = Retardo
              -1 = Falta
     */
+    constructor():this(Alumno(),0,"")
     constructor(alumno: Alumno) : this(alumno, 0,"")
 
     override fun equals(other: Any?): Boolean {

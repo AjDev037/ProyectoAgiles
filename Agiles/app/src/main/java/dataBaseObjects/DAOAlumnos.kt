@@ -24,8 +24,7 @@ object DAOAlumnos {
 
                     for (child in children) {
                         var alumno = child.getValue(Alumno::class.java)
-                        println(alumno!!.nombre)
-                        listaAlumnos.add(alumno)
+                        listaAlumnos.add(alumno!!)
                     }
                 }
             }
