@@ -24,8 +24,9 @@ class MenuMateriasProfesor : AppCompatActivity() {
         setContentView(R.layout.activity_menu_materias_profesor)
 
         val preferencias = MyPreference(this)
+        var id = intent.getStringExtra("id")
 
-        mats = DAOMaterias.getMaterias()
+        mats = DAOMaterias.getMateriasProfesor(id)
         var adaptador = AdaptadorMateria(this, mats)
         listview.adapter = adaptador
 
