@@ -1,7 +1,9 @@
 package com.example.proyectomovilagiles
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -49,7 +51,9 @@ class ListaClasesProfesor : AppCompatActivity() {
             }
 
             vista.setOnClickListener {
-
+                val intent = Intent(context, ListaAsistenciaProfesor::class.java)
+                intent.putExtra("asist",cla.asistencias)
+                (context as Activity).startActivity(intent)
             }
             return vista
 

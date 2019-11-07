@@ -2,12 +2,12 @@ package objetos
 
 import java.io.Serializable
 
-class Asistencia(var alumno: Alumno, var estado: Byte) : Serializable {
+class Asistencia(var alumno: Alumno, var estado: Byte, var hora:String) : Serializable {
     /*Estado: 1 = Asistencia
               0 = Retardo
              -1 = Falta
     */
-    constructor(alumno: Alumno) : this(alumno, 0)
+    constructor(alumno: Alumno) : this(alumno, 0,"")
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

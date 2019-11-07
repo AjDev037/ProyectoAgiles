@@ -45,10 +45,15 @@ class ListaAsistenciaProfesor : AppCompatActivity() {
 
             if (vista != null) {
                 vista.nomAlumno.text = asi.alumno.nombre
-                //if(asi.estado == -1){
-                 //
-                //}
-               // vista.txtAsistencia.text = asi.estado
+                if(asi.estado == 0.toByte()){
+                    vista.txtAsistencia.text = "Retardo"
+                }else if(asi.estado == 1.toByte()){
+                    vista.txtAsistencia.text = "Asistencia"
+                }else{
+                    vista.txtAsistencia.text = "Falta"
+                }
+                vista.txtHora.text = asi.hora
+
             }
 
             vista.setOnClickListener {
@@ -59,7 +64,7 @@ class ListaAsistenciaProfesor : AppCompatActivity() {
         }
 
         override fun getItem(position: Int): Any {
-            return clases?.get(position) ?: "Error"
+            return asistencias?.get(position) ?: "Error"
         }
 
         override fun getItemId(position: Int): Long {
@@ -67,7 +72,7 @@ class ListaAsistenciaProfesor : AppCompatActivity() {
         }
 
         override fun getCount(): Int {
-            return clases?.size ?: 0
+            return asistencias?.size ?: 0
         }
     }
 }

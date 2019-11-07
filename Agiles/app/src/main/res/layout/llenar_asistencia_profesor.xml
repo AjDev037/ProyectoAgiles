@@ -61,6 +61,15 @@
                     android:textSize="20dp"
                     android:textStyle="bold" />
 
+            <TextView
+                    android:id="@+id/txtHora"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Hora"
+                    android:textColor="@color/textMain"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
         </LinearLayout>
 
     </LinearLayout>
