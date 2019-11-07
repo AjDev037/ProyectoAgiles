@@ -12,7 +12,7 @@ object DAOClases {
 
         //IM NOT SURE THIS IS RIGHT, PLEAS SEND HELP AND PATS
         var clase1 = Clase (DAODias.getDia(1), DAOAsistencias.getAsistencias(),"salon")
-        var clase2 = Clase(DAODias.getDia(1),DAOAsistencias.getAsistencias(),"salon2")
+        var clase2 = Clase(DAODias.getDia(4),DAOAsistencias.getAsistencias(),"salon2")
 
         listaClases.add(clase1)
         listaClases.add(clase2)

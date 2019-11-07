@@ -16,7 +16,7 @@ class Login : AppCompatActivity() {
 
         val preferencias = MyPreference(this)
 
-        val intent = Intent(this, MenuMaterias::class.java)
+        val intent = Intent(this, MenuMateriasProfesor::class.java)
 
         if(preferencias.getUser() != "" && preferencias.getPass() != ""){
 
@@ -43,7 +43,7 @@ class Login : AppCompatActivity() {
 
     fun validacion(id:String, pass:String):Boolean{
 
-        if(id.equals("00000164788") && pass.equals("12345")){
+        if(id.equals("1") && pass.equals("1")){
 
             return true
         }

@@ -1,5 +1,6 @@
 package com.example.proyectomovilagiles
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import dataBaseObjects.DAOMaterias
 import kotlinx.android.synthetic.main.activity_menu_materias_profesor.*
 import kotlinx.android.synthetic.main.materia_cardview.view.*
 import objetos.Materia
@@ -15,6 +17,7 @@ import objetos.Materia
 class MenuMateriasProfesor : AppCompatActivity() {
 
     var listaMaterias = ArrayList<Materia>()
+    var mats = ArrayList<Materia>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,9 +25,8 @@ class MenuMateriasProfesor : AppCompatActivity() {
 
         val preferencias = MyPreference(this)
 
-        crearMaterias()
-
-        var adaptador = AdaptadorMateria(this, listaMaterias)
+        mats = DAOMaterias.getMaterias()
+        var adaptador = AdaptadorMateria(this, mats)
         listview.adapter = adaptador
 
         btnSalir.setOnClickListener {
@@ -61,8 +63,8 @@ class MenuMateriasProfesor : AppCompatActivity() {
 
 
             //TODO("Agregar una imagen de fondo para la carta, separada de la materia")
-            vista.card.setBackgroundResource(materia.imagen!!)
-            vista.materia_foto.setImageResource(materia.imagen!!)
+            //vista.card.setBackgroundResource(materia.imagen!!)
+            //vista.materia_foto.setImageResource(materia.imagen!!)
             vista.materia_nombre.text = materia.nombre
             vista.materia_fecha.text = "miaw"
             vista.materia_hora.text = "miaw"
@@ -70,6 +72,9 @@ class MenuMateriasProfesor : AppCompatActivity() {
 
             vista.setOnClickListener{
                 //TODO("Call next activity")
+                val intent = Intent(contexto, ListaClasesProfesor::class.java)
+                intent.putExtra("clases",materia.clases)
+                (contexto as Activity).startActivity(intent)
             }
 
             return vista

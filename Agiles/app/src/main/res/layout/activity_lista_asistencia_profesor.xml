@@ -7,13 +7,13 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:background="@color/background"
         android:orientation="vertical"
-        tools:context=".ListaClasesProfesor">
+        tools:context=".ListaAsistenciaProfesor">
 
 
 
     <ListView android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/listasClases"
+            android:id="@+id/listasAsistencias"
             android:layout_margin="8dp">
 
     </ListView>
