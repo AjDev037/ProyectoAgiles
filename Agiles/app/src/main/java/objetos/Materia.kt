@@ -10,9 +10,10 @@ class Materia(
     var alumnos: ArrayList<Alumno>?,
     var maestro: Maestro?,
     var imgFondo: Int?,
-    var horario: Horario?
+    var horario: Horario?,
+    var clases:ArrayList<Clase>?
 ) : Serializable {
-    constructor() : this("", "", "", null, null, null, null, null)
+    constructor() : this("", "", "", null, null, null, null, null,null)
 
     //ONLY FOR DEVELOPMENT PURPOSES
     constructor(s: String, s1: String, s2: String, s3: String, imagen: Int) : this(
@@ -23,10 +24,11 @@ class Materia(
         null,
         null,
         imagen,
-        null
+        null,
+    null
     )
 
-    constructor(id:String): this(id, "", "", null, null, null, null, null)
+    constructor(id:String): this(id, "", "", null, null, null, null, null,null)
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
