@@ -19,11 +19,12 @@ object DAOHorarios {
 
         var horario1 = Horario (listaDiasTemp)
 
-        listaDiasTemp.clear()
-        listaDiasTemp.add(DAODias.getDia(3))
-        listaDiasTemp.add(DAODias.getDia(4))
+        var listaDiasTemp2 = ArrayList<Dia>()
 
-        var horario2 = Horario (listaDiasTemp)
+        listaDiasTemp2.add(DAODias.getDia(3))
+        listaDiasTemp2.add(DAODias.getDia(4))
+
+        var horario2 = Horario (listaDiasTemp2)
 
         listaHorarios.add(horario1)
         listaHorarios.add(horario2)

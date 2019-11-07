@@ -13,6 +13,8 @@ import androidx.annotation.RequiresApi
 import dataBaseObjects.DAOMaterias
 import kotlinx.android.synthetic.main.activity_menu_materias.*
 import kotlinx.android.synthetic.main.materia_cardview.view.*
+import objetos.Dia
+import objetos.Horario
 import objetos.Materia
 
 class MenuMateriasAlumno : AppCompatActivity() {
@@ -54,22 +56,29 @@ class MenuMateriasAlumno : AppCompatActivity() {
 
         var actual:Materia? = null
 
+        //Recorremos las materias
         for (i in 0 until mats.size) {
+            //Y recorremos los dias de la materia
             for (j in 0 until mats[i].horario!!.dias.size) {
-
+                //Si el dia de la semana es igual al actual
                 if(mats[i].horario!!.dias[i].diaSemana == getDiaActual()){
-
+                    //Y la hora del dia es mayor que la actual
                     if(mats[i].horario!!.dias[i].ini >= getHoraActual())
-
+                        //Y si actual es nulo
                         if(actual == null){
+                            //Guardamos esa materia en actual
                             actual = mats[i]
+                        //Si no, comparamos la hora de este dia y materia con el que ya teniamos guardado
+                        //para ver si esta clase iria antes
                         } else if (actual.horario!!.dias[i].ini > mats[i].horario!!.dias[i].ini) {
+                            //Si es asi, cambiamos actual a esta otra materia
                             actual = mats[i]
                         }
                 }
             }
         }
 
+        //Regresaremos o un nulo o la siguiente materia proxima del dia
         return actual
     }
 
@@ -120,8 +129,12 @@ class MenuMateriasAlumno : AppCompatActivity() {
            // vista.card.setBackgroundResource(materia.imagen!!)
            // vista.materia_foto.setImageResource(materia.imagen!!)
             vista.materia_nombre.text = materia.nombre
-            vista.materia_fecha.text = "miaw"
-            vista.materia_hora.text = "miaw"
+
+            //Guardamos la siguiente fecha para su uso posterior
+            var sf = siguienteFecha(materia.horario!!)
+
+            vista.materia_fecha.text = sf.diaSemana
+            vista.materia_hora.text = sf.ini
             vista.materia_salon.text = materia.salon
 
             vista.setOnClickListener{
@@ -134,6 +147,29 @@ class MenuMateriasAlumno : AppCompatActivity() {
             }
 
             return vista
+        }
+
+        fun siguienteFecha(horario: Horario): Dia {
+
+            var diaSiguiente:Dia? = null
+
+            //Recorremos los dias en el horario
+            for (i in horario.dias){
+                //Y los comparamos con hoy para ver si estan despues
+                if(i.getDiaSemanaAsDOW() >= getDiaActualAsDOW()){
+                    //De ser asi, el diaSiguiente sera ese dia que comparamos
+                    diaSiguiente = i
+                }
+            }
+
+            //Si no obtuvimos ningun dia que sea despues de hoy
+            if(diaSiguiente == null){
+                //Decimos que el siguiente dia sera el primero del horario de la materia
+                //Digase hoy es viernes y la siguiente clase seria el Lunes
+                diaSiguiente = horario.dias[0]
+            }
+
+            return diaSiguiente!!
         }
 
         override fun getItem(position: Int): Any {

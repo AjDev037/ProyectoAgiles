@@ -80,8 +80,6 @@ class Login : AppCompatActivity() {
     }
 
     fun validacion(id:String, pass:String):Boolean{
-
-
         if(tipo){
             var maistro = DAOMaestro.getMaestro(id)
             if(maistro.contrasena.equals(pass)){
