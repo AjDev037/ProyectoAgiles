@@ -1,0 +1,4 @@
+package dataBaseObjects
+
+object DAOAsistencias {
+}
