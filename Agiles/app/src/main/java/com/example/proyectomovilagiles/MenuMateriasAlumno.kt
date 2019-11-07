@@ -91,8 +91,8 @@ class MenuMateriasAlumno : AppCompatActivity() {
 
 
             //TODO("Agregar una imagen de fondo para la carta, separada de la materia")
-            vista.card.setBackgroundResource(materia.imagen!!)
-            vista.materia_foto.setImageResource(materia.imagen!!)
+           // vista.card.setBackgroundResource(materia.imagen!!)
+           // vista.materia_foto.setImageResource(materia.imagen!!)
             vista.materia_nombre.text = materia.nombre
             vista.materia_fecha.text = "miaw"
             vista.materia_hora.text = "miaw"
