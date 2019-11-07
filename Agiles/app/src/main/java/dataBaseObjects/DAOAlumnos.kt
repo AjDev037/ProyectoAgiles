@@ -1,28 +1,36 @@
 package dataBaseObjects
 
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import objetos.Alumno
 
 object DAOAlumnos {
 
     var listaAlumnos = ArrayList<Alumno>()
 
-    private fun crearAlumnosScript(){
+    public fun crearAlumnosScript(){
 
-        listaAlumnos.clear()
+        val database = FirebaseDatabase.getInstance()
+        val referencia = database.getReference("Alumnos")
+        referencia.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {}
 
-        var alumno1 = Alumno("Alumno1","00000111111","contrasena1")
-        var alumno2 = Alumno("Alumno2","00000222222","contrasena2")
-        var alumno3 = Alumno("Alumno3","00000333333","contrasena3")
-        var alumno4 = Alumno("Alumno4","00000444444","contrasena4")
-        var alumno5 = Alumno("Alumno5","00000555555","contrasena5")
+            override fun onDataChange(p0: DataSnapshot) {
+                if (p0.exists()) {
+                    var children = p0.children
 
 
-        listaAlumnos.add(alumno1)
-        listaAlumnos.add(alumno2)
-        listaAlumnos.add(alumno3)
-        listaAlumnos.add(alumno4)
-        listaAlumnos.add(alumno5)
+                    for (child in children) {
+                        var alumno = child.getValue(Alumno::class.java)
+                        println(alumno!!.nombre)
+                        listaAlumnos.add(alumno)
+                    }
+                }
+            }
+        })
+
 
 
     }

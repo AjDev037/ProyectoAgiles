@@ -21,19 +21,26 @@ class Login : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         DAOMaestro.crearMaestrosScript()
+        DAOAlumnos.crearAlumnosScript()
 
         val preferencias = MyPreference(this)
 
         val intent = Intent(this, MenuMateriasProfesor::class.java)
 
-        if(preferencias.getId() != "" && preferencias.getPass() != ""){
+        /*if(preferencias.getId() != "" && preferencias.getPass() != ""){
 
             var id = preferencias.getId()
             var contra = preferencias.getPass()
             if(validacion(id!!,contra!!)){
-                startActivity(intent)
+                if(tipo){
+                    val intent = Intent(this, MenuMateriasProfesor::class.java)
+                    startActivity(intent)
+                }else{
+                    val intent = Intent(this, MenuMateriasAlumno::class.java)
+                    startActivity(intent)
+                }
             }
-        }
+        }*/
 
         btnTipo.setOnClickListener{
             if(tipo){
