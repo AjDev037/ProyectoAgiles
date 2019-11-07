@@ -31,7 +31,7 @@ class MenuMateriasProfesor : AppCompatActivity() {
 
         btnSalir.setOnClickListener {
             preferencias.setPass("")
-            preferencias.setUser("")
+            preferencias.setId("")
             val intent = Intent(this,Login::class.java)
             startActivity(intent)
         }

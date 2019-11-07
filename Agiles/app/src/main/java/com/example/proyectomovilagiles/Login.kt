@@ -1,6 +1,5 @@
 package com.example.proyectomovilagiles
 
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -20,9 +19,9 @@ class Login : AppCompatActivity() {
 
         val intent = Intent(this, MenuMateriasProfesor::class.java)
 
-        if(preferencias.getUser() != "" && preferencias.getPass() != ""){
+        if(preferencias.getId() != "" && preferencias.getPass() != ""){
 
-            var id = preferencias.getUser()
+            var id = preferencias.getId()
             var contra = preferencias.getPass()
             if(validacion(id!!,contra!!)){
                 startActivity(intent)
@@ -41,7 +40,7 @@ class Login : AppCompatActivity() {
             var id = txtUsuario.text.toString()
             var pass = txtPass.text.toString()
             if(validacion(id,pass)){
-                preferencias.setUser(id)
+                preferencias.setId(id)
                 preferencias.setPass(pass)
                 startActivity(intent)
             }else{

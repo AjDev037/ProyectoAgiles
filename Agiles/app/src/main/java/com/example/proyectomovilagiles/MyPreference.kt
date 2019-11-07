@@ -9,12 +9,12 @@ class MyPreference(context: Context){
 
     val preference = context.getSharedPreferences(ID,Context.MODE_PRIVATE)
 
-    fun getUser():String?{
+    fun getId():String?{
         var id = preference.getString(ID,"")
         return id
     }
 
-    fun setUser(id:String){
+    fun setId(id:String){
         val editor = preference.edit()
         editor.putString(ID,id)
         editor.apply()
