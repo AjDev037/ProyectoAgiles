@@ -12,7 +12,7 @@ object DAOMaterias {
 
     var listaMaterias = ArrayList<Materia>()
 
-     fun crearMaestrosScript(){
+     fun crearMateriasScript(){
 
 
 
@@ -76,7 +76,7 @@ object DAOMaterias {
 
     fun getMaterias():ArrayList<Materia>{
         //TODO: Conectarse a la base de datos y regresar la lista
-        crearMaestrosScript()
+        crearMateriasScript()
         return listaMaterias
     }
 
@@ -87,7 +87,7 @@ object DAOMaterias {
     }
 
     fun getMateriasAlumno(id:String):ArrayList<Materia>{
-        crearMaestrosScript()
+        crearMateriasScript()
 
         var alumno: Alumno = DAOAlumnos.getAlumno(id)
         var listaMateriasAlumno = ArrayList<Materia>()
@@ -103,7 +103,7 @@ object DAOMaterias {
 
     fun getMateriasProfesor(id:String ):ArrayList<Materia>{
 
-        crearMaestrosScript()
+        crearMateriasScript()
 
         var maestro: Maestro = DAOMaestro.getMaestro(id)
         var listaMateriasMaestro = ArrayList<Materia>()
@@ -118,7 +118,7 @@ object DAOMaterias {
     }
 
     fun getMateria(id:String): Materia {
-        crearMaestrosScript()
+        crearMateriasScript()
         return listaMaterias.get(listaMaterias.indexOf(Materia(id)))
     }
 
