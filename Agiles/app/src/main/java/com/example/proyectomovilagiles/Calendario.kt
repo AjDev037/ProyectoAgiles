@@ -2,6 +2,7 @@ package com.example.proyectomovilagiles
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import objetos.Dia
 import java.time.DayOfWeek
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -30,7 +31,7 @@ fun getFechaActual():String {
 fun getDiaActual():String {
     val fechaActual = LocalDateTime.now()
     val diaActual = fechaActual.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale("es","ES"))
-    val diaFormateado = diaActual.toString()
+    val diaFormateado = diaActual.toString().capitalize()
 
     return diaFormateado
 }
@@ -40,4 +41,19 @@ fun getDiaActualAsDOW():DayOfWeek{
     val diaActual = fechaActual.getDayOfWeek()
 
     return diaActual
+}
+
+fun getDiaSemanaAsDOW(dia: Dia): DayOfWeek {
+    var diaValue: Int? = null
+
+    when (dia.diaSemana) {
+        "Lunes" -> diaValue = 1
+        "Martes" -> diaValue = 2
+        "Miercoles" -> diaValue = 3
+        "Jueves" -> diaValue = 4
+        "Viernes" -> diaValue = 5
+        "Sabado" -> diaValue = 6
+        "Domingo" -> diaValue = 7
+    }
+    return DayOfWeek.of(diaValue!!)
 }

@@ -60,7 +60,7 @@ class MenuMateriasAlumno : AppCompatActivity() {
         for (i in 0 until mats.size) {
             //Y recorremos los dias de la materia
             for (j in 0 until mats[i].horario!!.dias.size) {
-                //Si el dia de la semana es igual al actual
+                //Si el dia de la semana es igual al actual\
                 if(mats[i].horario!!.dias[j].diaSemana == getDiaActual()){
                     //Y la hora del dia es mayor que la actual
                     if(mats[i].horario!!.dias[j].ini >= getHoraActual())
@@ -158,9 +158,10 @@ class MenuMateriasAlumno : AppCompatActivity() {
             //Recorremos los dias en el horario
             for (i in horario.dias){
                 //Y los comparamos con hoy para ver si estan despues
-                if(i.getDiaSemanaAsDOW() >= getDiaActualAsDOW()){
+                if(getDiaSemanaAsDOW(i) >= getDiaActualAsDOW()){
                     //De ser asi, el diaSiguiente sera ese dia que comparamos
                     diaSiguiente = i
+                    break
                 }
             }
 

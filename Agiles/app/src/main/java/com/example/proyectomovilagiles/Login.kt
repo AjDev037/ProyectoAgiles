@@ -24,7 +24,7 @@ class Login : AppCompatActivity() {
         DAOMaterias.limpiar()
         DAOMaestro.crearMaestrosScript()
         DAOAlumnos.crearAlumnosScript()
-        DAOMaterias.crearMaestrosScript()
+        DAOMaterias.crearMateriasScript()
 
         val preferencias = MyPreference(this)
 
