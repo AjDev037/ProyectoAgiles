@@ -59,7 +59,7 @@ fun getDiaSemanaAsDOW(dia: Dia): DayOfWeek {
     return DayOfWeek.of(diaValue!!)
 }
 
-fun getIDFechaClase(horario: Horario, dia: DayOfWeek): String{
+fun getIDFechaClase(horario: Horario, dia: DayOfWeek):String? {
     val fechaActual = LocalDateTime.now()
     val formateadorFecha = DateTimeFormatter.ofPattern("ddMMyy")
     val fechaFormateada = fechaActual.format(formateadorFecha)
@@ -72,12 +72,22 @@ fun getIDFechaClase(horario: Horario, dia: DayOfWeek): String{
             break
         }
 
-        //Si la hora termina siendo 00:00 hubo un error y no se encontro la hora
-        //del dia actual
-        horaTemp = "00:00"
+        //Si no se encontro la hora del dia actual, se regresa un nulo
+        return null
     }
 
     horaTemp = horaTemp.replace(":","")
 
     return fechaFormateada + horaTemp
+}
+
+fun getDiaFromHorario(horario:Horario, dia: DayOfWeek):Dia? {
+    for(i in horario.dias){
+        if(getDiaSemanaAsDOW(i) == dia){
+            return i
+        }
+    }
+
+    //Regresa un nulo si el dia actual no se encuentra en el horario
+    return null
 }
