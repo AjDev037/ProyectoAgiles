@@ -64,11 +64,14 @@ class MenuMateriasProfesor : AppCompatActivity() {
 
 
             //TODO("Agregar una imagen de fondo para la carta, separada de la materia")
-            //vista.card.setBackgroundResource(materia.imagen!!)
+            vista.card.setBackgroundResource(R.drawable.ic_class_black_24dp)
             //vista.materia_foto.setImageResource(materia.imagen!!)
             vista.materia_nombre.text = materia.nombre
-            vista.materia_fecha.text = "miaw"
-            vista.materia_hora.text = "miaw"
+            var d = ""
+            for(i in materia.horario!!.dias){
+                d += "${i.diaSemana} de ${i.ini} a ${i.fin}, "
+            }
+            vista.materia_fecha.text = d
             vista.materia_salon.text = materia.salon
 
             vista.setOnClickListener{

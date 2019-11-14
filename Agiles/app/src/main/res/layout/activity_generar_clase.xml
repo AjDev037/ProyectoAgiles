@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--android:onClick="pruebaSwipe -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:background="@color/background"
+        android:orientation="vertical"
+        tools:context=".GenerarClase">
+
+
+
+    <ImageView
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:id="@+id/codigo"
+            android:src="@drawable/common_google_signin_btn_text_light"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Clase: Metodos Agiles"
+            android:textSize="30dp"
+            android:textColor="@color/text"
+            android:layout_gravity="center"
+            android:textAlignment="center"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="40dp"
+            android:textColor="@color/text"
+            android:layout_gravity="center"
+            android:textAlignment="center"/>
+
+    <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            android:id="@+id/btnLogin"
+            android:text="Finalizar Asistencia"
+            android:layout_marginHorizontal="50dp"
+            android:layout_gravity="center"/>
+
+
+</LinearLayout>

@@ -28,8 +28,8 @@ object DAOMaterias {
 
                     for (child in children) {
                         var materia = child.getValue(Materia::class.java)
-                        println(materia!!.nombre)
-                        listaMaterias.add(materia)
+                        //println(materia!!.nombre)
+                        listaMaterias.add(materia!!)
                     }
                 }
             }

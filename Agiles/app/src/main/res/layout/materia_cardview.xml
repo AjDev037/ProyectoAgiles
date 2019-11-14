@@ -21,15 +21,15 @@
                 android:background="@drawable/ic_launcher_background"
         >
 
-            <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/materia_foto"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginRight="16dp"
-                    android:src="@drawable/ic_launcher_foreground"
-            />
+<!--            <ImageView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:id="@+id/materia_foto"-->
+<!--                    android:layout_alignParentLeft="true"-->
+<!--                    android:layout_alignParentTop="true"-->
+<!--                    android:layout_marginRight="16dp"-->
+<!--                    android:src="@drawable/ic_launcher_foreground"-->
+<!--            />-->
 
             <TextView
                     android:layout_width="wrap_content"
@@ -58,7 +58,7 @@
                     android:layout_toRightOf="@+id/materia_foto"
                     android:layout_below="@+id/materia_fecha"
                     android:textSize="20sp"
-                    android:text="algo salio mal"
+                    android:text=""
             />
 
             <TextView

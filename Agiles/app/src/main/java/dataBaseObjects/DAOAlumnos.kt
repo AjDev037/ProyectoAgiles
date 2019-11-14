@@ -10,7 +10,7 @@ object DAOAlumnos {
 
     var listaAlumnos = ArrayList<Alumno>()
 
-    public fun crearAlumnosScript(){
+    fun crearAlumnosScript(){
 
         val database = FirebaseDatabase.getInstance()
         val referencia = database.getReference("Alumnos")
@@ -24,7 +24,8 @@ object DAOAlumnos {
 
                     for (child in children) {
                         var alumno = child.getValue(Alumno::class.java)
-                        listaAlumnos.add(alumno!!)
+                        println(alumno!!.nombre)
+                        listaAlumnos.add(alumno)
                     }
                 }
             }
@@ -37,6 +38,12 @@ object DAOAlumnos {
     fun getAlumnos():ArrayList<Alumno>{
         //TODO: Conectarse a la base de datos y regresar la lista
         crearAlumnosScript()
+        while (listaAlumnos.isEmpty()){
+            crearAlumnosScript()
+            if(listaAlumnos.isNotEmpty()){
+                break
+            }
+        }
         return listaAlumnos
     }
 
@@ -48,6 +55,9 @@ object DAOAlumnos {
 
     fun getAlumno(id:String): Alumno {
         crearAlumnosScript()
-        return listaAlumnos.get(listaAlumnos.indexOf(Alumno(id)))
+
+        return listaAlumnos[listaAlumnos.indexOf(Alumno(id))]
     }
+
+
 }
