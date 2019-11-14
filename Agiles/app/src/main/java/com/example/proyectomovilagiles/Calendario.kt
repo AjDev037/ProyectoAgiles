@@ -3,6 +3,7 @@ package com.example.proyectomovilagiles
 import android.os.Build
 import androidx.annotation.RequiresApi
 import objetos.Dia
+import objetos.Horario
 import java.time.DayOfWeek
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -56,4 +57,15 @@ fun getDiaSemanaAsDOW(dia: Dia): DayOfWeek {
         "Domingo" -> diaValue = 7
     }
     return DayOfWeek.of(diaValue!!)
+}
+
+fun getIDFechaClase(horario: Horario, dia: Int): String{
+    val fechaActual = LocalDateTime.now()
+    val formateadorFecha = DateTimeFormatter.ofPattern("ddMMyy")
+    val fechaFormateada = fechaActual.format(formateadorFecha)
+
+    var horaTemp = horario.dias[dia].ini
+    horaTemp = horaTemp.replace(":","")
+
+    return fechaFormateada + horaTemp
 }
