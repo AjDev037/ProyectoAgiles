@@ -1,4 +1,4 @@
-package com.example.proyectomovilagiles
+package com.example.proyectomovilagiles.Materias
 
 import android.app.Activity
 import android.content.Context
@@ -9,6 +9,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import com.example.proyectomovilagiles.Clases.ListaClasesProfesor
+import com.example.proyectomovilagiles.Login.Login
+import com.example.proyectomovilagiles.Preferencias.MyPreference
+import com.example.proyectomovilagiles.R
 import dataBaseObjects.DAOMaterias
 import kotlinx.android.synthetic.main.activity_menu_materias_profesor.*
 import kotlinx.android.synthetic.main.materia_cardview.view.*
@@ -27,21 +31,29 @@ class MenuMateriasProfesor : AppCompatActivity() {
         var id = intent.getStringExtra("id")
 
         mats = DAOMaterias.getMateriasProfesor(id)
-        var adaptador = AdaptadorMateria(this, mats)
+        var adaptador =
+            AdaptadorMateria(
+                this,
+                mats
+            )
         listview.adapter = adaptador
 
         btnSalir.setOnClickListener {
             preferencias.setPass("")
             preferencias.setId("")
-            val intent = Intent(this,Login::class.java)
+            val intent = Intent(this, Login::class.java)
             startActivity(intent)
         }
 
     }
 
     fun crearMaterias(){
-        var materia1 = Materia("Materia1", "Hoy", "Hora Actual", "1800s", R.drawable.ic_backgroundtest)
-        var materia2 = Materia("Materia2", "Manana", "Hora Actual", "1800s", R.drawable.ic_backgroundtest)
+        var materia1 = Materia("Materia1", "Hoy", "Hora Actual", "1800s",
+            R.drawable.ic_backgroundtest
+        )
+        var materia2 = Materia("Materia2", "Manana", "Hora Actual", "1800s",
+            R.drawable.ic_backgroundtest
+        )
 
         listaMaterias.add(materia1)
         listaMaterias.add(materia2)

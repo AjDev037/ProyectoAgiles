@@ -1,4 +1,4 @@
-package com.example.proyectomovilagiles
+package com.example.proyectomovilagiles.Clases
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,15 +6,11 @@ import androidmads.library.qrgenearator.QRGContents
 import androidmads.library.qrgenearator.QRGEncoder
 import com.google.zxing.qrcode.encoder.QRCode
 import android.graphics.Bitmap
-import android.opengl.ETC1.getHeight
-import android.opengl.ETC1.getWidth
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.google.zxing.common.BitMatrix
 import com.google.zxing.WriterException
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import com.example.proyectomovilagiles.R
 import kotlinx.android.synthetic.main.activity_generar_clase.*
 
 

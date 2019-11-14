@@ -12,23 +12,22 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".TomarAsistencia"></activity>
-        <activity android:name=".GenerarClase" />
-        <activity android:name=".AsistenciaAlumno" />
-        <activity android:name=".ListaClasesAlumno" />
-        <activity android:name=".ListaAsistenciaProfesor" />
-        <activity android:name=".ListaClasesProfesor" />
-        <activity android:name=".MateriaCalendario" />
-        <activity android:name=".MenuMateriasAlumno" />
-        <activity android:name=".MenuMateriasProfesor" />
-        <activity android:name=".Login">
+        <activity android:name=".legacy.TomarAsistencia"></activity>
+        <activity android:name=".Clases.GenerarClase" />
+        <activity android:name=".legacy.AsistenciaAlumno" />
+        <activity android:name=".Clases.ListaClasesAlumno" />
+        <activity android:name=".Clases.ListaAsistenciaProfesor" />
+        <activity android:name=".Clases.ListaClasesProfesor" />
+        <activity android:name=".Materias.MenuMateriasAlumno" />
+        <activity android:name=".Materias.MenuMateriasProfesor" />
+        <activity android:name=".Login.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".Login.MainActivity" />
     </application>
 
 </manifest>

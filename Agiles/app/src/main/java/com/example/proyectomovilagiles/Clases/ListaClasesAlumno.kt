@@ -1,4 +1,4 @@
-package com.example.proyectomovilagiles
+package com.example.proyectomovilagiles.Clases
 
 import android.app.Activity
 import android.app.AlertDialog
@@ -11,8 +11,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import com.example.proyectomovilagiles.R
+import com.example.proyectomovilagiles.legacy.AsistenciaAlumno
 import com.google.zxing.Result
-import kotlinx.android.synthetic.main.activity_lista_clases.*
 import kotlinx.android.synthetic.main.activity_lista_clases_alumno.*
 import kotlinx.android.synthetic.main.llenar_clases.view.*
 import me.dm7.barcodescanner.zxing.ZXingScannerView
@@ -30,7 +31,11 @@ class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler {
 
         clases = intent.getSerializableExtra("clases") as ArrayList<Clase>
         var nom = intent.getStringExtra("id")
-        var adaptador = AdaptadorClases(this, clases,nom!!)
+        var adaptador = AdaptadorClases(
+            this,
+            clases,
+            nom!!
+        )
         listasClasesAlumno.adapter = adaptador
 
         btnAsistencia.setOnClickListener {

@@ -1,4 +1,4 @@
-package com.example.proyectomovilagiles
+package com.example.proyectomovilagiles.Clases
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
@@ -7,11 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import com.example.proyectomovilagiles.R
 import kotlinx.android.synthetic.main.activity_lista_asistencia_profesor.*
 import kotlinx.android.synthetic.main.llenar_asistencia_profesor.view.*
-import kotlinx.android.synthetic.main.llenar_clases.view.*
 import objetos.Asistencia
-import objetos.Clase
 
 class ListaAsistenciaProfesor : AppCompatActivity() {
 
@@ -22,7 +21,11 @@ class ListaAsistenciaProfesor : AppCompatActivity() {
         setContentView(R.layout.activity_lista_asistencia_profesor)
 
         asistencias = intent.getSerializableExtra("asist") as ArrayList<Asistencia>
-        var adaptador = AdaptadorAsistencias(this,asistencias)
+        var adaptador =
+            AdaptadorAsistencias(
+                this,
+                asistencias
+            )
         listasAsistencias.adapter = adaptador
 
     }

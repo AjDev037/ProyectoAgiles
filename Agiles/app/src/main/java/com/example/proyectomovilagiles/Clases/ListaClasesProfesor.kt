@@ -1,16 +1,15 @@
-package com.example.proyectomovilagiles
+package com.example.proyectomovilagiles.Clases
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import com.example.proyectomovilagiles.R
 import kotlinx.android.synthetic.main.activity_lista_clases.*
 import kotlinx.android.synthetic.main.llenar_clases.view.*
 import objetos.Clase
@@ -24,11 +23,15 @@ class ListaClasesProfesor : AppCompatActivity() {
         setContentView(R.layout.activity_lista_clases)
 
         clases = intent.getSerializableExtra("clases") as ArrayList<Clase>
-        var adaptador = AdaptadorClientes(this,clases)
+        var adaptador =
+            AdaptadorClientes(
+                this,
+                clases
+            )
         listasClases.adapter = adaptador
 
         btnNuevaClaseM.setOnClickListener {
-            val intent = Intent(this,GenerarClase::class.java)
+            val intent = Intent(this, GenerarClase::class.java)
             startActivity(intent)
         }
 

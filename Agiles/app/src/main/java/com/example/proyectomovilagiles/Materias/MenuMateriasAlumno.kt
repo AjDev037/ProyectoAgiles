@@ -1,4 +1,4 @@
-package com.example.proyectomovilagiles
+package com.example.proyectomovilagiles.Materias
 
 import android.content.Context
 import android.content.Intent
@@ -10,6 +10,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import androidx.annotation.RequiresApi
+import com.example.proyectomovilagiles.*
+import com.example.proyectomovilagiles.Clases.ListaClasesAlumno
+import com.example.proyectomovilagiles.Login.Login
+import com.example.proyectomovilagiles.Preferencias.MyPreference
 import dataBaseObjects.DAOAlumnos
 import dataBaseObjects.DAOMaterias
 import kotlinx.android.synthetic.main.activity_menu_materias.*
@@ -42,13 +46,18 @@ class MenuMateriasAlumno : AppCompatActivity() {
         }
 
 
-        var adaptador = AdaptadorMateria(this, mats,id)
+        var adaptador =
+            AdaptadorMateria(
+                this,
+                mats,
+                id
+            )
         listview.adapter = adaptador
 
         btnSalir.setOnClickListener {
             preferencias.setPass("")
             preferencias.setId("")
-            val intent = Intent(this,Login::class.java)
+            val intent = Intent(this, Login::class.java)
             startActivity(intent)
         }
     }
@@ -104,8 +113,12 @@ class MenuMateriasAlumno : AppCompatActivity() {
      */
 
     fun crearMaterias(){
-        var materia1 = Materia("Materia1", "Hoy", "Hora Actual", "1800s", R.drawable.ic_backgroundtest)
-        var materia2 = Materia("Materia2", "Manana", "Hora Actual", "1800s", R.drawable.ic_backgroundtest)
+        var materia1 = Materia("Materia1", "Hoy", "Hora Actual", "1800s",
+            R.drawable.ic_backgroundtest
+        )
+        var materia2 = Materia("Materia2", "Manana", "Hora Actual", "1800s",
+            R.drawable.ic_backgroundtest
+        )
 
         listaMaterias.add(materia1)
         listaMaterias.add(materia2)
