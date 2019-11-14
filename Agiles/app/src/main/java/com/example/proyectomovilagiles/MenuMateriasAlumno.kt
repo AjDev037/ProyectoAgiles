@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import androidx.annotation.RequiresApi
+import dataBaseObjects.DAOAlumnos
 import dataBaseObjects.DAOMaterias
 import kotlinx.android.synthetic.main.activity_menu_materias.*
 import kotlinx.android.synthetic.main.materia_cardview.view.*
@@ -27,10 +28,11 @@ class MenuMateriasAlumno : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu_materias)
-
+        DAOAlumnos.crearAlumnosScript()
         val preferencias = MyPreference(this)
 
         var id = intent.getStringExtra("id")
+
 
         mats = DAOMaterias.getMateriasAlumno(id)
 
@@ -124,11 +126,13 @@ class MenuMateriasAlumno : AppCompatActivity() {
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
             var inflador = LayoutInflater.from(contexto)
             var vista = inflador.inflate(R.layout.materia_cardview, null)
+
             var materia = materias[position]
 
 
             //TODO("Agregar una imagen de fondo para la carta, separada de la materia")
-           // vista.card.setBackgroundResource(materia.imagen!!)
+            vista.card.setBackgroundResource(R.drawable.ic_class_black_24dp)
+            println(R.drawable.ic_class_black_24dp)
            // vista.materia_foto.setImageResource(materia.imagen!!)
             vista.materia_nombre.text = materia.nombre
 

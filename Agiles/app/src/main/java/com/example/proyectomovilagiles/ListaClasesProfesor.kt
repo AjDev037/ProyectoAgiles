@@ -27,6 +27,12 @@ class ListaClasesProfesor : AppCompatActivity() {
         var adaptador = AdaptadorClientes(this,clases)
         listasClases.adapter = adaptador
 
+        btnNuevaClaseM.setOnClickListener {
+            val intent = Intent(this,GenerarClase::class.java)
+            startActivity(intent)
+        }
+
+
     }
     private class AdaptadorClientes : BaseAdapter {
 

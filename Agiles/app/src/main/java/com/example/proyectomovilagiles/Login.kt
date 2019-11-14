@@ -9,6 +9,7 @@ import dataBaseObjects.DAOMaterias
 import kotlinx.android.synthetic.main.activity_login.*
 import objetos.Alumno
 import objetos.Maestro
+import java.lang.IndexOutOfBoundsException
 
 class Login : AppCompatActivity() {
     //Booleano que muestra donde buscara los datos la app,
@@ -28,22 +29,29 @@ class Login : AppCompatActivity() {
 
         val preferencias = MyPreference(this)
 
-        val intent = Intent(this, MenuMateriasProfesor::class.java)
+        //val intent = Intent(this, MenuMateriasProfesor::class.java)
 
-        /*if(preferencias.getId() != "" && preferencias.getPass() != ""){
+        if(preferencias.getId() != "" && preferencias.getPass() != ""){
 
             var id = preferencias.getId()
             var contra = preferencias.getPass()
-            if(validacion(id!!,contra!!)){
-                if(tipo){
+            tipo = preferencias.getTipo()!!
+            println("HOOOOOOOOOOOOOLLLLLLLLLLLLLAAAAAAAAAAAAAAAAA")
+            println(id)
+            println(contra)
+            println(tipo)
+            if(validacion(id!!,contra!!,tipo)){
+                if(tipo!!){
                     val intent = Intent(this, MenuMateriasProfesor::class.java)
-                    startActivity(intent)
+                    intent.putExtra("id",id)
+                    startActivityForResult(intent,0)
                 }else{
                     val intent = Intent(this, MenuMateriasAlumno::class.java)
-                    startActivity(intent)
+                    intent.putExtra("id",id)
+                    startActivityForResult(intent,0)
                 }
             }
-        }*/
+        }
 
         btnTipo.setOnClickListener{
             if(tipo){
@@ -60,18 +68,23 @@ class Login : AppCompatActivity() {
         btnLogin.setOnClickListener {
             var id = txtUsuario.text.toString()
             var pass = txtPass.text.toString()
-            if(validacion(id,pass)){
+            if(validacion(id,pass,tipo)){
+                println("ESTOY GUARDANDO LOS DATOS")
+                preferencias.setId(id)
+                preferencias.setPass(pass)
+                preferencias.setTipo(tipo)
+                println("YA LOS GUARDE")
                 if(tipo){
+
                     val intent = Intent(this, MenuMateriasProfesor::class.java)
                     intent.putExtra("id",id)
-                    startActivity(intent)
+                    startActivityForResult(intent,0)
                 }else{
                     val intent = Intent(this, MenuMateriasAlumno::class.java)
                     intent.putExtra("id",id)
-                    startActivity(intent)
+                    startActivityForResult(intent,0)
                 }
-                preferencias.setId(id)
-                preferencias.setPass(pass)
+
 
             }else{
                incorrecto.text = "*Credenciales invalidas*"
@@ -80,24 +93,47 @@ class Login : AppCompatActivity() {
         }
     }
 
-    fun validacion(id:String, pass:String):Boolean{
-        if(tipo){
-            var maistro = DAOMaestro.getMaestro(id)
-            if(maistro.contrasena.equals(pass)){
-                maestro = maistro
-                return true
-            }else{
+    fun validacion(id:String, pass:String,tips:Boolean):Boolean{
+
+        if(tips){
+
+            try {
+                var maistro = DAOMaestro.getMaestro(id)
+                if(maistro.contrasena.equals(pass)){
+                    maestro = maistro
+                    return true
+                }else{
+                    return false
+                }
+            }
+            catch (e: IndexOutOfBoundsException) {
+                println("NO VALIDE LA CONTRA POR LA EXPCECION MAESTRO")
                 return false
             }
-        }else{
-            var alu = DAOAlumnos.getAlumno(id)
-            if(alu.contrasena.equals(pass)){
-                alumno = alu
-                return true
-            }else{
 
+
+        }else{
+
+            try {
+                // some code
+                DAOAlumnos.crearAlumnosScript()
+                var alu = DAOAlumnos.getAlumno(id)
+                if(alu.contrasena.equals(pass)){
+                    alumno = alu
+                    println("VALIDE LA CONTRA")
+                    return true
+                }else{
+
+                }
+                println("NO VALIDE LA CONTRA POR ERROR")
+                return false
             }
-            return false
+            catch (e: IndexOutOfBoundsException) {
+                // handler
+                println("NO VALIDE LA CONTRA POR LA EXCEPCION ALUMNO")
+                return false
+            }
+
         }
 
     }

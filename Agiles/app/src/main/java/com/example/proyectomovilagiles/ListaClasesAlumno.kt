@@ -1,21 +1,25 @@
 package com.example.proyectomovilagiles
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import com.google.zxing.Result
 import kotlinx.android.synthetic.main.activity_lista_clases.*
 import kotlinx.android.synthetic.main.activity_lista_clases_alumno.*
 import kotlinx.android.synthetic.main.llenar_clases.view.*
+import me.dm7.barcodescanner.zxing.ZXingScannerView
 import objetos.Asistencia
 import objetos.Clase
 
-class ListaClasesAlumno : AppCompatActivity() {
+class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler {
 
     var clases = ArrayList<Clase>()
 
@@ -26,8 +30,26 @@ class ListaClasesAlumno : AppCompatActivity() {
 
         clases = intent.getSerializableExtra("clases") as ArrayList<Clase>
         var nom = intent.getStringExtra("id")
-        var adaptador = ListaClasesAlumno.AdaptadorClases(this, clases,nom)
+        var adaptador = AdaptadorClases(this, clases,nom!!)
         listasClasesAlumno.adapter = adaptador
+
+        btnAsistencia.setOnClickListener {
+            var mScanner = ZXingScannerView(this)
+            setContentView(mScanner)
+            mScanner.setResultHandler(this)
+            mScanner.startCamera()
+        }
+    }
+
+    override fun handleResult(p0: Result?) {
+
+        Log.v("HanlderResult",p0?.text)
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Clase")
+        builder.setMessage(p0!!.text)
+        val dialogo = builder.create()
+        dialogo.show()
+
     }
 
     private class AdaptadorClases : BaseAdapter {
