@@ -3,6 +3,10 @@ package com.example.proyectomovilagiles
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import dataBaseObjects.DAOAlumnos
 import dataBaseObjects.DAOMaestro
 import dataBaseObjects.DAOMaterias
@@ -14,6 +18,7 @@ import java.lang.IndexOutOfBoundsException
 class Login : AppCompatActivity() {
     //Booleano que muestra donde buscara los datos la app,
     // si es falso es para alumnos, si es verdadero es para profesores.
+
     var tipo: Boolean = false
     var maestro = Maestro()
     var alumno = Alumno()
@@ -21,7 +26,7 @@ class Login : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true)
         DAOMaterias.limpiar()
         DAOMaestro.crearMaestrosScript()
         DAOAlumnos.crearAlumnosScript()
@@ -40,17 +45,13 @@ class Login : AppCompatActivity() {
             println(id)
             println(contra)
             println(tipo)
-            if(validacion(id!!,contra!!,tipo)){
-                if(tipo!!){
-                    val intent = Intent(this, MenuMateriasProfesor::class.java)
-                    intent.putExtra("id",id)
-                    startActivityForResult(intent,0)
+                if(tipo){
+                    println("VALIDACION AUTOMATICA")
+                    validarLoginM(id!!,contra!!)
                 }else{
-                    val intent = Intent(this, MenuMateriasAlumno::class.java)
-                    intent.putExtra("id",id)
-                    startActivityForResult(intent,0)
+                    validarLoginA(id!!,contra!!)
                 }
-            }
+
         }
 
         btnTipo.setOnClickListener{
@@ -75,13 +76,14 @@ class Login : AppCompatActivity() {
                 preferencias.setTipo(tipo)
                 println("YA LOS GUARDE")
                 if(tipo){
-
                     val intent = Intent(this, MenuMateriasProfesor::class.java)
                     intent.putExtra("id",id)
                     startActivityForResult(intent,0)
+
                 }else{
                     val intent = Intent(this, MenuMateriasAlumno::class.java)
-                    intent.putExtra("id",id)
+
+                    intent.putExtra("alumno",alumno)
                     startActivityForResult(intent,0)
                 }
 
@@ -91,6 +93,58 @@ class Login : AppCompatActivity() {
             }
 
         }
+    }
+
+    fun validarLoginA(id:String, pass:String){
+        val context = this
+        val database = FirebaseDatabase.getInstance()
+        val referencia = database.getReference("Alumnos")
+        referencia.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {}
+
+            override fun onDataChange(p0: DataSnapshot) {
+                if (p0.exists()) {
+                    var children = p0.children
+
+                    for (child in children) {
+                        var alumno = child.getValue(Alumno::class.java)
+                        if(alumno?.id.equals((id)) && alumno?.contrasena.equals(pass)){
+                            val intent = Intent(context, MenuMateriasAlumno::class.java)
+                            intent.putExtra("alumno",alumno)
+                            startActivityForResult(intent,0)
+                        }
+                    }
+                }
+            }
+        })
+    }
+
+    fun validarLoginM(id:String, pass:String){
+        val context = this
+        val database = FirebaseDatabase.getInstance()
+        val referencia = database.getReference("Maestros")
+        referencia.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {}
+
+            override fun onDataChange(p0: DataSnapshot) {
+                if (p0.exists()) {
+                    var children = p0.children
+
+                    for (child in children) {
+                        var profe = child.getValue(Maestro::class.java)
+                        println("ESTE ES EL PROFE TEMPORAL")
+                        println(profe!!.id)
+                        println(profe.contrasena)
+                        if(profe?.id == (id) && profe?.contrasena == pass){
+                            println("ENTRE A LA VALIDACION DEL MAESTRO AUTOMATICA")
+                            val intent = Intent(context, MenuMateriasProfesor::class.java)
+                            intent.putExtra("id",id)
+                            startActivityForResult(intent,0)
+                        }
+                    }
+                }
+            }
+        })
     }
 
     fun validacion(id:String, pass:String,tips:Boolean):Boolean{

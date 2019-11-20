@@ -13,6 +13,7 @@ object DAOAlumnos {
     fun crearAlumnosScript(){
 
         val database = FirebaseDatabase.getInstance()
+
         val referencia = database.getReference("Alumnos")
         referencia.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {}

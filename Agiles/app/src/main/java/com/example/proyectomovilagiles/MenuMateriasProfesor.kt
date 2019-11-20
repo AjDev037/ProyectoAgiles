@@ -78,6 +78,9 @@ class MenuMateriasProfesor : AppCompatActivity() {
                 //TODO("Call next activity")
                 val intent = Intent(contexto, ListaClasesProfesor::class.java)
                 intent.putExtra("clases",materia.clases)
+                intent.putExtra("horarioMat",materia.horario)
+                intent.putExtra("salon",materia.salon)
+                intent.putExtra("idMat",materia.id)
                 (contexto as Activity).startActivity(intent)
             }
 

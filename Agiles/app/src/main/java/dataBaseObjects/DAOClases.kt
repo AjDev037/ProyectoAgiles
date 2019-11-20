@@ -3,6 +3,11 @@ package dataBaseObjects
 import android.os.Build
 import androidx.annotation.RequiresApi
 import objetos.Clase
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import objetos.Dia
 
 object DAOClases {
 
@@ -14,12 +19,18 @@ object DAOClases {
         listaClases.clear()
 
         //IM NOT SURE THIS IS RIGHT, PLEAS SEND HELP AND PATS
-        var clase1 = Clase (DAODias.getDia(1), "07/11/19",DAOAsistencias.getAsistencias(),"salon")
-        var clase2 = Clase(DAODias.getDia(4), "07/11/19",DAOAsistencias.getAsistencias(),"salon2")
+        //var clase1 = Clase (DAODias.getDia(1), "07/11/19",DAOAsistencias.getAsistencias(),"salon")
+       // var clase2 = Clase(DAODias.getDia(4), "07/11/19",DAOAsistencias.getAsistencias(),"salon2")
 
-        listaClases.add(clase1)
-        listaClases.add(clase2)
+       // listaClases.add(clase1)
+       // listaClases.add(clase2)
 
+    }
+
+    fun crearClase(c:Clase,idMateria:String){
+        val database = FirebaseDatabase.getInstance()
+        val referencia = database.getReference("Materias").child(idMateria).child("Clases").child(c.id)
+        referencia.setValue(c)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

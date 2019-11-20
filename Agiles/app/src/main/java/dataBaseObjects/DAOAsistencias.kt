@@ -2,6 +2,7 @@ package dataBaseObjects
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import com.google.firebase.database.FirebaseDatabase
 import objetos.Asistencia
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -30,6 +31,12 @@ object DAOAsistencias {
         listaAsistencia.add(asistencia4)
         listaAsistencia.add(asistencia5)
 
+    }
+
+    fun registrarAsistencia(idMateria:String,idClase:String,asistencia:Asistencia){
+        val database = FirebaseDatabase.getInstance()
+        val referencia = database.getReference("Materias").child(idMateria).child("Clases").child(idClase).child("Asistencias")
+        referencia.setValue(asistencia)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

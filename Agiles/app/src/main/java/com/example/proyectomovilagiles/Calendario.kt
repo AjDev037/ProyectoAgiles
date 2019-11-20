@@ -72,6 +72,9 @@ fun getIDFechaClase(horario: Horario, dia: DayOfWeek):String? {
             break
         }
 
+    }
+
+    if(horaTemp == ""){
         //Si no se encontro la hora del dia actual, se regresa un nulo
         return null
     }

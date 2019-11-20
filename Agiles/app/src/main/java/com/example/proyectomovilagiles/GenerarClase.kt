@@ -15,7 +15,12 @@ import com.google.zxing.WriterException
 import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import dataBaseObjects.DAOClases
 import kotlinx.android.synthetic.main.activity_generar_clase.*
+import objetos.Asistencia
+import objetos.Clase
+import objetos.Dia
+import objetos.Horario
 
 
 class GenerarClase : AppCompatActivity() {
@@ -24,12 +29,33 @@ class GenerarClase : AppCompatActivity() {
     val BLACK = -0x1000000
     val WIDTH = 400
     val HEIGHT = 400
+    var horario = Horario()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_generar_clase)
+        var salon = intent.getStringExtra("salon")
+        println("SALON: $salon")
+        val idMat = intent.getStringExtra("idMat")
+        println("MATERIA: $idMat")
+        horario = intent.getSerializableExtra("horarioMat") as Horario
+        if(horario == null) {
+            println("HORAR NULO")
+        }
+        var idTemp = getIDFechaClase(horario, getDiaActualAsDOW())
+        if(idTemp == null){
+            println("ID CLASE NULO")
+        }
 
-        val myBitmap = encodeAsBitmap("CLASE DE PRUEBA")
+        if(getDiaActualAsDOW() == null){
+            println("EL DIA ACTUAL ES NULO")
+        }
+        var clase = Clase(idTemp!!, getDiaFromHorario(horario, getDiaActualAsDOW())!!, getFechaActual(),ArrayList<Asistencia>(),salon!!)
+        DAOClases.crearClase(clase,idMat)
+
+        //Esto crea el QR
+        val myBitmap = encodeAsBitmap("$idMat.$idTemp.1")
+        //Setea el bitmap del qr a la pantalla
         codigo.setImageBitmap(myBitmap)
     }
 

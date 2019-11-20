@@ -14,21 +14,32 @@ import android.widget.BaseAdapter
 import kotlinx.android.synthetic.main.activity_lista_clases.*
 import kotlinx.android.synthetic.main.llenar_clases.view.*
 import objetos.Clase
+import objetos.Horario
 
 class ListaClasesProfesor : AppCompatActivity() {
 
     var clases = ArrayList<Clase>()
+    var horario = Horario()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista_clases)
 
         clases = intent.getSerializableExtra("clases") as ArrayList<Clase>
+        horario = intent.getSerializableExtra("horarioMat") as Horario
+        val idMat = intent.getStringExtra("idMat")
+        var salon = intent.getStringExtra("salon")
+
         var adaptador = AdaptadorClientes(this,clases)
         listasClases.adapter = adaptador
 
         btnNuevaClaseM.setOnClickListener {
+
+
             val intent = Intent(this,GenerarClase::class.java)
+            intent.putExtra("horarioMat",horario)
+            intent.putExtra("salon",salon)
+            intent.putExtra("idMat",idMat)
             startActivity(intent)
         }
 

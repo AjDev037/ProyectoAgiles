@@ -14,6 +14,7 @@ import dataBaseObjects.DAOAlumnos
 import dataBaseObjects.DAOMaterias
 import kotlinx.android.synthetic.main.activity_menu_materias.*
 import kotlinx.android.synthetic.main.materia_cardview.view.*
+import objetos.Alumno
 import objetos.Dia
 import objetos.Horario
 import objetos.Materia
@@ -31,10 +32,11 @@ class MenuMateriasAlumno : AppCompatActivity() {
         DAOAlumnos.crearAlumnosScript()
         val preferencias = MyPreference(this)
 
-        var id = intent.getStringExtra("id")
+
+        val alumno = intent.getSerializableExtra("alumno") as Alumno
 
 
-        mats = DAOMaterias.getMateriasAlumno(id)
+        mats = DAOMaterias.getMateriasAlumno(alumno.id)
 
         siguiente = getSiguienteCardMateria()
         if (siguiente != null) {
@@ -42,7 +44,7 @@ class MenuMateriasAlumno : AppCompatActivity() {
         }
 
 
-        var adaptador = AdaptadorMateria(this, mats,id)
+        var adaptador = AdaptadorMateria(this, mats,alumno)
         listview.adapter = adaptador
 
         btnSalir.setOnClickListener {
@@ -115,9 +117,9 @@ class MenuMateriasAlumno : AppCompatActivity() {
 
         var contexto: Context? = null
         var materias = ArrayList<Materia>()
-        var id = ""
+        var id = Alumno()
 
-        constructor(context: Context, materias: ArrayList<Materia>,id:String){
+        constructor(context: Context, materias: ArrayList<Materia>,id:Alumno){
             contexto = context
             this.materias = materias
             this.id = id
