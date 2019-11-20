@@ -1,9 +1,9 @@
-package com.example.proyectomovilagiles
+package com.example.proyectomovilagiles.legacy
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.proyectomovilagiles.R
 import kotlinx.android.synthetic.main.activity_asistencia_alumno.*
-import objetos.Alumno
 import objetos.Asistencia
 
 class AsistenciaAlumno : AppCompatActivity() {

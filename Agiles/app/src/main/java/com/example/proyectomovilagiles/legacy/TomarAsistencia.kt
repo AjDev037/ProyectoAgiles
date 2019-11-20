@@ -1,7 +1,8 @@
-package com.example.proyectomovilagiles
+package com.example.proyectomovilagiles.legacy
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.proyectomovilagiles.R
 
 class TomarAsistencia : AppCompatActivity() {
 

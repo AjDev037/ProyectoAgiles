@@ -1,8 +1,8 @@
-package com.example.proyectomovilagiles
+package com.example.proyectomovilagiles.Login
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import dataBaseObjects.DAOAlumnos
+import com.example.proyectomovilagiles.R
 
 class MainActivity : AppCompatActivity() {
 

@@ -1,4 +1,4 @@
-package com.example.proyectomovilagiles
+package com.example.proyectomovilagiles.Login
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +7,10 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.example.proyectomovilagiles.Materias.MenuMateriasAlumno
+import com.example.proyectomovilagiles.Materias.MenuMateriasProfesor
+import com.example.proyectomovilagiles.Preferencias.MyPreference
+import com.example.proyectomovilagiles.R
 import dataBaseObjects.DAOAlumnos
 import dataBaseObjects.DAOMaestro
 import dataBaseObjects.DAOMaterias

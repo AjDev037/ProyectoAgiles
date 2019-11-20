@@ -1,16 +1,15 @@
-package com.example.proyectomovilagiles
+package com.example.proyectomovilagiles.Clases
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import com.example.proyectomovilagiles.R
 import kotlinx.android.synthetic.main.activity_lista_clases.*
 import kotlinx.android.synthetic.main.llenar_clases.view.*
 import objetos.Clase
