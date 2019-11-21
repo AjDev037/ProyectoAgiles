@@ -12,8 +12,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import com.example.proyectomovilagiles.R
+import com.example.proyectomovilagiles.getHoraActual
 import com.example.proyectomovilagiles.legacy.AsistenciaAlumno
-import com.google.zxing.Result
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -33,6 +33,9 @@ class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler {
     var clases = ArrayList<Clase>()
     var alumno = Alumno()
     var mScanner : ZXingScannerView? = null
+
+    val retardoTiempo = 5
+    var faltaTiempo = 15
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,12 +88,41 @@ class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler {
         println("VOY A IMPRIMIR")
         var materia = codigo[0]
         var clase = codigo[1]
-        var estado = codigo[2].toInt()
+        var estado = codigo[2]
         println(materia)
         println(clase)
         println(estado)
 
-        var asistencia = Asistencia(alumno,estado, getHoraActual())
+        //Separamos la hora del QR que viene en el estado
+        val estadoSplitted = estado.split(":")
+        //Multiplicamos las horas por 60 para obtener los minutos y los agregamos a los minutos de la hora
+        val horaEstadoInt = (estadoSplitted.get(0).toInt() * 60) + (estadoSplitted.get(1).toInt())
+
+
+        val horaActual = getHoraActual()
+        //Separamos la hora actual
+        val horaActualSplitted = horaActual.split(":")
+        //Multiplicamos las horas por 60 para obtener los minutos y los agregamos a los minutos de la hora
+        val horaActualInt = (horaActualSplitted.get(0).toInt() * 60) + (horaActualSplitted.get(1).toInt())
+
+        var estadoAsistencia:Int? = null
+
+        //Si la hora actual de registro menos la hora del QR, es menor al tiempo definido para el retardo
+        if((horaActualInt - horaEstadoInt) <= retardoTiempo){
+            //Lo registramos como asistencia
+            estadoAsistencia = 1
+        } else if ((horaActualInt - horaEstadoInt) <= faltaTiempo){
+            //En caso de que la hora actual de registro sea menor al tiempo definido para la falta
+            //Lo tomamos como retardo
+            estadoAsistencia = 0
+        } else {
+            //En caso de que la hora si fuese mayor al definido para la falta
+            //Se tomara como falta
+            estadoAsistencia = -1
+        }
+
+        //Creamos la asistencia
+        var asistencia = Asistencia(alumno,estadoAsistencia!!, getHoraActual())
 
         DAOAsistencias.registrarAsistencia(materia,clase,asistencia)
         dialogo.dismiss()

@@ -13,6 +13,7 @@ import com.google.zxing.WriterException
 import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import com.example.proyectomovilagiles.*
 import dataBaseObjects.DAOClases
 import kotlinx.android.synthetic.main.activity_generar_clase.*
 import objetos.Asistencia
@@ -51,8 +52,10 @@ class GenerarClase : AppCompatActivity() {
         var clase = Clase(idTemp!!, getDiaFromHorario(horario, getDiaActualAsDOW())!!, getFechaActual(),ArrayList<Asistencia>(),salon!!)
         DAOClases.crearClase(clase,idMat)
 
+        val horaClase = getHoraActual()
+
         //Esto crea el QR
-        val myBitmap = encodeAsBitmap("$idMat.$idTemp.1")
+        val myBitmap = encodeAsBitmap("$idMat.$idTemp.$horaClase")
         //Setea el bitmap del qr a la pantalla
         codigo.setImageBitmap(myBitmap)
     }
