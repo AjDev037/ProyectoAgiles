@@ -37,10 +37,12 @@ class GenerarClase : AppCompatActivity() {
         val idMat = materia.id
         println("MATERIA: $idMat")
         horario = intent.getSerializableExtra("horarioMat") as Horario
+        println(horario.dias)
         if(horario == null) {
             println("HORAR NULO")
         }
         var idTemp = getIDFechaClase(horario, getDiaActualAsDOW())
+
         if(idTemp == null){
             println("ID CLASE NULO")
         }
