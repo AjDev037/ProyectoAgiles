@@ -27,10 +27,11 @@ class Login : AppCompatActivity() {
     var maestro = Maestro()
     var alumno = Alumno()
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true)
+
         DAOMaterias.limpiar()
         DAOMaestro.crearMaestrosScript()
         DAOAlumnos.crearAlumnosScript()

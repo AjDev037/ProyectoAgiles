@@ -155,8 +155,9 @@ class MenuMateriasAlumno : AppCompatActivity() {
 
             vista.setOnClickListener{
                 val intent = Intent(contexto, ListaClasesAlumno::class.java)
-                intent.putExtra("clases",materia.clases)
+
                 //TODO("Add extras for next activity")
+                intent.putExtra("materia",materia.id)
                 intent.putExtra("id",id)
                 contexto?.startActivity(intent)
 

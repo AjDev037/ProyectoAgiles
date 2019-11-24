@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.activity_lista_clases.*
 import kotlinx.android.synthetic.main.llenar_clases.view.*
 import objetos.Clase
 import objetos.Horario
+import objetos.Materia
 
 class ListaClasesProfesor : AppCompatActivity() {
 
@@ -26,7 +27,7 @@ class ListaClasesProfesor : AppCompatActivity() {
 
         clases = intent.getSerializableExtra("clases") as ArrayList<Clase>
         horario = intent.getSerializableExtra("horarioMat") as Horario
-        val idMat = intent.getStringExtra("idMat")
+        val idMat = intent.getSerializableExtra("materia") as Materia
         var salon = intent.getStringExtra("salon")
 
         var adaptador = AdaptadorClientes(this,clases)
@@ -38,7 +39,7 @@ class ListaClasesProfesor : AppCompatActivity() {
             val intent = Intent(this,GenerarClase::class.java)
             intent.putExtra("horarioMat",horario)
             intent.putExtra("salon",salon)
-            intent.putExtra("idMat",idMat)
+            intent.putExtra("materia",idMat)
             startActivity(intent)
         }
 

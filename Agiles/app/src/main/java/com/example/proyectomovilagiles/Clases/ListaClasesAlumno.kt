@@ -12,13 +12,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import com.example.proyectomovilagiles.R
+import com.example.proyectomovilagiles.getHoraActual
 import com.example.proyectomovilagiles.legacy.AsistenciaAlumno
 import com.google.zxing.Result
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.zxing.Result
 import dataBaseObjects.DAOAsistencias
 import kotlinx.android.synthetic.main.activity_lista_clases.*
 import kotlinx.android.synthetic.main.activity_lista_clases_alumno.*
@@ -41,8 +41,7 @@ class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler {
         var materia = intent.getStringExtra("materia")
         //clases = intent.getSerializableExtra("clases") as ArrayList<Clase>
         alumno = intent.getSerializableExtra("id") as Alumno
-        var adaptador = AdaptadorClases(this, clases,alumno!!.nombre)
-        listasClasesAlumno.adapter = adaptador
+        llenarClases(materia)
 
         btnAsistencia.setOnClickListener {
             mScanner = ZXingScannerView(this)
@@ -53,6 +52,7 @@ class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler {
     }
 
     fun llenarClases(mat:String){
+        var contexto = this
         val database = FirebaseDatabase.getInstance()
         val referencia = database.getReference("Materias").child(mat).child("Clases")
         referencia.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -64,8 +64,40 @@ class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler {
 
 
                     for (child in children) {
-
+                        var clase = child.getValue(Clase::class.java)
+                        println(clase?.asistencias?.isEmpty())
+                        llenarAsistencias(clase!!,mat)
+                        clases.add(clase!!)
                     }
+                    var adaptador = AdaptadorClases(contexto, clases,alumno!!.id)
+                    listasClasesAlumno.adapter = adaptador
+
+                }
+            }
+        })
+    }
+
+    fun llenarAsistencias(clase:Clase,mat:String){
+        var contexto = this
+        val database = FirebaseDatabase.getInstance()
+        val referencia = database.getReference("Materias").child(mat).child("Clases").child(clase.id).child("Asistencias")
+        referencia.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {}
+
+            override fun onDataChange(p0: DataSnapshot) {
+                if (p0.exists()) {
+                    var children = p0.children
+
+
+                    for (child in children) {
+                        var asist = child.getValue(Asistencia::class.java)
+
+                        println("ESTOY IMPRIMIENDO EL ASIST")
+                        println(asist)
+                        //clase.asistencias.add(asist!!)
+                    }
+
+
                 }
             }
         })
@@ -125,8 +157,10 @@ class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler {
             vista.setOnClickListener {
                 val intent = Intent(context, AsistenciaAlumno::class.java)
                 var auxiliar = Asistencia()
+                println("DATOS DE LA ASISTENCIA")
+                println(cla.asistencias)
                 for(x in cla.asistencias){
-                    if(x.alumno.id.equals(id)){
+                    if(x.alumno.id == id){
                         auxiliar = x
                     }
                 }

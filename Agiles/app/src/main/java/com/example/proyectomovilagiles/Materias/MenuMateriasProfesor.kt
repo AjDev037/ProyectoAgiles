@@ -92,7 +92,7 @@ class MenuMateriasProfesor : AppCompatActivity() {
                 intent.putExtra("clases",materia.clases)
                 intent.putExtra("horarioMat",materia.horario)
                 intent.putExtra("salon",materia.salon)
-                intent.putExtra("idMat",materia.id)
+                intent.putExtra("materia",materia)
                 (contexto as Activity).startActivity(intent)
             }
 
