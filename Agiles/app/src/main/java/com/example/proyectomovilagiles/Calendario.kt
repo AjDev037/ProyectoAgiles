@@ -60,33 +60,45 @@ fun getDiaSemanaAsDOW(dia: Dia): DayOfWeek {
 }
 
 fun getIDFechaClase(horario: Horario, dia: DayOfWeek):String? {
+    //Obtenemos la fecha actual y la formateamos a ddMMyy o ([dia][dia][mes][mes][anio][anio])
     val fechaActual = LocalDateTime.now()
     val formateadorFecha = DateTimeFormatter.ofPattern("ddMMyy")
     val fechaFormateada = fechaActual.format(formateadorFecha)
 
+    //La hora temporal la asignamos como un string vacio para la comprobacion mas adelante
     var horaTemp:String = ""
 
+    //Recorremos los dias en el horario
     for(i in horario.dias){
+        //Si un dia (i) del horario (horario) es igual al dia (DayOfWeek)
         if(getDiaSemanaAsDOW(i) == dia){
+            //Asignamos la hora temporal a la hora de inicio (ini) de la clase (i)
             horaTemp = i.ini
+            //Terminamos el ciclo
             break
         }
 
     }
 
+    //Si hora temp sigue estando vacio
     if(horaTemp == ""){
         //Si no se encontro la hora del dia actual, se regresa un nulo
         return null
     }
 
+    //Quitamos los dos puntos de la hora actual en la hora temporal
     horaTemp = horaTemp.replace(":","")
 
+    //Regresamos el codigo generado al sumar la fecha formateada y la hora temporal formateada
     return fechaFormateada + horaTemp
 }
 
 fun getDiaFromHorario(horario:Horario, dia: DayOfWeek):Dia? {
+    //Recorremos los dias en el horario
     for(i in horario.dias){
+        //Si un dia (i) del horario (horario) es igual al dia (DayOfWeek)
         if(getDiaSemanaAsDOW(i) == dia){
+            //Regresamos el dia (i)
             return i
         }
     }

@@ -15,11 +15,9 @@ import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import com.example.proyectomovilagiles.*
 import dataBaseObjects.DAOClases
+import dataBaseObjects.DAOMaterias
 import kotlinx.android.synthetic.main.activity_generar_clase.*
-import objetos.Asistencia
-import objetos.Clase
-import objetos.Dia
-import objetos.Horario
+import objetos.*
 
 
 class GenerarClase : AppCompatActivity() {
@@ -35,13 +33,16 @@ class GenerarClase : AppCompatActivity() {
         setContentView(R.layout.activity_generar_clase)
         var salon = intent.getStringExtra("salon")
         println("SALON: $salon")
-        val idMat = intent.getStringExtra("idMat")
+        val materia = intent.getSerializableExtra("materia") as Materia
+        val idMat = materia.id
         println("MATERIA: $idMat")
         horario = intent.getSerializableExtra("horarioMat") as Horario
+        println(horario.dias)
         if(horario == null) {
             println("HORAR NULO")
         }
         var idTemp = getIDFechaClase(horario, getDiaActualAsDOW())
+
         if(idTemp == null){
             println("ID CLASE NULO")
         }
@@ -50,7 +51,11 @@ class GenerarClase : AppCompatActivity() {
             println("EL DIA ACTUAL ES NULO")
         }
         var clase = Clase(idTemp!!, getDiaFromHorario(horario, getDiaActualAsDOW())!!, getFechaActual(),ArrayList<Asistencia>(),salon!!)
-        DAOClases.crearClase(clase,idMat)
+        materia.clases.add(clase)
+        //DAOClases.crearClase(clase,idMat)
+        DAOMaterias.agregarMaterias(materia)
+
+
 
         val horaClase = getHoraActual()
 
