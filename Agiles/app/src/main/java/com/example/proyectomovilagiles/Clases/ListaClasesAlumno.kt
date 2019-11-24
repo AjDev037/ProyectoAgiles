@@ -14,6 +14,7 @@ import android.widget.BaseAdapter
 import com.example.proyectomovilagiles.R
 import com.example.proyectomovilagiles.getHoraActual
 import com.example.proyectomovilagiles.legacy.AsistenciaAlumno
+import com.google.zxing.Result
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
