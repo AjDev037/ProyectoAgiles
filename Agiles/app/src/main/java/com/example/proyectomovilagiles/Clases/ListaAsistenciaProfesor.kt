@@ -150,4 +150,11 @@ class ListaAsistenciaProfesor : AppCompatActivity() {
             return asistencias?.size ?: 0
         }
     }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val resultIntent = Intent()
+        setResult(Activity.RESULT_OK,resultIntent)
+        finish()
+    }
 }

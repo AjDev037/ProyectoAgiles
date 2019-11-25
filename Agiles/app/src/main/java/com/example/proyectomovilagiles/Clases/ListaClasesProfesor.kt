@@ -22,6 +22,7 @@ class ListaClasesProfesor : AppCompatActivity() {
     var clases = ArrayList<Clase>()
     var horario = Horario()
     var idMat = ""
+    var materia = Materia()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +32,7 @@ class ListaClasesProfesor : AppCompatActivity() {
 
         //val idMat = intent.getSerializableExtra("materia") as Materia
         idMat = intent.getStringExtra("idMat")
-        val materia = DAOMaterias.getMateria(idMat)
+        materia = DAOMaterias.getMateria(idMat)
         horario = materia.horario!!
         clases = materia.clases
 
@@ -82,7 +83,7 @@ class ListaClasesProfesor : AppCompatActivity() {
                 intent.putExtra("asist",cla.asistencias)
                 intent.putExtra("materia", mat)
                 intent.putExtra("idClase", cla.id)
-                (context as Activity).startActivity(intent)
+                (context as Activity).startActivityForResult(intent,0)
             }
             return vista
 
@@ -99,6 +100,21 @@ class ListaClasesProfesor : AppCompatActivity() {
         override fun getCount(): Int {
             return clases?.size ?: 0
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        println("ENTRE AL ACTIVITYRESULT")
+
+        materia = DAOMaterias.getMateria(idMat)
+        horario = materia.horario!!
+        clases = materia.clases
+
+
+        var adaptador = AdaptadorClientes(this,clases,materia)
+        listasClases.adapter = adaptador
+
     }
 
 }
