@@ -16,6 +16,7 @@ object DAOMaterias {
 
      fun crearMateriasScript(){
 
+
         val database = FirebaseDatabase.getInstance()
         val referencia = database.getReference("Materias")
         referencia.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -32,10 +33,11 @@ object DAOMaterias {
                         listaMaterias.add(materia!!)
                     }
                 }
+                notificar()
             }
         })
 
-         notificar()
+
 
     }
 
@@ -66,6 +68,7 @@ object DAOMaterias {
         return listaMateriasAlumno
     }
 
+
     fun getMateriasProfesor(id:String ):ArrayList<Materia>{
 
         crearMateriasScript()
@@ -83,7 +86,7 @@ object DAOMaterias {
     }
 
     fun getMateria(id:String): Materia {
-        crearMateriasScript()
+        //crearMateriasScript()
         return listaMaterias[listaMaterias.indexOf(Materia(id))]
     }
 

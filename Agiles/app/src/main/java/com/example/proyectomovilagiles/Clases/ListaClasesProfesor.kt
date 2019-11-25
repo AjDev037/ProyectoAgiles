@@ -19,8 +19,12 @@ import objetos.Materia
 import objetos.Observer
 
 class ListaClasesProfesor : AppCompatActivity(), Observer {
+
+
     //Metodo de observer
     override fun notificar() {
+        materia = DAOMaterias.getMateria(idMat)
+
         horario = materia.horario!!
         clases = materia.clases
 
@@ -37,6 +41,12 @@ class ListaClasesProfesor : AppCompatActivity(), Observer {
             intent.putExtra("salon",salon)
             intent.putExtra("materia",idMat)
             startActivityForResult(intent,0)
+        }
+
+
+        println("ESTOY IMPRIMIENDO LA ASISTENCIA PARA VERIFICAR")
+        for(c in materia.clases){
+            println(c.asistencias[0].estado)
         }
 
         //Lo removeremos al final nomas porque si uwu
@@ -57,7 +67,7 @@ class ListaClasesProfesor : AppCompatActivity(), Observer {
         //val idMat = intent.getSerializableExtra("materia") as Materia
         idMat = intent.getStringExtra("idMat")
         DAOMaterias.observadores.add(this)
-        materia = DAOMaterias.getMateria(idMat)
+        DAOMaterias.crearMateriasScript()
 
         //Esperaremos a que el DAO nos notifique
     }
@@ -113,15 +123,20 @@ class ListaClasesProfesor : AppCompatActivity(), Observer {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        println("ENTRE AL ACTIVITYRESULT")
+//        println("ENTRE AL ACTIVITYRESULT")
+//        DAOMaterias.crearMateriasScript()
+//        materia = DAOMaterias.getMateria(idMat)
+//        horario = materia.horario!!
+//        clases = materia.clases
+//
+//
+//        var adaptador = AdaptadorClientes(this,clases,materia)
+//        listasClases.adapter = adaptador
+
+        DAOMaterias.limpiar()
+        DAOMaterias.observadores.add(this)
         DAOMaterias.crearMateriasScript()
-        materia = DAOMaterias.getMateria(idMat)
-        horario = materia.horario!!
-        clases = materia.clases
 
-
-        var adaptador = AdaptadorClientes(this,clases,materia)
-        listasClases.adapter = adaptador
 
     }
 
