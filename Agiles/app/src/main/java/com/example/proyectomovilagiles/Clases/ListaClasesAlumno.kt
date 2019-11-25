@@ -205,8 +205,8 @@ class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler {
                         auxiliar = x
                     }
                 }
-                intent.putExtra("asist",auxiliar)
-                (context as Activity).startActivity(intent)
+                //intent.putExtra("asist",auxiliar)
+                //(context as Activity).startActivity(intent)
             }
             return vista
 

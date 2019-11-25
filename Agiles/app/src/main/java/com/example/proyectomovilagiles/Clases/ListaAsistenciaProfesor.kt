@@ -7,10 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.Toast
 import com.example.proyectomovilagiles.R
 import kotlinx.android.synthetic.main.activity_lista_asistencia_profesor.*
 import kotlinx.android.synthetic.main.llenar_asistencia_profesor.view.*
 import objetos.Asistencia
+import objetos.Materia
 
 class ListaAsistenciaProfesor : AppCompatActivity() {
 
@@ -21,10 +23,14 @@ class ListaAsistenciaProfesor : AppCompatActivity() {
         setContentView(R.layout.activity_lista_asistencia_profesor)
 
         asistencias = intent.getSerializableExtra("asist") as ArrayList<Asistencia>
+        //intent.putExtra("materia", mat)
+        //intent.putExtra("idClase", cla.id)
+        var materia = intent.getSerializableExtra("materia") as Materia
+        var clase = intent.getStringExtra("idClase")
         var adaptador =
             AdaptadorAsistencias(
                 this,
-                asistencias
+                asistencias,materia,clase
             )
         listasAsistencias.adapter = adaptador
 
@@ -34,10 +40,14 @@ class ListaAsistenciaProfesor : AppCompatActivity() {
 
         var context: Context
         var asistencias: ArrayList<Asistencia>? = null
+        var clase = ""
+        var mat = Materia()
 
-        constructor(context: Context, asistencias: ArrayList<Asistencia>) {
+        constructor(context: Context, asistencias: ArrayList<Asistencia>,materia:Materia,cla:String) {
             this.context = context
             this.asistencias = asistencias
+            mat = materia
+            clase = cla
         }
 
 
@@ -60,7 +70,8 @@ class ListaAsistenciaProfesor : AppCompatActivity() {
             }
 
             vista.setOnClickListener {
-
+                //AQUI PON EL POP UP DIEGO PLIS
+                Toast.makeText(context,"AAAAAH",Toast.LENGTH_LONG).show()
             }
             return vista
 

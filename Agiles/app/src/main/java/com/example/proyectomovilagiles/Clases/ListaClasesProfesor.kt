@@ -30,7 +30,7 @@ class ListaClasesProfesor : AppCompatActivity() {
         val idMat = intent.getSerializableExtra("materia") as Materia
         var salon = intent.getStringExtra("salon")
 
-        var adaptador = AdaptadorClientes(this,clases)
+        var adaptador = AdaptadorClientes(this,clases,idMat)
         listasClases.adapter = adaptador
 
         btnNuevaClaseM.setOnClickListener {
@@ -49,10 +49,12 @@ class ListaClasesProfesor : AppCompatActivity() {
 
         var context: Context
         var clases: ArrayList<Clase>? = null
+        var mat = Materia()
 
-        constructor(context: Context, clases: ArrayList<Clase>) {
+        constructor(context: Context, clases: ArrayList<Clase>, materia:Materia) {
             this.context = context
             this.clases = clases
+            mat = materia
         }
 
 
@@ -71,6 +73,8 @@ class ListaClasesProfesor : AppCompatActivity() {
             vista.setOnClickListener {
                 val intent = Intent(context, ListaAsistenciaProfesor::class.java)
                 intent.putExtra("asist",cla.asistencias)
+                intent.putExtra("materia", mat)
+                intent.putExtra("idClase", cla.id)
                 (context as Activity).startActivity(intent)
             }
             return vista

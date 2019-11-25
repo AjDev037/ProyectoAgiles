@@ -5,6 +5,7 @@ import android.os.Bundle
 import com.example.proyectomovilagiles.R
 import kotlinx.android.synthetic.main.activity_asistencia_alumno.*
 import objetos.Asistencia
+import objetos.Materia
 
 class AsistenciaAlumno : AppCompatActivity() {
 
@@ -14,6 +15,7 @@ class AsistenciaAlumno : AppCompatActivity() {
 
 
         var asistencia = intent.getSerializableExtra("asist") as Asistencia
+
 
         nomAlumno.text = asistencia.alumno.nombre
         if(asistencia.estado == 0){
