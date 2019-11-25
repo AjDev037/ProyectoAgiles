@@ -82,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimaryDark"
                 android:id="@+id/btnTipo"
-                android:text="Soy Profesor"
+                android:text="Cambiar a Profesor"
                 android:layout_marginHorizontal="50dp"
                 android:layout_gravity="center"/>
     </LinearLayout>
