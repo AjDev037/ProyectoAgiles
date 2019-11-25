@@ -19,11 +19,11 @@ object DAOAsistencias {
         val formateadorHora = DateTimeFormatter.ofPattern("HH:mm")
         val horaFormateada = fechaActual.format(formateadorHora)
 
-        var asistencia1 = Asistencia (DAOAlumnos.getAlumno("00000111111"),1,horaFormateada)
-        var asistencia2 = Asistencia (DAOAlumnos.getAlumno("00000222222"),0,horaFormateada)
-        var asistencia3 = Asistencia (DAOAlumnos.getAlumno("00000333333"),1,horaFormateada)
-        var asistencia4 = Asistencia (DAOAlumnos.getAlumno("00000444444"),-1,horaFormateada)
-        var asistencia5 = Asistencia (DAOAlumnos.getAlumno("00000555555"),1,horaFormateada)
+        var asistencia1 = Asistencia (DAOAlumnos.getAlumno("00000111111"),1,0,horaFormateada)
+        var asistencia2 = Asistencia (DAOAlumnos.getAlumno("00000222222"),0,0,horaFormateada)
+        var asistencia3 = Asistencia (DAOAlumnos.getAlumno("00000333333"),1,1,horaFormateada)
+        var asistencia4 = Asistencia (DAOAlumnos.getAlumno("00000444444"),-1,-1,horaFormateada)
+        var asistencia5 = Asistencia (DAOAlumnos.getAlumno("00000555555"),1,1,horaFormateada)
 
         listaAsistencia.add(asistencia1)
         listaAsistencia.add(asistencia2)

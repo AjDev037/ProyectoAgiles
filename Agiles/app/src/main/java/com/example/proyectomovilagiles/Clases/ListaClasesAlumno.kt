@@ -157,7 +157,7 @@ class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler {
         }
 
         //Creamos la asistencia
-        var asistencia = Asistencia(alumno,estadoAsistencia!!, getHoraActual())
+        var asistencia = Asistencia(alumno,estadoAsistencia!!, estadoAsistencia!!,getHoraActual())
         for(c in materia.clases){
             if(c.id == clase){
                 c.asistencias.add(asistencia)

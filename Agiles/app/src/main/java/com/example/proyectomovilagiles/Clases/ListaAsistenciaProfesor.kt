@@ -95,14 +95,23 @@ class ListaAsistenciaProfesor : AppCompatActivity() {
                     //Si dijo que no, no hacemos nada...
 
                 }
-                //Y mostramos el cuadro de dialogo
-
-                if(asi.estado < 1) {
+                
+                //Si el estado original no es igual al estado, es porque ya lo actualizamos
+                if(asi.estadoOriginal != asi.estado){
+                    //Mostramos un texto
+                    Toast.makeText(context,"No se puede actualizar dos veces una asistencia",Toast.LENGTH_LONG).show()
+                }
+                //Si el estado es menor a 1, entonces se trata o de una falta o de un retardo
+                else if(asi.estado < 1 ) {
+                    //Mostramos el cuadro de dialogo
                     mAlertDialog.show()
+                //Si no, se trata de una asistencia, por lo que no hay nada que justificar
                 } else {
+                    //Mostramos un texto
                     Toast.makeText(context,"No puede justificar una asistencia",Toast.LENGTH_LONG).show()
                 }
 
+                //Para fines de prueba mostramos el valor del estado
                 Toast.makeText(context,asi.estado.toString(),Toast.LENGTH_LONG).show()
             }
             return vista
