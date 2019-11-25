@@ -157,7 +157,7 @@ class MenuMateriasAlumno : AppCompatActivity() {
                 val intent = Intent(contexto, ListaClasesAlumno::class.java)
 
                 //TODO("Add extras for next activity")
-                intent.putExtra("materia",materia.id)
+                intent.putExtra("materia",materia)
                 intent.putExtra("id",id)
                 contexto?.startActivity(intent)
 

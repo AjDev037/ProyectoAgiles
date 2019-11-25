@@ -20,19 +20,21 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import dataBaseObjects.DAOAsistencias
-import kotlinx.android.synthetic.main.activity_lista_clases.*
+import dataBaseObjects.DAOMaterias
 import kotlinx.android.synthetic.main.activity_lista_clases_alumno.*
 import kotlinx.android.synthetic.main.llenar_clases.view.*
 import me.dm7.barcodescanner.zxing.ZXingScannerView
 import objetos.Alumno
 import objetos.Asistencia
 import objetos.Clase
+import objetos.Materia
 
 class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler {
 
     var clases = ArrayList<Clase>()
     var alumno = Alumno()
     var mScanner : ZXingScannerView? = null
+    var materia = Materia()
 
     val retardoTiempo = 5
     var faltaTiempo = 15
@@ -41,10 +43,11 @@ class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista_clases_alumno)
 
-        var materia = intent.getStringExtra("materia")
+        materia = intent.getSerializableExtra("materia") as Materia
+        var idMateria = materia.id
         //clases = intent.getSerializableExtra("clases") as ArrayList<Clase>
         alumno = intent.getSerializableExtra("id") as Alumno
-        llenarClases(materia)
+        llenarClases(idMateria)
 
         btnAsistencia.setOnClickListener {
             mScanner = ZXingScannerView(this)
@@ -118,7 +121,7 @@ class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler {
 
         val codigo = text.split(".").toTypedArray()
         println("VOY A IMPRIMIR")
-        var materia = codigo[0]
+        //var materia = codigo[0]
         var clase = codigo[1]
         var estado = codigo[2]
         println(materia)
@@ -155,8 +158,14 @@ class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler {
 
         //Creamos la asistencia
         var asistencia = Asistencia(alumno,estadoAsistencia!!, getHoraActual())
+        for(c in materia.clases){
+            if(c.id == clase){
+                c.asistencias.add(asistencia)
+            }
+        }
 
-        DAOAsistencias.registrarAsistencia(materia,clase,asistencia)
+        //DAOAsistencias.registrarAsistencia(materia,clase,asistencia)
+        DAOMaterias.agregarMaterias(materia)
         dialogo.dismiss()
         finish()
     }
