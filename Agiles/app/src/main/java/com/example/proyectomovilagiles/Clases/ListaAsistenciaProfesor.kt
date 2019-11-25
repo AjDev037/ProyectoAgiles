@@ -36,7 +36,6 @@ class ListaAsistenciaProfesor : AppCompatActivity() {
                 asistencias,materia,clase
             )
         listasAsistencias.adapter = adaptador
-
     }
 
     private class AdaptadorAsistencias : BaseAdapter {
@@ -87,6 +86,7 @@ class ListaAsistenciaProfesor : AppCompatActivity() {
                     //Le sumamos uno al estado
                     asi.estado += 1
 
+                    this.notifyDataSetChanged()
                     //Aqui puedes poner el llamado a la base de datos uwu
                 }
 
@@ -95,7 +95,7 @@ class ListaAsistenciaProfesor : AppCompatActivity() {
                     //Si dijo que no, no hacemos nada...
 
                 }
-                
+
                 //Si el estado original no es igual al estado, es porque ya lo actualizamos
                 if(asi.estadoOriginal != asi.estado){
                     //Mostramos un texto
