@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import com.example.proyectomovilagiles.R
+import dataBaseObjects.DAOMaterias
 import kotlinx.android.synthetic.main.activity_lista_clases.*
 import kotlinx.android.synthetic.main.llenar_clases.view.*
 import objetos.Clase
@@ -20,17 +21,23 @@ class ListaClasesProfesor : AppCompatActivity() {
 
     var clases = ArrayList<Clase>()
     var horario = Horario()
+    var idMat = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista_clases)
 
-        clases = intent.getSerializableExtra("clases") as ArrayList<Clase>
-        horario = intent.getSerializableExtra("horarioMat") as Horario
-        val idMat = intent.getSerializableExtra("materia") as Materia
+        //clases = intent.getSerializableExtra("clases") as ArrayList<Clase>
+
+        //val idMat = intent.getSerializableExtra("materia") as Materia
+        idMat = intent.getStringExtra("idMat")
+        val materia = DAOMaterias.getMateria(idMat)
+        horario = materia.horario!!
+        clases = materia.clases
+
         var salon = intent.getStringExtra("salon")
 
-        var adaptador = AdaptadorClientes(this,clases,idMat)
+        var adaptador = AdaptadorClientes(this,clases,materia)
         listasClases.adapter = adaptador
 
         btnNuevaClaseM.setOnClickListener {
@@ -40,7 +47,7 @@ class ListaClasesProfesor : AppCompatActivity() {
             intent.putExtra("horarioMat",horario)
             intent.putExtra("salon",salon)
             intent.putExtra("materia",idMat)
-            startActivity(intent)
+            startActivityForResult(intent,0)
         }
 
 

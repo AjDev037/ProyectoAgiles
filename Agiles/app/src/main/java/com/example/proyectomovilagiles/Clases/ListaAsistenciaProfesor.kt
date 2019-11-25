@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.Toast
 import com.example.proyectomovilagiles.R
+import dataBaseObjects.DAOMaterias
 import kotlinx.android.synthetic.main.activity_lista_asistencia_profesor.*
 import kotlinx.android.synthetic.main.llenar_asistencia_profesor.view.*
 import objetos.Asistencia
@@ -36,6 +37,7 @@ class ListaAsistenciaProfesor : AppCompatActivity() {
                 asistencias,materia,clase
             )
         listasAsistencias.adapter = adaptador
+        adaptador.notifyDataSetChanged()
 
     }
 
@@ -86,8 +88,23 @@ class ListaAsistenciaProfesor : AppCompatActivity() {
                 mAlertDialog.setPositiveButton("Si") { dialog, id ->
                     //Le sumamos uno al estado
                     asi.estado += 1
-
+                    this.notifyDataSetChanged()
+                    var posicion:Int = 0
+                    var posicionC = 0
                     //Aqui puedes poner el llamado a la base de datos uwu
+                    for(c in mat.clases){
+                        if(c.id == clase){
+                            for(a in c.asistencias!!){
+                                if(a.alumno.id == asi.alumno.id){
+                                    posicion = c.asistencias.indexOf(a)
+                                    posicionC = mat.clases.indexOf(c)
+                                }
+                            }
+                        }
+                    }
+                    mat.clases[posicionC].asistencias[posicion] = asi
+                    DAOMaterias.agregarMaterias(mat)
+                    //DAOMaterias.crearMateriasScript()
                 }
 
                 //Le damos un listener a la accion negativa y un texto
@@ -113,6 +130,11 @@ class ListaAsistenciaProfesor : AppCompatActivity() {
 
                 //Para fines de prueba mostramos el valor del estado
                 Toast.makeText(context,asi.estado.toString(),Toast.LENGTH_LONG).show()
+
+
+                for(a in asistencias!!){
+                    println(a.estado)
+                }
             }
             return vista
 
