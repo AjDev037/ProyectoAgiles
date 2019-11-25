@@ -8,9 +8,11 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import objetos.Dia
+import objetos.Observer
 
 object DAOClases {
 
+    var observadores = ArrayList<Observer>()
     var listaClases = ArrayList<Clase>()
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -61,5 +63,13 @@ object DAOClases {
         return listaClases.get(index)
     }
 
+    fun limpiar(){
+        listaClases.clear()
+    }
 
+    fun notificar(){
+        for(i in observadores){
+            i.notificar("Clases")
+        }
+    }
 }

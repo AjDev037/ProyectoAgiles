@@ -5,9 +5,11 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import objetos.Alumno
+import objetos.Observer
 
 object DAOAlumnos {
 
+    var observadores = ArrayList<Observer>()
     var listaAlumnos = ArrayList<Alumno>()
 
     fun crearAlumnosScript(){
@@ -29,16 +31,15 @@ object DAOAlumnos {
                         listaAlumnos.add(alumno)
                     }
                 }
+
+                notificar()
             }
         })
-
-
-
     }
 
     fun getAlumnos():ArrayList<Alumno>{
         //TODO: Conectarse a la base de datos y regresar la lista
-        crearAlumnosScript()
+        //crearAlumnosScript()
         while (listaAlumnos.isEmpty()){
             crearAlumnosScript()
             if(listaAlumnos.isNotEmpty()){
@@ -60,5 +61,13 @@ object DAOAlumnos {
         return listaAlumnos[listaAlumnos.indexOf(Alumno(id))]
     }
 
+    fun limpiar(){
+        listaAlumnos.clear()
+    }
 
+    fun notificar(){
+        for(i in observadores){
+            i.notificar("Alumnos")
+        }
+    }
 }

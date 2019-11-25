@@ -4,11 +4,13 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import com.google.firebase.database.FirebaseDatabase
 import objetos.Asistencia
+import objetos.Observer
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 object DAOAsistencias {
 
+    var observadores = ArrayList<Observer>()
     var listaAsistencia = ArrayList<Asistencia>()
 
 
@@ -21,6 +23,16 @@ object DAOAsistencias {
     @RequiresApi(Build.VERSION_CODES.O)
     fun getAsistencia(id:String): Asistencia {
         return listaAsistencia.get(listaAsistencia.indexOf(Asistencia(DAOAlumnos.getAlumno(id))))
+    }
+
+    fun limpiar(){
+        listaAsistencia.clear()
+    }
+
+    fun notificar(){
+        for(i in observadores){
+            i.notificar("Asistencias")
+        }
     }
 }
 

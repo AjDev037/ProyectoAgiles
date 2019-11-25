@@ -20,39 +20,6 @@ import objetos.Observer
 
 class ListaClasesProfesor : AppCompatActivity(), Observer {
 
-
-    //Metodo de observer
-    override fun notificar() {
-        materia = DAOMaterias.getMateria(idMat)
-
-        horario = materia.horario!!
-        clases = materia.clases
-
-        var salon = intent.getStringExtra("salon")
-
-        var adaptador = AdaptadorClientes(this,clases,materia)
-        listasClases.adapter = adaptador
-
-        btnNuevaClaseM.setOnClickListener {
-
-
-            val intent = Intent(this,GenerarClase::class.java)
-            intent.putExtra("horarioMat",horario)
-            intent.putExtra("salon",salon)
-            intent.putExtra("materia",idMat)
-            startActivityForResult(intent,0)
-        }
-
-
-        println("ESTOY IMPRIMIENDO LA ASISTENCIA PARA VERIFICAR")
-        for(c in materia.clases){
-            println(c.asistencias[0].estado)
-        }
-
-        //Lo removeremos al final nomas porque si uwu
-        DAOMaterias.observadores.remove(this)
-    }
-
     var clases = ArrayList<Clase>()
     var horario = Horario()
     var idMat = ""
@@ -62,10 +29,7 @@ class ListaClasesProfesor : AppCompatActivity(), Observer {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista_clases)
 
-        //clases = intent.getSerializableExtra("clases") as ArrayList<Clase>
-
-        //val idMat = intent.getSerializableExtra("materia") as Materia
-        idMat = intent.getStringExtra("idMat")
+        idMat = intent.getStringExtra("idMat")!!
         DAOMaterias.observadores.add(this)
         DAOMaterias.crearMateriasScript()
 
@@ -89,12 +53,10 @@ class ListaClasesProfesor : AppCompatActivity(), Observer {
             var vista = layout?.inflate(R.layout.llenar_clases, null)!!
             var cla = clases!![position]
 
-            if (vista != null) {
-                vista.diaClase.text = cla.dia.diaSemana
-                vista.horas.text = cla.dia.ini
-                vista.salonClase.text = cla.salon
-                vista.txtFecha.text = cla.fecha
-            }
+            vista.diaClase.text = cla.dia.diaSemana
+            vista.horas.text = cla.dia.ini
+            vista.salonClase.text = cla.salon
+            vista.txtFecha.text = cla.fecha
 
             vista.setOnClickListener {
                 val intent = Intent(context, ListaAsistenciaProfesor::class.java)
@@ -123,21 +85,33 @@ class ListaClasesProfesor : AppCompatActivity(), Observer {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-//        println("ENTRE AL ACTIVITYRESULT")
-//        DAOMaterias.crearMateriasScript()
-//        materia = DAOMaterias.getMateria(idMat)
-//        horario = materia.horario!!
-//        clases = materia.clases
-//
-//
-//        var adaptador = AdaptadorClientes(this,clases,materia)
-//        listasClases.adapter = adaptador
-
         DAOMaterias.limpiar()
         DAOMaterias.observadores.add(this)
         DAOMaterias.crearMateriasScript()
+    }
 
+    //Metodo de observer
+    override fun notificar(name: String) {
+        materia = DAOMaterias.getMateria(idMat)
 
+        horario = materia.horario!!
+        clases = materia.clases
+
+        var salon = intent.getStringExtra("salon")
+
+        var adaptador = AdaptadorClientes(this,clases,materia)
+        listasClases.adapter = adaptador
+
+        btnNuevaClaseM.setOnClickListener {
+            val intent = Intent(this,GenerarClase::class.java)
+            intent.putExtra("horarioMat",horario)
+            intent.putExtra("salon",salon)
+            intent.putExtra("materia",idMat)
+            startActivityForResult(intent,0)
+        }
+
+        //Lo removeremos al final nomas porque si uwu
+        DAOMaterias.observadores.remove(this)
     }
 
 }

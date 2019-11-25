@@ -6,7 +6,7 @@ class MyPreference(context: Context){
 
     val ID = "usuario"
     val PASS = "Pass"
-    val TIPO = "tipo"
+    val TIPO = "tipoMaestro"
 
     val preference = context.getSharedPreferences(ID,Context.MODE_PRIVATE)
 

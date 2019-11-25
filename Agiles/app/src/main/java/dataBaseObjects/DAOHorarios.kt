@@ -2,9 +2,11 @@ package dataBaseObjects
 
 import objetos.Dia
 import objetos.Horario
+import objetos.Observer
 
 object DAOHorarios {
 
+    var observadores = ArrayList<Observer>()
     var listaHorarios = ArrayList<Horario>()
 
     private fun crearHorariosScript(){
@@ -40,5 +42,15 @@ object DAOHorarios {
     fun getHorario(index:Int): Horario {
         crearHorariosScript()
         return listaHorarios.get(index)
+    }
+
+    fun limpiar(){
+        listaHorarios.clear()
+    }
+
+    fun notificar(){
+        for(i in observadores){
+            i.notificar("Horarios")
+        }
     }
 }

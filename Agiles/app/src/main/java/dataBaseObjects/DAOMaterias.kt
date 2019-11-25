@@ -36,9 +36,6 @@ object DAOMaterias {
                 notificar()
             }
         })
-
-
-
     }
 
     fun getMaterias():ArrayList<Materia>{
@@ -96,7 +93,7 @@ object DAOMaterias {
 
     fun notificar(){
         for(i in observadores){
-            i.notificar()
+            i.notificar("Materias")
         }
     }
 }

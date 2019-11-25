@@ -3,10 +3,6 @@ package com.example.proyectomovilagiles.Login
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.example.proyectomovilagiles.Materias.MenuMateriasAlumno
 import com.example.proyectomovilagiles.Materias.MenuMateriasProfesor
 import com.example.proyectomovilagiles.Preferencias.MyPreference
@@ -17,177 +13,191 @@ import dataBaseObjects.DAOMaterias
 import kotlinx.android.synthetic.main.activity_login.*
 import objetos.Alumno
 import objetos.Maestro
+import objetos.Observer
+import java.lang.Exception
 import java.lang.IndexOutOfBoundsException
 
-class Login : AppCompatActivity() {
+class Login : AppCompatActivity(), Observer {
+
     //Booleano que muestra donde buscara los datos la app,
     // si es falso es para alumnos, si es verdadero es para profesores.
-
-    var tipo: Boolean = false
-    var maestro = Maestro()
+    private var tipoMaestro: Boolean = false
+    private var maestro = Maestro()
     var alumno = Alumno()
 
+    private var pass: String? = null
+    var id: String? = null
+
+    private var validacionAutomatica: Boolean = false
+
+    private var preferencias:MyPreference? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        preferencias = MyPreference(this)
+
         DAOMaterias.limpiar()
-        DAOMaestro.crearMaestrosScript()
-        DAOAlumnos.crearAlumnosScript()
         DAOMaterias.crearMateriasScript()
 
-        val preferencias = MyPreference(this)
+        if (preferencias!!.getId() != "" && preferencias!!.getPass() != "") {
 
-        //val intent = Intent(this, MenuMateriasProfesor::class.java)
+            id = preferencias!!.getId()
+            pass = preferencias!!.getPass()
 
-        if(preferencias.getId() != "" && preferencias.getPass() != ""){
+            tipoMaestro = preferencias!!.getTipo()!!
 
-            var id = preferencias.getId()
-            var contra = preferencias.getPass()
-            tipo = preferencias.getTipo()!!
-            println("HOOOOOOOOOOOOOLLLLLLLLLLLLLAAAAAAAAAAAAAAAAA")
-            println(id)
-            println(contra)
-            println(tipo)
-                if(tipo){
-                    println("VALIDACION AUTOMATICA")
-                    validarLoginM(id!!,contra!!)
-                }else{
-                    validarLoginA(id!!,contra!!)
-                }
+            validacionAutomatica = true
 
+            if (tipoMaestro) {
+                DAOMaestro.observadores.add(this)
+                DAOMaestro.crearMaestrosScript()
+            } else {
+                DAOAlumnos.observadores.add(this)
+                DAOAlumnos.crearAlumnosScript()
+            }
         }
 
-        btnTipo.setOnClickListener{
-            if(tipo){
-                btnTipo.text = "Soy Profesor"
-                tipo = false
-                println(tipo)
-            }else{
-                btnTipo.text = "Soy Alumno"
-                tipo = true
-                println(tipo)
+        btnTipo.setOnClickListener {
+            if (tipoMaestro) {
+                DAOAlumnos.observadores.add(this)
+                DAOMaestro.observadores.remove(this)
+
+                btnTipo.text = "Cambiar a Profesor"
+                tipoMaestro = false
+                println(tipoMaestro)
+
+            } else {
+                DAOMaestro.observadores.add(this)
+                DAOAlumnos.observadores.remove(this)
+
+                btnTipo.text = "Cambiar a Alumno"
+                tipoMaestro = true
+                println(tipoMaestro)
+
             }
         }
 
         btnLogin.setOnClickListener {
-            var id = txtUsuario.text.toString()
-            var pass = txtPass.text.toString()
-            if(validacion(id,pass,tipo)){
-                println("ESTOY GUARDANDO LOS DATOS")
-                preferencias.setId(id)
-                preferencias.setPass(pass)
-                preferencias.setTipo(tipo)
-                println("YA LOS GUARDE")
-                if(tipo){
-                    val intent = Intent(this, MenuMateriasProfesor::class.java)
-                    intent.putExtra("id",id)
-                    startActivityForResult(intent,0)
+            id = txtUsuario.text.toString()
+            pass = txtPass.text.toString()
 
-                }else{
-                    val intent = Intent(this, MenuMateriasAlumno::class.java)
-
-                    intent.putExtra("alumno",alumno)
-                    startActivityForResult(intent,0)
-                }
-
-
-            }else{
-               incorrecto.text = "*Credenciales invalidas*"
+            if (tipoMaestro) {
+                DAOMaestro.crearMaestrosScript()
+            } else {
+                DAOAlumnos.crearAlumnosScript()
             }
-
         }
     }
 
-    fun validarLoginA(id:String, pass:String){
-        val context = this
-        val database = FirebaseDatabase.getInstance()
-        val referencia = database.getReference("Alumnos")
-        referencia.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {}
+    fun terminarLogin() {
+        if (validacion(this.id!!, this.pass!!, tipoMaestro)) {
 
-            override fun onDataChange(p0: DataSnapshot) {
-                if (p0.exists()) {
-                    var children = p0.children
+            preferencias!!.setId(this.id!!)
+            preferencias!!.setPass(this.pass!!)
+            preferencias!!.setTipo(tipoMaestro)
 
-                    for (child in children) {
-                        var alumno = child.getValue(Alumno::class.java)
-                        if(alumno?.id.equals((id)) && alumno?.contrasena.equals(pass)){
-                            val intent = Intent(context, MenuMateriasAlumno::class.java)
-                            intent.putExtra("alumno",alumno)
-                            startActivityForResult(intent,0)
-                        }
-                    }
+            if (tipoMaestro) {
+                val intent = Intent(this, MenuMateriasProfesor::class.java)
+                intent.putExtra("id", id)
+
+                try{
+                    DAOAlumnos.observadores.remove(this)
+                    DAOMaestro.observadores.remove(this)
+                }catch (e:Exception){
+                    println("No se pudo remover\n" + e.message)
                 }
+
+                startActivityForResult(intent, 0)
+
+            } else {
+                val intent = Intent(this, MenuMateriasAlumno::class.java)
+
+                try{
+                    DAOAlumnos.observadores.remove(this)
+                    DAOMaestro.observadores.remove(this)
+                }catch (e:Exception){
+                    println("No se pudo remover\n" + e.message)
+                }
+
+                intent.putExtra("alumno", alumno)
+                startActivityForResult(intent, 0)
             }
-        })
+
+        } else {
+            incorrecto.text = "*Credenciales invalidas*"
+        }
     }
 
-    fun validarLoginM(id:String, pass:String){
-        val context = this
-        val database = FirebaseDatabase.getInstance()
-        val referencia = database.getReference("Maestros")
-        referencia.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {}
+    fun validarLoginA(id: String, pass: String) {
 
-            override fun onDataChange(p0: DataSnapshot) {
-                if (p0.exists()) {
-                    var children = p0.children
+        this.id = id
+        this.pass = pass
 
-                    for (child in children) {
-                        var profe = child.getValue(Maestro::class.java)
-                        println("ESTE ES EL PROFE TEMPORAL")
-                        println(profe!!.id)
-                        println(profe.contrasena)
-                        if(profe?.id == (id) && profe?.contrasena == pass){
-                            println("ENTRE A LA VALIDACION DEL MAESTRO AUTOMATICA")
-                            val intent = Intent(context, MenuMateriasProfesor::class.java)
-                            intent.putExtra("id",id)
-                            startActivityForResult(intent,0)
-                        }
-                    }
-                }
+        for (i in DAOAlumnos.getAlumnos()) {
+            if (i.id == (this.id) && alumno.contrasena == this.pass) {
+                val intent = Intent(this, MenuMateriasAlumno::class.java)
+                intent.putExtra("alumno", alumno)
+
+                DAOAlumnos.observadores.remove(this)
+                DAOMaestro.observadores.remove(this)
+
+                startActivityForResult(intent, 0)
             }
-        })
+        }
     }
 
-    fun validacion(id:String, pass:String,tips:Boolean):Boolean{
+    fun validarLoginM(id: String, pass: String) {
 
-        if(tips){
+        this.id = id
+        this.pass = pass
 
+        for (i in DAOMaestro.getMaestros()) {
+            if (i.id == (this.id) && i.contrasena == this.pass) {
+                val intent = Intent(this, MenuMateriasProfesor::class.java)
+                intent.putExtra("id", id)
+
+                DAOAlumnos.observadores.remove(this)
+                DAOMaestro.observadores.remove(this)
+
+                startActivityForResult(intent, 0)
+            }
+        }
+    }
+
+    fun validacion(id: String, pass: String, tipo: Boolean): Boolean {
+
+        if (tipo) {
             try {
                 var maistro = DAOMaestro.getMaestro(id)
-                if(maistro.contrasena.equals(pass)){
+                if (maistro.contrasena.equals(pass)) {
                     maestro = maistro
                     return true
-                }else{
+                } else {
                     return false
                 }
-            }
-            catch (e: IndexOutOfBoundsException) {
+            } catch (e: IndexOutOfBoundsException) {
                 println("NO VALIDE LA CONTRA POR LA EXPCECION MAESTRO")
                 return false
             }
 
 
-        }else{
-
+        } else {
             try {
                 // some code
                 DAOAlumnos.crearAlumnosScript()
                 var alu = DAOAlumnos.getAlumno(id)
-                if(alu.contrasena.equals(pass)){
+                if (alu.contrasena.equals(pass)) {
                     alumno = alu
                     println("VALIDE LA CONTRA")
                     return true
-                }else{
+                } else {
 
                 }
                 println("NO VALIDE LA CONTRA POR ERROR")
                 return false
-            }
-            catch (e: IndexOutOfBoundsException) {
+            } catch (e: IndexOutOfBoundsException) {
                 // handler
                 println("NO VALIDE LA CONTRA POR LA EXCEPCION ALUMNO")
                 return false
@@ -195,5 +205,17 @@ class Login : AppCompatActivity() {
 
         }
 
+    }
+
+    override fun notificar(name: String) {
+        if (validacionAutomatica) {
+            if (tipoMaestro) {
+                validarLoginM(this.id!!, this.pass!!)
+            } else {
+                validarLoginA(this.id!!, this.pass!!)
+            }
+        } else {
+            terminarLogin()
+        }
     }
 }

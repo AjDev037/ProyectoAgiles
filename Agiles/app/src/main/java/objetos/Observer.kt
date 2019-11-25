@@ -2,5 +2,5 @@ package objetos
 
 interface Observer {
 
-    fun notificar()
+    fun notificar(name:String)
 }

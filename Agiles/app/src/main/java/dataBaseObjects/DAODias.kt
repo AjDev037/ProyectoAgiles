@@ -1,9 +1,11 @@
 package dataBaseObjects
 
 import objetos.Dia
+import objetos.Observer
 
 object DAODias {
 
+    var observadores = ArrayList<Observer>()
     var listaDias = ArrayList<Dia>()
 
     private fun crearDiasScript(){
@@ -34,5 +36,15 @@ object DAODias {
         crearDiasScript()
 
         return listaDias.get(index)
+    }
+
+    fun limpiar(){
+        listaDias.clear()
+    }
+
+    fun notificar(){
+        for(i in observadores){
+            i.notificar("Dias")
+        }
     }
 }
