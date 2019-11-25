@@ -7,9 +7,11 @@ import com.google.firebase.database.ValueEventListener
 import objetos.Alumno
 import objetos.Maestro
 import objetos.Materia
+import objetos.Observer
 
 object DAOMaterias {
 
+    var observadores = ArrayList<Observer>()
     var listaMaterias = ArrayList<Materia>()
 
      fun crearMateriasScript(){
@@ -32,6 +34,8 @@ object DAOMaterias {
                 }
             }
         })
+
+         notificar()
 
     }
 
@@ -85,6 +89,12 @@ object DAOMaterias {
 
     fun limpiar(){
         listaMaterias.clear()
+    }
+
+    fun notificar(){
+        for(i in observadores){
+            i.notificar()
+        }
     }
 }
 
