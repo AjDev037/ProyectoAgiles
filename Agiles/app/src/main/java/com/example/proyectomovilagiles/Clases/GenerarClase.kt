@@ -47,6 +47,8 @@ class GenerarClase : AppCompatActivity() {
         if(idTemp == null){
             println("ID CLASE NULO")
             Toast.makeText(this,"No hay clases el dia de hoy para la materia", Toast.LENGTH_LONG).show()
+            println("AAAAH")
+            finish()
         }
 
         if(getDiaActualAsDOW() == null){
