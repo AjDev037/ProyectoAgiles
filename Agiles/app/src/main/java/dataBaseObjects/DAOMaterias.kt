@@ -14,8 +14,6 @@ object DAOMaterias {
 
      fun crearMateriasScript(){
 
-
-
         val database = FirebaseDatabase.getInstance()
         val referencia = database.getReference("Materias")
         referencia.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -34,43 +32,6 @@ object DAOMaterias {
                 }
             }
         })
-
- /*        listaMaterias.clear()
-
-         var materia1 = Materia("00000001","Metodos Agiles","1824", null, DAOAlumnos.getAlumnos(),
-             DAOMaestro.getMaestro("000001111"), null, DAOHorarios.getHorario(0),DAOClases.getClases() )
-         var materia2 = Materia("00000002","Arquitectura","1825", null, DAOAlumnos.getAlumnos(),
-             DAOMaestro.getMaestro("000001111"), null, DAOHorarios.getHorario(1), DAOClases.getClases() )
-         var materia3 = Materia("00000003","Redes","1826", null, DAOAlumnos.getAlumnos(),
-             DAOMaestro.getMaestro("000002222"), null, DAOHorarios.getHorario(0),DAOClases.getClases() )
-         var materia4 = Materia("00000004","Seguridad Informatica","1827", null, DAOAlumnos.getAlumnos(),
-             DAOMaestro.getMaestro("000002222"), null, DAOHorarios.getHorario(1), DAOClases.getClases() )
-         var materia5 = Materia("00000005","Materia1","1828", null, DAOAlumnos.getAlumnos(),
-             DAOMaestro.getMaestro("000003333"), null, DAOHorarios.getHorario(0),DAOClases.getClases() )
-         var materia6 = Materia("00000006","Materia2","1829", null, DAOAlumnos.getAlumnos(),
-             DAOMaestro.getMaestro("000003333"), null, DAOHorarios.getHorario(1), DAOClases.getClases() )
-         var materia7 = Materia("00000007","Materia1","1834", null, DAOAlumnos.getAlumnos(),
-             DAOMaestro.getMaestro("000004444"), null, DAOHorarios.getHorario(0),DAOClases.getClases() )
-         var materia8 = Materia("00000008","Materia2","1835", null, DAOAlumnos.getAlumnos(),
-             DAOMaestro.getMaestro("000004444"), null, DAOHorarios.getHorario(1), DAOClases.getClases() )
-         var materia9 = Materia("00000009","Materia1","1835", null, DAOAlumnos.getAlumnos(),
-             DAOMaestro.getMaestro("000005555"), null, DAOHorarios.getHorario(0),DAOClases.getClases() )
-         var materia0 = Materia("00000010","Materia2","1837", null, DAOAlumnos.getAlumnos(),
-             DAOMaestro.getMaestro("000005555"), null, DAOHorarios.getHorario(1), DAOClases.getClases() )
-
-         agregarMaterias(materia1)
-         agregarMaterias(materia2)
-         agregarMaterias(materia3)
-         agregarMaterias(materia4)
-         agregarMaterias(materia5)
-         agregarMaterias(materia6)
-         agregarMaterias(materia7)
-         agregarMaterias(materia8)
-         agregarMaterias(materia9)
-         agregarMaterias(materia0)
-
-         listaMaterias.add(materia1)
-         listaMaterias.add(materia2)*/
 
     }
 
@@ -126,3 +87,43 @@ object DAOMaterias {
         listaMaterias.clear()
     }
 }
+
+
+
+/*        listaMaterias.clear()
+
+        var materia1 = Materia("00000001","Metodos Agiles","1824", null, DAOAlumnos.getAlumnos(),
+            DAOMaestro.getMaestro("000001111"), null, DAOHorarios.getHorario(0),DAOClases.getClases() )
+        var materia2 = Materia("00000002","Arquitectura","1825", null, DAOAlumnos.getAlumnos(),
+            DAOMaestro.getMaestro("000001111"), null, DAOHorarios.getHorario(1), DAOClases.getClases() )
+        var materia3 = Materia("00000003","Redes","1826", null, DAOAlumnos.getAlumnos(),
+            DAOMaestro.getMaestro("000002222"), null, DAOHorarios.getHorario(0),DAOClases.getClases() )
+        var materia4 = Materia("00000004","Seguridad Informatica","1827", null, DAOAlumnos.getAlumnos(),
+            DAOMaestro.getMaestro("000002222"), null, DAOHorarios.getHorario(1), DAOClases.getClases() )
+        var materia5 = Materia("00000005","Materia1","1828", null, DAOAlumnos.getAlumnos(),
+            DAOMaestro.getMaestro("000003333"), null, DAOHorarios.getHorario(0),DAOClases.getClases() )
+        var materia6 = Materia("00000006","Materia2","1829", null, DAOAlumnos.getAlumnos(),
+            DAOMaestro.getMaestro("000003333"), null, DAOHorarios.getHorario(1), DAOClases.getClases() )
+        var materia7 = Materia("00000007","Materia1","1834", null, DAOAlumnos.getAlumnos(),
+            DAOMaestro.getMaestro("000004444"), null, DAOHorarios.getHorario(0),DAOClases.getClases() )
+        var materia8 = Materia("00000008","Materia2","1835", null, DAOAlumnos.getAlumnos(),
+            DAOMaestro.getMaestro("000004444"), null, DAOHorarios.getHorario(1), DAOClases.getClases() )
+        var materia9 = Materia("00000009","Materia1","1835", null, DAOAlumnos.getAlumnos(),
+            DAOMaestro.getMaestro("000005555"), null, DAOHorarios.getHorario(0),DAOClases.getClases() )
+        var materia0 = Materia("00000010","Materia2","1837", null, DAOAlumnos.getAlumnos(),
+            DAOMaestro.getMaestro("000005555"), null, DAOHorarios.getHorario(1), DAOClases.getClases() )
+
+        agregarMaterias(materia1)
+        agregarMaterias(materia2)
+        agregarMaterias(materia3)
+        agregarMaterias(materia4)
+        agregarMaterias(materia5)
+        agregarMaterias(materia6)
+        agregarMaterias(materia7)
+        agregarMaterias(materia8)
+        agregarMaterias(materia9)
+        agregarMaterias(materia0)
+
+        listaMaterias.add(materia1)
+        listaMaterias.add(materia2)*/
+
