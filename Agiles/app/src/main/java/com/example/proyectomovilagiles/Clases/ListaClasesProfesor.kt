@@ -16,23 +16,11 @@ import kotlinx.android.synthetic.main.llenar_clases.view.*
 import objetos.Clase
 import objetos.Horario
 import objetos.Materia
+import objetos.Observer
 
-class ListaClasesProfesor : AppCompatActivity() {
-
-    var clases = ArrayList<Clase>()
-    var horario = Horario()
-    var idMat = ""
-    var materia = Materia()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_lista_clases)
-
-        //clases = intent.getSerializableExtra("clases") as ArrayList<Clase>
-
-        //val idMat = intent.getSerializableExtra("materia") as Materia
-        idMat = intent.getStringExtra("idMat")
-        materia = DAOMaterias.getMateria(idMat)
+class ListaClasesProfesor : AppCompatActivity(), Observer {
+    //Metodo de observer
+    override fun notificar() {
         horario = materia.horario!!
         clases = materia.clases
 
@@ -51,7 +39,27 @@ class ListaClasesProfesor : AppCompatActivity() {
             startActivityForResult(intent,0)
         }
 
+        //Lo removeremos al final nomas porque si uwu
+        DAOMaterias.observadores.remove(this)
+    }
 
+    var clases = ArrayList<Clase>()
+    var horario = Horario()
+    var idMat = ""
+    var materia = Materia()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_lista_clases)
+
+        //clases = intent.getSerializableExtra("clases") as ArrayList<Clase>
+
+        //val idMat = intent.getSerializableExtra("materia") as Materia
+        idMat = intent.getStringExtra("idMat")
+        DAOMaterias.observadores.add(this)
+        materia = DAOMaterias.getMateria(idMat)
+
+        //Esperaremos a que el DAO nos notifique
     }
     private class AdaptadorClientes : BaseAdapter {
 
