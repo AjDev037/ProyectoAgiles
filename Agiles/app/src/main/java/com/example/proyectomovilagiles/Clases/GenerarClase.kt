@@ -13,6 +13,7 @@ import com.google.zxing.WriterException
 import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.widget.Toast
 import com.example.proyectomovilagiles.*
 import dataBaseObjects.DAOClases
 import dataBaseObjects.DAOMaterias
@@ -45,6 +46,7 @@ class GenerarClase : AppCompatActivity() {
 
         if(idTemp == null){
             println("ID CLASE NULO")
+            Toast.makeText(this,"No hay clases el dia de hoy para la materia", Toast.LENGTH_LONG).show()
         }
 
         if(getDiaActualAsDOW() == null){
