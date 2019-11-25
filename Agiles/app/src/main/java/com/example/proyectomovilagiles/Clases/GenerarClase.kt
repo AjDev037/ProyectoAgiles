@@ -19,6 +19,7 @@ import dataBaseObjects.DAOClases
 import dataBaseObjects.DAOMaterias
 import kotlinx.android.synthetic.main.activity_generar_clase.*
 import objetos.*
+import java.lang.NullPointerException
 
 
 class GenerarClase : AppCompatActivity() {
@@ -46,27 +47,34 @@ class GenerarClase : AppCompatActivity() {
 
         if(idTemp == null){
             println("ID CLASE NULO")
-            Toast.makeText(this,"No hay clases el dia de hoy para la materia", Toast.LENGTH_LONG).show()
-            println("AAAAH")
-            finish()
+
         }
 
         if(getDiaActualAsDOW() == null){
             println("EL DIA ACTUAL ES NULO")
         }
-        var clase = Clase(idTemp!!, getDiaFromHorario(horario, getDiaActualAsDOW())!!, getFechaActual(),ArrayList<Asistencia>(),salon!!)
-        materia.clases.add(clase)
-        //DAOClases.crearClase(clase,idMat)
-        DAOMaterias.agregarMaterias(materia)
+
+        try{
+            var clase = Clase(idTemp!!, getDiaFromHorario(horario, getDiaActualAsDOW())!!, getFechaActual(),ArrayList<Asistencia>(),salon!!)
+            materia.clases.add(clase)
+            //DAOClases.crearClase(clase,idMat)
+            DAOMaterias.agregarMaterias(materia)
 
 
 
-        val horaClase = getHoraActual()
+            val horaClase = getHoraActual()
 
-        //Esto crea el QR
-        val myBitmap = encodeAsBitmap("$idMat.$idTemp.$horaClase")
-        //Setea el bitmap del qr a la pantalla
-        codigo.setImageBitmap(myBitmap)
+            //Esto crea el QR
+            val myBitmap = encodeAsBitmap("$idMat.$idTemp.$horaClase")
+            //Setea el bitmap del qr a la pantalla
+            codigo.setImageBitmap(myBitmap)
+        }catch (e:NullPointerException){
+            Toast.makeText(this,"No hay clases el dia de hoy para la materia", Toast.LENGTH_LONG).show()
+            println("AAAAH")
+            finish()
+        }
+
+
     }
 
     @Throws(WriterException::class)
