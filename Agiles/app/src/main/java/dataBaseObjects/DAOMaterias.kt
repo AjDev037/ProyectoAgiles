@@ -80,7 +80,7 @@ object DAOMaterias {
 
     fun getMateria(id:String): Materia {
         crearMateriasScript()
-        return listaMaterias.get(listaMaterias.indexOf(Materia(id)))
+        return listaMaterias[listaMaterias.indexOf(Materia(id))]
     }
 
     fun limpiar(){

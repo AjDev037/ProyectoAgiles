@@ -106,7 +106,7 @@ class ListaClasesProfesor : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         println("ENTRE AL ACTIVITYRESULT")
-
+        DAOMaterias.crearMateriasScript()
         materia = DAOMaterias.getMateria(idMat)
         horario = materia.horario!!
         clases = materia.clases
