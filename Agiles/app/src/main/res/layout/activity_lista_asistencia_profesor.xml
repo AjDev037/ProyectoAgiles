@@ -7,7 +7,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:background="@color/background"
         android:orientation="vertical"
-        tools:context=".Clases.ListaAsistenciaProfesor">
+        tools:context=".Asistencia.ListaAsistenciaProfesor">
 
     <TextView
             android:layout_width="match_parent"
@@ -108,7 +108,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/colorPrimaryDark"
-                android:id="@+id/btnLogin"
+                android:id="@+id/btnTomarAsist"
                 android:text="Tomar Asistencia"
                 android:layout_marginHorizontal="30dp"
                 android:layout_weight="10"/>

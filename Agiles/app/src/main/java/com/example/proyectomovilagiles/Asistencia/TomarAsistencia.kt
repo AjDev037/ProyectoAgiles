@@ -1,4 +1,4 @@
-package com.example.proyectomovilagiles.Clases
+package com.example.proyectomovilagiles.Asistencia
 
 import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
@@ -8,12 +8,14 @@ import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.google.zxing.WriterException
 import com.google.zxing.common.BitMatrix
-import dataBaseObjects.DAOMaterias
 import kotlinx.android.synthetic.main.activity_tomar_asistencia.*
-import objetos.Asistencia
-import objetos.Clase
 import objetos.Horario
 import objetos.Materia
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
+
 
 class TomarAsistencia : AppCompatActivity() {
 
@@ -30,7 +32,7 @@ class TomarAsistencia : AppCompatActivity() {
         val materia = intent.getSerializableExtra("materia") as Materia
         val idMat = materia.id
 
-        horario = intent.getSerializableExtra("horarioMat") as Horario
+        horario = materia.horario!!
 
         var idTemp = getIDFechaClase(horario, getDiaActualAsDOW())
         val horaClase = getHoraActual()
@@ -39,6 +41,15 @@ class TomarAsistencia : AppCompatActivity() {
         val myBitmap = encodeAsBitmap("$idMat.$idTemp.$horaClase")
         //Setea el bitmap del qr a la pantalla
         codigo.setImageBitmap(myBitmap)
+
+        btnTomarAsist.setOnClickListener {
+            this.finish()
+        }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        this.finish()
     }
 
 

@@ -44,7 +44,6 @@ class MenuMateriasProfesor : AppCompatActivity() {
             val intent = Intent(this, Login::class.java)
             startActivity(intent)
         }
-
     }
 
     fun crearMaterias(){

@@ -9,7 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import com.example.proyectomovilagiles.R
+import com.example.proyectomovilagiles.*
+import com.example.proyectomovilagiles.Asistencia.ListaAsistenciaProfesor
 import dataBaseObjects.DAOMaterias
 import kotlinx.android.synthetic.main.activity_lista_clases_profesor.*
 import kotlinx.android.synthetic.main.llenar_clases.view.*
@@ -40,11 +41,13 @@ class ListaClasesProfesor : AppCompatActivity(), Observer {
         var context: Context
         var clases: ArrayList<Clase>? = null
         var mat = Materia()
+        var horario = Horario()
 
-        constructor(context: Context, clases: ArrayList<Clase>, materia:Materia) {
+        constructor(context: Context, clases: ArrayList<Clase>, materia:Materia, horario:Horario) {
             this.context = context
             this.clases = clases
-            mat = materia
+            this.horario = horario
+            this.mat = materia
         }
 
 
@@ -96,18 +99,34 @@ class ListaClasesProfesor : AppCompatActivity(), Observer {
 
         horario = materia.horario!!
         clases = materia.clases
+        var salon = materia.salon
 
-        var salon = intent.getStringExtra("salon")
-
-        var adaptador = AdaptadorClientes(this,clases,materia)
+        var adaptador = AdaptadorClientes(this,clases,materia, horario)
         listasClases.adapter = adaptador
 
         btnNuevaClaseM.setOnClickListener {
+
+            var idTemp = getIDFechaClase(horario, getDiaActualAsDOW())
+
+            var clase = Clase(idTemp!!, getDiaFromHorario(horario, getDiaActualAsDOW())!!, getFechaActual(),ArrayList(),salon!!, "")
+            materia.clases.add(clase)
+
+            DAOMaterias.agregarMaterias(materia)
+
+            val intent = Intent(this, ListaAsistenciaProfesor::class.java)
+            intent.putExtra("asist",clase.asistencias)
+            intent.putExtra("materia", materia)
+            intent.putExtra("idClase", clase.id)
+            this.startActivityForResult(intent,0)
+
+            /*
             val intent = Intent(this,GenerarClase::class.java)
             intent.putExtra("horarioMat",horario)
             intent.putExtra("salon",salon)
             intent.putExtra("materia",materia)
             startActivityForResult(intent,0)
+
+             */
         }
 
         //Lo removeremos al final nomas porque si uwu

@@ -12,12 +12,12 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".Clases.TomarAsistencia"></activity>
+        <activity android:name=".Asistencia.TomarAsistencia"></activity>
         <activity android:name=".legacy.TomarAsistencia" />
-        <activity android:name=".Clases.GenerarClase" />
-        <activity android:name=".legacy.AsistenciaAlumno" />
+        <activity android:name=".legacy.GenerarClaseLegacy" />
+        <activity android:name=".legacy.AsistenciaAlumnoLegacy" />
         <activity android:name=".Clases.ListaClasesAlumno" />
-        <activity android:name=".Clases.ListaAsistenciaProfesor" />
+        <activity android:name=".Asistencia.ListaAsistenciaProfesor" />
         <activity android:name=".Clases.ListaClasesProfesor" />
         <activity android:name=".Materias.MenuMateriasAlumno" />
         <activity android:name=".Materias.MenuMateriasProfesor" />

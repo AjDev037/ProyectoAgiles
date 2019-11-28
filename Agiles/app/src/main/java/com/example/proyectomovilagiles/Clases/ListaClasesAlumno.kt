@@ -1,6 +1,5 @@
 package com.example.proyectomovilagiles.Clases
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
@@ -13,13 +12,12 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import com.example.proyectomovilagiles.R
 import com.example.proyectomovilagiles.getHoraActual
-import com.example.proyectomovilagiles.legacy.AsistenciaAlumno
+import com.example.proyectomovilagiles.legacy.AsistenciaAlumnoLegacy
 import com.google.zxing.Result
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import dataBaseObjects.DAOAsistencias
 import dataBaseObjects.DAOMaterias
 import kotlinx.android.synthetic.main.activity_lista_clases_alumno.*
 import kotlinx.android.synthetic.main.llenar_clases.view.*
@@ -196,7 +194,7 @@ class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler {
             }
 
             vista.setOnClickListener {
-                val intent = Intent(context, AsistenciaAlumno::class.java)
+                val intent = Intent(context, AsistenciaAlumnoLegacy::class.java)
                 var auxiliar = Asistencia()
                 println("DATOS DE LA ASISTENCIA")
                 println(cla.asistencias)

@@ -1,4 +1,4 @@
-package com.example.proyectomovilagiles.Clases
+package com.example.proyectomovilagiles.Asistencia
 
 import android.app.Activity
 import android.app.AlertDialog
@@ -12,12 +12,12 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.Toast
 import com.example.proyectomovilagiles.R
-import dataBaseObjects.DAOClases
 import dataBaseObjects.DAOMaterias
 import kotlinx.android.synthetic.main.activity_lista_asistencia_profesor.*
 import kotlinx.android.synthetic.main.llenar_asistencia_profesor.view.*
 import objetos.Asistencia
 import objetos.Clase
+import objetos.Horario
 import objetos.Materia
 
 class ListaAsistenciaProfesor : AppCompatActivity() {
@@ -29,19 +29,21 @@ class ListaAsistenciaProfesor : AppCompatActivity() {
         setContentView(R.layout.activity_lista_asistencia_profesor)
 
         asistencias = intent.getSerializableExtra("asist") as ArrayList<Asistencia>
-        //intent.putExtra("materia", mat)
-        //intent.putExtra("idClase", cla.id)
+
         var materia = intent.getSerializableExtra("materia") as Materia
+        val horario = materia.horario!!
+        val idMat = materia.id
+
         var clase = intent.getStringExtra("idClase")
         var adaptador =
             AdaptadorAsistencias(
                 this,
-                asistencias,materia,clase
+                asistencias, materia, clase
             )
         listasAsistencias.adapter = adaptador
 
-        btnLogin.setOnClickListener{
-            generarQR()
+        btnTomarAsist.setOnClickListener{
+            generarQR(horario, materia)
         }
 
         btnActualizar.setOnClickListener {
@@ -69,11 +71,11 @@ class ListaAsistenciaProfesor : AppCompatActivity() {
     }
 
 
-    fun generarQR(){
-        val intent = Intent(this,TomarAsistencia::class.java)
-        //intent.putExtra("horarioMat",horario)
-        //intent.putExtra("materia",idMat)
-        //startActivityForResult(intent,0)
+    fun generarQR(horario:Horario, materia:Materia){
+        val intent = Intent(this, TomarAsistencia::class.java)
+        intent.putExtra("horarioMat",horario)
+        intent.putExtra("materia",materia)
+        startActivityForResult(intent,0)
     }
 
     private class AdaptadorAsistencias : BaseAdapter {

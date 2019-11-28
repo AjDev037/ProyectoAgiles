@@ -1,27 +1,16 @@
-package com.example.proyectomovilagiles.Clases
+package com.example.proyectomovilagiles.legacy
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidmads.library.qrgenearator.QRGContents
-import androidmads.library.qrgenearator.QRGEncoder
-import com.google.zxing.qrcode.encoder.QRCode
-import android.graphics.Bitmap
-import com.google.zxing.BarcodeFormat
-import com.google.zxing.MultiFormatWriter
-import com.google.zxing.common.BitMatrix
-import com.google.zxing.WriterException
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import com.example.proyectomovilagiles.*
-import dataBaseObjects.DAOClases
+import com.example.proyectomovilagiles.Asistencia.TomarAsistencia
 import dataBaseObjects.DAOMaterias
 import kotlinx.android.synthetic.main.activity_generar_clase.*
 import objetos.*
 
 
-class GenerarClase : AppCompatActivity() {
+class GenerarClaseLegacy : AppCompatActivity() {
 
     var horario = Horario()
     var idMat = ""
@@ -58,13 +47,13 @@ class GenerarClase : AppCompatActivity() {
 
         DAOMaterias.agregarMaterias(materia)
 
-        btnLogin.setOnClickListener{
+        btnTomarAsist.setOnClickListener{
             generarQR()
         }
     }
 
     fun generarQR(){
-        val intent = Intent(this,TomarAsistencia::class.java)
+        val intent = Intent(this, TomarAsistencia::class.java)
             intent.putExtra("horarioMat",horario)
             intent.putExtra("materia",idMat)
         startActivityForResult(intent,0)

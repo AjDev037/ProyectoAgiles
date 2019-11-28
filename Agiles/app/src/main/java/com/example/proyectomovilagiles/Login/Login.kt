@@ -1,6 +1,5 @@
 package com.example.proyectomovilagiles.Login
 
-import android.app.Instrumentation
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -18,8 +17,6 @@ import dataBaseObjects.DAOMaterias
 import kotlinx.android.synthetic.main.activity_login.*
 import objetos.Alumno
 import objetos.Maestro
-import objetos.Observer
-import java.lang.Exception
 import java.lang.IndexOutOfBoundsException
 
 class Login : AppCompatActivity() {
@@ -74,7 +71,7 @@ class Login : AppCompatActivity() {
             }
         }
 
-        btnLogin.setOnClickListener {
+        btnTomarAsist.setOnClickListener {
             var id = txtUsuario.text.toString()
             var pass = txtPass.text.toString()
             if(validacion(id,pass,tipo)){

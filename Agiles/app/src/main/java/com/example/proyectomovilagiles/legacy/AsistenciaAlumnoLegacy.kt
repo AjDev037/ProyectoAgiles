@@ -7,7 +7,7 @@ import kotlinx.android.synthetic.main.activity_asistencia_alumno.*
 import objetos.Asistencia
 import objetos.Materia
 
-class AsistenciaAlumno : AppCompatActivity() {
+class AsistenciaAlumnoLegacy : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

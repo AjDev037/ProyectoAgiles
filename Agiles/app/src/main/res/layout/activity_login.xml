@@ -63,7 +63,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimaryDark"
-                android:id="@+id/btnLogin"
+                android:id="@+id/btnTomarAsist"
                 android:text="Entrar"
                 android:layout_marginHorizontal="50dp"
                 android:layout_gravity="center"/>
