@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.example.proyectomovilagiles.*
 import com.example.proyectomovilagiles.Clases.ListaClasesAlumno
@@ -35,7 +36,11 @@ class MenuMateriasAlumno : AppCompatActivity() {
         setContentView(R.layout.activity_menu_materias)
         DAOAlumnos.crearAlumnosScript()
         val preferencias = MyPreference(this)
-
+        if(preferencias.getVacio()){
+            Toast.makeText(this,"BD VACIA", Toast.LENGTH_LONG).show()
+        }else{
+            Toast.makeText(this,"BD Con datos", Toast.LENGTH_LONG).show()
+        }
 
         val alumno = intent.getSerializableExtra("alumno") as Alumno
 
