@@ -7,17 +7,8 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:background="@color/background"
         android:orientation="vertical"
-        tools:context=".Clases.GenerarClase">
-
-
-
-    <ImageView
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:id="@+id/codigo"
-            android:src="@drawable/common_google_signin_btn_text_light"/>
+        tools:context=".Clases.GenerarClase"
+        >
 
     <TextView
             android:layout_width="match_parent"
@@ -26,25 +17,86 @@
             android:textSize="30dp"
             android:textColor="@color/text"
             android:layout_gravity="center"
-            android:textAlignment="center"/>
+            android:textAlignment="center"
+            android:layout_margin="10dp"/>
 
-    <TextView
+    <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="?android:attr/listDivider" />
+
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=""
-            android:textSize="40dp"
-            android:textColor="@color/text"
-            android:layout_gravity="center"
-            android:textAlignment="center"/>
+            android:orientation="vertical"
+            android:layout_weight="1">
 
-    <Button
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Hito"
+                android:textSize="32dp"
+                android:textStyle="bold"
+                android:textColor="@color/text"
+                android:layout_gravity="center"
+                android:layout_margin="10dp" />
+
+        <EditText
+                android:id="@+id/editText2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text"
+                android:ems="10"
+                android:gravity="start|top"
+                android:inputType="textMultiLine"
+                android:text=""
+                android:hint="Ingrese un hito o mensaje para la clase..."
+                android:textColorHint="@color/hint"
+                android:layout_margin="10dp"/>
+
+        <View
+                android:id="@+id/divider2"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="?android:attr/listDivider" />
+
+        <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryDark"
+                android:id="@+id/btnActualizar"
+                android:text="Actualizar Clase"
+                android:layout_marginHorizontal="50dp"
+                android:layout_gravity="center"/>
+
+        <View
+                android:id="@+id/divider3"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="?android:attr/listDivider" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark"
-            android:id="@+id/btnLogin"
-            android:text="Finalizar Asistencia"
-            android:layout_marginHorizontal="50dp"
-            android:layout_gravity="center"/>
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:layout_margin="10dp">
+
+        <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryDark"
+                android:id="@+id/btnLogin"
+                android:text="Tomar Asistencia"
+                android:layout_marginHorizontal="30dp"/>
+
+
+    </LinearLayout>
 
 
 </LinearLayout>

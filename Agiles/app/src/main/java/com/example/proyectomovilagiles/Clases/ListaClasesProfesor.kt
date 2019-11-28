@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import com.example.proyectomovilagiles.R
 import dataBaseObjects.DAOMaterias
-import kotlinx.android.synthetic.main.activity_lista_clases.*
+import kotlinx.android.synthetic.main.activity_lista_clases_profesor.*
 import kotlinx.android.synthetic.main.llenar_clases.view.*
 import objetos.Clase
 import objetos.Horario
@@ -27,7 +27,7 @@ class ListaClasesProfesor : AppCompatActivity(), Observer {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_lista_clases)
+        setContentView(R.layout.activity_lista_clases_profesor)
 
         idMat = intent.getStringExtra("idMat")!!
         DAOMaterias.observadores.add(this)

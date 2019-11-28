@@ -1,5 +1,6 @@
 package com.example.proyectomovilagiles.Clases
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidmads.library.qrgenearator.QRGContents
@@ -22,22 +23,23 @@ import objetos.*
 
 class GenerarClase : AppCompatActivity() {
 
-    val WHITE = -0x1
-    val BLACK = -0x1000000
-    val WIDTH = 400
-    val HEIGHT = 400
     var horario = Horario()
+    var idMat = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_generar_clase)
+
         var salon = intent.getStringExtra("salon")
         println("SALON: $salon")
+
         val materia = intent.getSerializableExtra("materia") as Materia
-        val idMat = materia.id
+        idMat = materia.id
         println("MATERIA: $idMat")
+
         horario = intent.getSerializableExtra("horarioMat") as Horario
         println(horario.dias)
+
         if(horario == null) {
             println("HORAR NULO")
         }
@@ -50,21 +52,25 @@ class GenerarClase : AppCompatActivity() {
         if(getDiaActualAsDOW() == null){
             println("EL DIA ACTUAL ES NULO")
         }
+        
         var clase = Clase(idTemp!!, getDiaFromHorario(horario, getDiaActualAsDOW())!!, getFechaActual(),ArrayList<Asistencia>(),salon!!)
         materia.clases.add(clase)
-        //DAOClases.crearClase(clase,idMat)
+
         DAOMaterias.agregarMaterias(materia)
 
-
-
-        val horaClase = getHoraActual()
-
-        //Esto crea el QR
-        val myBitmap = encodeAsBitmap("$idMat.$idTemp.$horaClase")
-        //Setea el bitmap del qr a la pantalla
-        codigo.setImageBitmap(myBitmap)
+        btnLogin.setOnClickListener{
+            generarQR()
+        }
     }
 
+    fun generarQR(){
+        val intent = Intent(this,TomarAsistencia::class.java)
+            intent.putExtra("horarioMat",horario)
+            intent.putExtra("materia",idMat)
+        startActivityForResult(intent,0)
+    }
+
+    /*
     @Throws(WriterException::class)
     fun encodeAsBitmap(str: String): Bitmap? {
         val result: BitMatrix
@@ -92,4 +98,5 @@ class GenerarClase : AppCompatActivity() {
         bitmap.setPixels(pixels, 0, w, 0, 0, w, h)
         return bitmap
     }
+    */
 }
