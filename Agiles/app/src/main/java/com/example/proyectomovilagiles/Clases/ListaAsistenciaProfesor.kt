@@ -12,10 +12,12 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.Toast
 import com.example.proyectomovilagiles.R
+import dataBaseObjects.DAOClases
 import dataBaseObjects.DAOMaterias
 import kotlinx.android.synthetic.main.activity_lista_asistencia_profesor.*
 import kotlinx.android.synthetic.main.llenar_asistencia_profesor.view.*
 import objetos.Asistencia
+import objetos.Clase
 import objetos.Materia
 
 class ListaAsistenciaProfesor : AppCompatActivity() {
@@ -37,6 +39,41 @@ class ListaAsistenciaProfesor : AppCompatActivity() {
                 asistencias,materia,clase
             )
         listasAsistencias.adapter = adaptador
+
+        btnLogin.setOnClickListener{
+            generarQR()
+        }
+
+        btnActualizar.setOnClickListener {
+            var claseTemp:Clase? = null
+
+            for (i in materia.clases){
+                if(i.id == clase){
+                    claseTemp = i
+                    break
+                }
+            }
+
+            if (claseTemp != null) {
+                actualizarClase(materia, claseTemp)
+            }
+        }
+    }
+
+    fun actualizarClase(materia: Materia, clase: Clase){
+        //Esto estara bien ?...
+        clase.hito = txtHito.text.toString()
+
+        //Actualizamos los datos de la clase ?
+        DAOMaterias.agregarMaterias(materia)
+    }
+
+
+    fun generarQR(){
+        val intent = Intent(this,TomarAsistencia::class.java)
+        //intent.putExtra("horarioMat",horario)
+        //intent.putExtra("materia",idMat)
+        //startActivityForResult(intent,0)
     }
 
     private class AdaptadorAsistencias : BaseAdapter {

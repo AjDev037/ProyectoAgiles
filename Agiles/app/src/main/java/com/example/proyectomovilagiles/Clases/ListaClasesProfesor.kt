@@ -106,7 +106,7 @@ class ListaClasesProfesor : AppCompatActivity(), Observer {
             val intent = Intent(this,GenerarClase::class.java)
             intent.putExtra("horarioMat",horario)
             intent.putExtra("salon",salon)
-            intent.putExtra("materia",idMat)
+            intent.putExtra("materia",materia)
             startActivityForResult(intent,0)
         }
 
