@@ -38,7 +38,12 @@ object DAOMaestro {
 
     fun getMaestros():ArrayList<Maestro>{
         //TODO: Conectarse a la base de datos y regresar la lista
-        crearMaestrosScript()
+        while (listaMaestros.isEmpty()){
+            crearMaestrosScript()
+            if(listaMaestros.isNotEmpty()){
+                break
+            }
+        }
         return listaMaestros
     }
 
@@ -50,7 +55,7 @@ object DAOMaestro {
 
     fun getMaestro(id:String): Maestro {
         crearMaestrosScript()
-        return listaMaestros.get(listaMaestros.indexOf(Maestro(id)))
+        return listaMaestros[listaMaestros.indexOf(Maestro(id))]
     }
 
     fun limpiar(){

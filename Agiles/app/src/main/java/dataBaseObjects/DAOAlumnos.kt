@@ -15,7 +15,6 @@ object DAOAlumnos {
     fun crearAlumnosScript(){
 
         val database = FirebaseDatabase.getInstance()
-
         val referencia = database.getReference("Alumnos")
         referencia.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {}
@@ -27,8 +26,7 @@ object DAOAlumnos {
 
                     for (child in children) {
                         var alumno = child.getValue(Alumno::class.java)
-                        println(alumno!!.nombre)
-                        listaAlumnos.add(alumno)
+                        listaAlumnos.add(alumno!!)
                     }
                 }
 
@@ -57,7 +55,6 @@ object DAOAlumnos {
 
     fun getAlumno(id:String): Alumno {
         crearAlumnosScript()
-
         return listaAlumnos[listaAlumnos.indexOf(Alumno(id))]
     }
 
