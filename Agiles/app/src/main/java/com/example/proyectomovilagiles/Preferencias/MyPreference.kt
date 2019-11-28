@@ -7,6 +7,7 @@ class MyPreference(context: Context){
     val ID = "usuario"
     val PASS = "Pass"
     val TIPO = "tipoMaestro"
+    val VACIO = "Vacio"
 
     val preference = context.getSharedPreferences(ID,Context.MODE_PRIVATE)
 
@@ -39,6 +40,16 @@ class MyPreference(context: Context){
 
     fun getTipo():Boolean?{
         return preference.getBoolean(TIPO,false)
+    }
+
+    fun setVacio(vacio:Boolean){
+        val editor = preference.edit()
+        editor.putBoolean(VACIO,vacio)
+        editor.apply()
+    }
+
+    fun getVacio():Boolean{
+        return preference.getBoolean(VACIO,true)
     }
 
 }

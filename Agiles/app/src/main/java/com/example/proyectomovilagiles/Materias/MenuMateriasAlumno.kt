@@ -9,11 +9,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.example.proyectomovilagiles.*
 import com.example.proyectomovilagiles.Clases.ListaClasesAlumno
 import com.example.proyectomovilagiles.Login.Login
 import com.example.proyectomovilagiles.Preferencias.MyPreference
+import com.example.proyectomovilagiles.SQL.DbHandler
 import dataBaseObjects.DAOAlumnos
 import dataBaseObjects.DAOMaterias
 import kotlinx.android.synthetic.main.activity_menu_materias.*
@@ -35,7 +37,11 @@ class MenuMateriasAlumno : AppCompatActivity() {
         setContentView(R.layout.activity_menu_materias)
         DAOAlumnos.crearAlumnosScript()
         val preferencias = MyPreference(this)
-
+        if(preferencias.getVacio()){
+            Toast.makeText(this,"BD VACIA", Toast.LENGTH_LONG).show()
+        }else{
+            Toast.makeText(this,"BD Con datos", Toast.LENGTH_LONG).show()
+        }
 
         val alumno = intent.getSerializableExtra("alumno") as Alumno
 
@@ -131,6 +137,7 @@ class MenuMateriasAlumno : AppCompatActivity() {
             contexto = context
             this.materias = materias
             this.id = id
+            llenarBD()
         }
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
@@ -200,6 +207,19 @@ class MenuMateriasAlumno : AppCompatActivity() {
 
         override fun getCount(): Int {
             return materias.size
+        }
+
+        fun llenarBD(){
+            var preferencias = MyPreference(contexto!!)
+            if(preferencias.getVacio()){
+                val db = DbHandler(contexto!!)
+                for( m in materias){
+                    for( h in m.horario!!.dias){
+                        db.insertarDatos(h.diaSemana,h.ini,m.nombre)
+                    }
+                }
+                preferencias.setVacio(false)
+            }
         }
 
 
