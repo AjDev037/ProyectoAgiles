@@ -1,11 +1,18 @@
 package com.example.proyectomovilagiles;
 
+import android.app.Notification;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
 public class MyService extends Service {
     public MyService() {
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        startForeground(1,new Notification());
     }
 
     @Override
