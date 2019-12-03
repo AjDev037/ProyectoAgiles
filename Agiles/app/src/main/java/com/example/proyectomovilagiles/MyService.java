@@ -18,6 +18,8 @@ public class MyService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         System.out.println("ESTOY EN EL SERVICIO");
+        Hilo hilo = new Hilo();
+        new Thread(hilo).start();
         return super.onStartCommand(intent, flags, startId);
     }
 
