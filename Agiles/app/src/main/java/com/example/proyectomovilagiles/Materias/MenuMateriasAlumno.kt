@@ -41,6 +41,7 @@ class MenuMateriasAlumno : AppCompatActivity() {
 
 
         mats = DAOMaterias.getMateriasAlumno(alumno.id)
+        iniciarServicio()
 
         siguiente = getSiguienteCardMateria()
         if (siguiente != null) {
@@ -108,6 +109,10 @@ class MenuMateriasAlumno : AppCompatActivity() {
         }
     }
      */
+
+    fun iniciarServicio(){
+
+    }
 
     fun crearMaterias(){
         var materia1 = Materia("Materia1", "Hoy", "Hora Actual", "1800s",
