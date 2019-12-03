@@ -22,6 +22,12 @@ import objetos.Alumno
 import objetos.Dia
 import objetos.Horario
 import objetos.Materia
+import androidx.core.content.ContextCompat.startForegroundService
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
+
 
 class MenuMateriasAlumno : AppCompatActivity() {
 
@@ -111,7 +117,11 @@ class MenuMateriasAlumno : AppCompatActivity() {
      */
 
     fun iniciarServicio(){
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(Intent(this, MyService::class.java))
+        } else {
+            startService(Intent(this, MyService::class.java))
+        }
     }
 
     fun crearMaterias(){

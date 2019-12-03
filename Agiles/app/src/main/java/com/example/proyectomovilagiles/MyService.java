@@ -10,6 +10,7 @@ public class MyService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        System.out.println("ESTOY EN EL SERVICIO");
         return super.onStartCommand(intent, flags, startId);
     }
 
