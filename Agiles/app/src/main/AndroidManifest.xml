@@ -12,7 +12,12 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".Asistencia.TomarAsistencia"></activity>
+        <service
+                android:name=".MyService"
+                android:enabled="true"
+                android:exported="true"></service>
+
+        <activity android:name=".Asistencia.TomarAsistencia" />
         <activity android:name=".legacy.TomarAsistencia" />
         <activity android:name=".legacy.GenerarClaseLegacy" />
         <activity android:name=".legacy.AsistenciaAlumnoLegacy" />
