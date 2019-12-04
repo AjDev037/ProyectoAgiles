@@ -20,6 +20,7 @@ public class MyService extends Service implements Observer {
 
     private final static String CHANNEL_ID = "NOTIFICACION";
     private final static int NOTIFICACION_ID = 0;
+    Comparacion hilo;
 
     public MyService() {
     }
@@ -28,14 +29,16 @@ public class MyService extends Service implements Observer {
     public void onCreate() {
         super.onCreate();
         startForeground(1,new Notification());
+        hilo = new Comparacion(this);
+        //notificacionChannel();
+        //crearNotificacion();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         System.out.println("ESTOY EN EL SERVICIO");
-        Hilo hilo = new Hilo(this);
         new Thread(hilo).start();
-        return super.onStartCommand(intent, flags, startId);
+        return Service.START_STICKY;
     }
 
     @Override
@@ -48,17 +51,17 @@ public class MyService extends Service implements Observer {
     public void notificar(@NotNull String name) {
         System.out.println("ME NOTIFICARON");
         notificacionChannel();
-        crearNotificacion();
+        crearNotificacion(name);
     }
 
-    public void crearNotificacion(){
+    public void crearNotificacion(String str){
         NotificationCompat.Builder notificacion = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID);
-        notificacion.setSmallIcon(R.drawable.ic_launcher_foreground);
+        notificacion.setSmallIcon(R.mipmap.ic_launcher);
         notificacion.setTicker("Notificacion por tiempo");
         notificacion.setWhen(System.currentTimeMillis());
         notificacion.setPriority(NotificationCompat.PRIORITY_DEFAULT);
         notificacion.setContentTitle("Se acabo el tiempo");
-        notificacion.setContentText("APACHURRALE");
+        notificacion.setContentText(str);
 
         NotificationManagerCompat nm = NotificationManagerCompat.from(getApplicationContext());
         assert nm != null;

@@ -1,5 +1,9 @@
 package com.example.proyectomovilagiles;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+
 import objetos.Observer;
 
 public class Hilo implements Runnable {
@@ -12,23 +16,21 @@ public class Hilo implements Runnable {
 
     @Override
     public void run() {
-        for(int i= 0; i<= 15;i++){
-
-            try {
-                System.out.println("ME DORMI");
-
-                Thread.sleep(1000);
-                System.out.println("ESTOY IMPRIMIENDO EL NUMERO: " + i);
-                if(i == 15){
-                    obs.notificar("Hilo");
-                    System.out.println("YA NO VOY A CONTAR, QUE HUEVA");
-                }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        while (true){
+            if(getHoraActual().equals("17:50") || getHoraActual().equals("5:50")){
+                obs.notificar("Hilo");
             }
-            //createNotification();
-
-
         }
+
+    }
+
+    private String getHoraActual() {
+        LocalDateTime fechaActual = LocalDateTime.now();
+        DateTimeFormatter dt = DateTimeFormatter.ofPattern("HH:mm");
+        String horaFormateada = fechaActual.format(dt);
+
+
+
+        return horaFormateada;
     }
 }
