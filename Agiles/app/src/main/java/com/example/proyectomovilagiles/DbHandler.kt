@@ -28,13 +28,16 @@ class DbHandler(context: Context):SQLiteOpenHelper(context, NOMBRE_BD,null,1){
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    fun insertData(materia:Materia){
+    fun insertarDatos(dia:String, hora:String, nombre:String){
+
+
         val db = this.writableDatabase
         var cv = ContentValues()
-        cv.put(COL_MAT,"")
-        cv.put(COL_DIA,"")
-        cv.put(COL_HORA,"")
+        cv.put(COL_MAT,nombre)
+        cv.put(COL_DIA,dia)
+        cv.put(COL_HORA,hora)
         db.insert(NOMBRE_TABLA,null,cv)
     }
+
 
 }

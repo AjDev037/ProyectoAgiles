@@ -26,7 +26,7 @@ import androidx.core.content.ContextCompat.startForegroundService
 import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-
+import android.widget.Toast
 
 
 class MenuMateriasAlumno : AppCompatActivity() {
@@ -41,7 +41,11 @@ class MenuMateriasAlumno : AppCompatActivity() {
         setContentView(R.layout.activity_menu_materias)
         DAOAlumnos.crearAlumnosScript()
         val preferencias = MyPreference(this)
-
+        if(preferencias.getVacio()){
+            Toast.makeText(this,"BD VACIA", Toast.LENGTH_LONG).show()
+        }else{
+            Toast.makeText(this,"BD Con datos", Toast.LENGTH_LONG).show()
+        }
 
         val alumno = intent.getSerializableExtra("alumno") as Alumno
 
@@ -146,6 +150,7 @@ class MenuMateriasAlumno : AppCompatActivity() {
             contexto = context
             this.materias = materias
             this.id = id
+            llenarBD()
         }
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
@@ -215,6 +220,19 @@ class MenuMateriasAlumno : AppCompatActivity() {
 
         override fun getCount(): Int {
             return materias.size
+        }
+
+        fun llenarBD(){
+            var preferencias = MyPreference(contexto!!)
+            if(preferencias.getVacio()){
+                val db = DbHandler(contexto!!)
+                for( m in materias){
+                    for( h in m.horario!!.dias){
+                        db.insertarDatos(h.diaSemana,h.ini,m.nombre)
+                    }
+                }
+                preferencias.setVacio(false)
+            }
         }
 
 
