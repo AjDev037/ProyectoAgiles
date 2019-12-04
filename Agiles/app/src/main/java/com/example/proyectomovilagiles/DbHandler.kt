@@ -31,7 +31,10 @@ class DbHandler(context: Context):SQLiteOpenHelper(context, NOMBRE_BD,null,1){
     fun insertData(materia:Materia){
         val db = this.writableDatabase
         var cv = ContentValues()
-        //cv.put(CO)
+        cv.put(COL_MAT,"")
+        cv.put(COL_DIA,"")
+        cv.put(COL_HORA,"")
+        db.insert(NOMBRE_TABLA,null,cv)
     }
 
 }
