@@ -70,7 +70,7 @@ class DbHandler(context: Context):SQLiteOpenHelper(context, NOMBRE_BD,null,1){
         val db = this.writableDatabase
         db.delete(NOMBRE_TABLA,null,null)
         db.execSQL("DELETE FROM $NOMBRE_TABLA")
-        db.execSQL("TRUNCATE table" + NOMBRE_TABLA)
+        //db.execSQL("TRUNCATE table" + NOMBRE_TABLA)
         db.close()
     }
 

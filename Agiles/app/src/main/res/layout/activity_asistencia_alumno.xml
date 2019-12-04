@@ -119,14 +119,22 @@
                     android:textSize="20dp"
                     />
 
-            <Button
+            <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorPrimaryDark"
-                    android:id="@+id/btnJustificacion"
-                    android:text="Justificacion"
-                    android:layout_marginHorizontal="50dp"
-                    android:layout_gravity="center"/>
+                    android:text="Hito:"
+                    android:textColor="@color/textMain"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+            <TextView
+                    android:id="@+id/txtHito"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Hora"
+                    android:textColor="@color/textMain"
+                    android:textSize="20dp"
+                    />
 
         </LinearLayout>
 

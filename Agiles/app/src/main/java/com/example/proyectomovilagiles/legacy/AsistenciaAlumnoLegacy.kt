@@ -15,17 +15,26 @@ class AsistenciaAlumnoLegacy : AppCompatActivity() {
 
 
         var asistencia = intent.getSerializableExtra("asist") as Asistencia
+        var hito = intent.getStringExtra("hito")
 
-
-        nomAlumno.text = asistencia.alumno.nombre
-        if(asistencia.estado == 0){
-            txtAsistencia.text = "Retardo"
-        }else if(asistencia.estado == 1){
-            txtAsistencia.text = "Asistencia"
+        if(asistencia.hora != ""){
+            nomAlumno.text = asistencia.alumno.nombre
+            if(asistencia.estado == 0){
+                txtAsistencia.text = "Retardo"
+            }else if(asistencia.estado == 1){
+                txtAsistencia.text = "Asistencia"
+            }else{
+                txtAsistencia.text = "Falta"
+            }
+            txtHora.text = asistencia.hora
         }else{
-            txtAsistencia.text = "Falta"
+            nomAlumno.text = ""
+            txtAsistencia.text = "No registrada"
+            txtHora.text = ""
         }
-        txtHora.text = asistencia.hora
+
+        txtHito.text = hito
+
 
     }
 }

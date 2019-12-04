@@ -1,5 +1,6 @@
 package com.example.proyectomovilagiles.Clases
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
@@ -46,6 +47,8 @@ class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler {
         //clases = intent.getSerializableExtra("clases") as ArrayList<Clase>
         alumno = intent.getSerializableExtra("id") as Alumno
         llenarClases(idMateria)
+        var adaptador = AdaptadorClases(this,materia.clases,alumno.nombre)
+        listasClasesAlumno.adapter = adaptador
 
         btnAsistencia.setOnClickListener {
             mScanner = ZXingScannerView(this)
@@ -203,8 +206,9 @@ class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler {
                         auxiliar = x
                     }
                 }
-                //intent.putExtra("asist",auxiliar)
-                //(context as Activity).startActivity(intent)
+                intent.putExtra("asist",auxiliar)
+                intent.putExtra("hito", cla.hito)
+                (context as Activity).startActivity(intent)
             }
             return vista
 
