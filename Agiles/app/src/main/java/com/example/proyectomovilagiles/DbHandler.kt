@@ -18,9 +18,8 @@ class DbHandler(context: Context):SQLiteOpenHelper(context, NOMBRE_BD,null,1){
 
     override fun onCreate(p0: SQLiteDatabase?) {
 
-        val createTable = "CREATE TABLE $NOMBRE_BD ($COL_MAT VARCHAR(50), $COL_HORA VARCHAR(50), $COL_DIA VARCHAR(50)"
-
-        p0?.execSQL(createTable)
+        val tabla = "CREATE TABLE $NOMBRE_TABLA ($COL_MAT VARCHAR(50), $COL_HORA VARCHAR(50), $COL_DIA VARCHAR(50))"
+        p0?.execSQL(tabla)
 
     }
 

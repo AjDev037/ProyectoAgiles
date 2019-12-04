@@ -38,7 +38,7 @@ class Login : AppCompatActivity() {
         DAOMaterias.crearMateriasScript()
 
         val preferencias = MyPreference(this)
-        preferencias.setVacio(true)
+        //preferencias.setVacio(true)
 
         //val intent = Intent(this, MenuMateriasProfesor::class.java)
 
