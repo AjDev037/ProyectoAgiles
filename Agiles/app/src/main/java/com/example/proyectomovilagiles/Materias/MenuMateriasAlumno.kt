@@ -65,6 +65,9 @@ class MenuMateriasAlumno : AppCompatActivity() {
         btnSalir.setOnClickListener {
             preferencias.setPass("")
             preferencias.setId("")
+            preferencias.setVacio(true)
+            val db = DbHandler(this)
+            db.borrarDatos()
             val intent = Intent(this, Login::class.java)
             startActivity(intent)
         }

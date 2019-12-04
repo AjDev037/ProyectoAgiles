@@ -5,25 +5,28 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 import objetos.Observer
 
-class Comparacion(var obs:Observer): Runnable{
+
+class Comparacion(var obs:Observer, var db : DbHandler): Runnable{
 
     val observer :Observer = obs
+    var bd : DbHandler = db
+    var notificado = false;
 
 
     override fun run() {
         while (true){
-            if(getHoraActual() == "11:06" || getHoraActual() == "23:06"){
-                observer.notificar("Es la hora")
+            for( mat in bd.leerDatos()){
+                if(mat.dia == getDiaActual()){
+                    if(mat.hora == getHoraActual()){
+                            observer.notificar(mat.nombre)
+                            notificado = true
+                    }
+                }
+                Thread.sleep(3000)
             }
         }
     }
 
-    fun getHoraActual(): String{
-        val fechaActual = LocalDateTime.now()
-        val formateadorHora = DateTimeFormatter.ofPattern("HH:mm")
-        val horaFormateada = fechaActual.format(formateadorHora)
 
-        return horaFormateada
-    }
 
 }

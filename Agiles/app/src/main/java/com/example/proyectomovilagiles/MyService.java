@@ -29,7 +29,8 @@ public class MyService extends Service implements Observer {
     public void onCreate() {
         super.onCreate();
         startForeground(1,new Notification());
-        hilo = new Comparacion(this);
+        DbHandler db = new DbHandler(getApplicationContext());
+        hilo = new Comparacion(this,db);
         //notificacionChannel();
         //crearNotificacion();
     }
@@ -60,8 +61,8 @@ public class MyService extends Service implements Observer {
         notificacion.setTicker("Notificacion por tiempo");
         notificacion.setWhen(System.currentTimeMillis());
         notificacion.setPriority(NotificationCompat.PRIORITY_DEFAULT);
-        notificacion.setContentTitle("Se acabo el tiempo");
-        notificacion.setContentText(str);
+        notificacion.setContentTitle(str);
+        notificacion.setContentText("Tienes una clase pronto");
 
         NotificationManagerCompat nm = NotificationManagerCompat.from(getApplicationContext());
         assert nm != null;
@@ -70,7 +71,7 @@ public class MyService extends Service implements Observer {
 
     public void notificacionChannel(){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            CharSequence name = "Notificacion";
+            CharSequence name = "Clase";
             NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, name, NotificationManager.IMPORTANCE_DEFAULT);
             NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             notificationManager.createNotificationChannel(notificationChannel);

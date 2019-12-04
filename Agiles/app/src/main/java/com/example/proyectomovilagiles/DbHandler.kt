@@ -2,9 +2,11 @@ package com.example.proyectomovilagiles
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import objetos.Materia
+import objetos.MateriaBD
 
 val NOMBRE_BD = "MateriasDB"
 val NOMBRE_TABLA = "Materias"
@@ -36,6 +38,40 @@ class DbHandler(context: Context):SQLiteOpenHelper(context, NOMBRE_BD,null,1){
         cv.put(COL_DIA,dia)
         cv.put(COL_HORA,hora)
         db.insert(NOMBRE_TABLA,null,cv)
+    }
+
+    fun leerDatos():ArrayList<MateriaBD>{
+        var lista = ArrayList<MateriaBD>()
+
+        var db = this.readableDatabase
+        val query = "SELECT * FROM $NOMBRE_TABLA"
+        var result :Cursor? = null
+        try {
+            result = db.rawQuery(query,null)
+            if(result!!.moveToFirst()){
+                do{
+                    var materia = MateriaBD()
+                    materia.nombre = result.getString(result.getColumnIndex(COL_MAT))
+                    materia.hora = result.getString(result.getColumnIndex(COL_HORA))
+                    materia.dia = result.getString(result.getColumnIndex(COL_DIA))
+                    lista.add(materia)
+                } while(result.moveToNext())
+
+            }
+        } finally {
+            // this gets called even if there is an exception somewhere above
+            result?.close()
+        }
+
+        return lista
+    }
+
+    fun borrarDatos(){
+        val db = this.writableDatabase
+        db.delete(NOMBRE_TABLA,null,null)
+        db.execSQL("DELETE FROM $NOMBRE_TABLA")
+        db.execSQL("TRUNCATE table" + NOMBRE_TABLA)
+        db.close()
     }
 
 
