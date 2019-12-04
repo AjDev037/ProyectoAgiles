@@ -38,7 +38,7 @@ public class MyService extends Service implements Observer {
     public int onStartCommand(Intent intent, int flags, int startId) {
         System.out.println("ESTOY EN EL SERVICIO");
         new Thread(hilo).start();
-        return Service.START_STICKY;
+        return Service.START_NOT_STICKY;
     }
 
     @Override
