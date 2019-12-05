@@ -35,42 +35,38 @@
 
             <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:layout_weight="2">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                 <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Hito"
-                        android:textSize="20dp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         android:textColor="@color/text"
                         android:layout_gravity="center"
                         android:layout_marginHorizontal="10dp" />
 
-                <EditText
+                <TextView
                         android:id="@+id/txtHito"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/text"
                         android:ems="10"
                         android:gravity="start|top"
-                        android:inputType="textMultiLine"
                         android:text=""
-                        android:hint="Ingrese un hito o mensaje para la clase..."
-                        android:textColorHint="@color/hint"
                         android:layout_margin="10dp"/>
 
                 <View
                         android:id="@+id/divider2"
                         android:layout_width="match_parent"
-                        android:layout_height="10dp"
+                        android:layout_height="5dp"
                         android:background="?android:attr/listDivider" />
 
                 <Button
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="30dp"
                         android:background="@color/colorPrimaryDark"
                         android:id="@+id/btnActualizar"
                         android:text="Actualizar Clase"
@@ -80,7 +76,7 @@
                 <View
                         android:id="@+id/divider3"
                         android:layout_width="match_parent"
-                        android:layout_height="10dp"
+                        android:layout_height="5dp"
                         android:background="?android:attr/listDivider" />
 
             </LinearLayout>

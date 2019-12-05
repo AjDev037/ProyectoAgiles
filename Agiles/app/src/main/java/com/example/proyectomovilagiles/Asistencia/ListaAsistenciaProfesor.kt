@@ -4,15 +4,18 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.proyectomovilagiles.R
 import com.example.proyectomovilagiles.getFechaActual
+import com.example.proyectomovilagiles.getFechaValueFromFecha
 import dataBaseObjects.DAOMaterias
 import kotlinx.android.synthetic.main.activity_lista_asistencia_profesor.*
 import kotlinx.android.synthetic.main.llenar_asistencia_profesor.view.*
@@ -21,10 +24,11 @@ import objetos.Clase
 import objetos.Horario
 import objetos.Materia
 
+
 class ListaAsistenciaProfesor : AppCompatActivity() {
 
     var asistencias = ArrayList<Asistencia>()
-    val hitoLength = 100
+    val hitoMaxLength = 100
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,48 +40,83 @@ class ListaAsistenciaProfesor : AppCompatActivity() {
         val horario = materia.horario!!
         val idMat = materia.id
 
-        var clase = intent.getStringExtra("idClase")
+
+        var clase = intent.getSerializableExtra("clase") as Clase
         var adaptador =
             AdaptadorAsistencias(
                 this,
-                asistencias, materia, clase
+                asistencias, materia, clase.id
             )
         listasAsistencias.adapter = adaptador
+
+        clase = materia.clases[materia.clases.indexOf(clase)]
+
+        txtHito.text = clase.hito
 
         btnTomarAsist.setOnClickListener {
             generarQR(horario, materia)
         }
 
         btnActualizar.setOnClickListener {
-            var claseTemp: Clase? = null
-
-            for (i in materia.clases) {
-                if (i.id == clase) {
-                    claseTemp = i
-                    break
-                }
-            }
-
-            if (claseTemp != null) {
-                actualizarClase(materia, claseTemp)
+            //Si la fecha de la clase es despues o igual a hoy
+            if (getFechaValueFromFecha(clase.fecha) >= getFechaValueFromFecha(getFechaActual())) {
+                //Permitimos que se ingrese el hito
+                ingresarHito(materia, clase)
+            } else {
+                //Mostramos un mensaje de error
+                Toast.makeText(
+                    this,
+                    "No se puede actualizar el hito de una clase pasada!",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
     }
 
-    fun actualizarClase(materia: Materia, clase: Clase) {
-        //Si la fecha de la clase es despues o igual a hoy
-        if (clase.fecha >= getFechaActual()) {
-            //Agregamos un hito
-            if(txtHito.text.toString().length > hitoLength){
-                Toast.makeText(this,
-                    "El Hito no puede ser de una longitud mayor que $hitoLength", Toast.LENGTH_LONG).show()
-            } else {
-                clase.hito = txtHito.text.toString().substring(0, hitoLength)
+    fun ingresarHito(materia: Materia, clase: Clase) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Hito")
 
-                //Actualizamos los datos de la clase ?
-                DAOMaterias.agregarMaterias(materia)
-            }
+        // Set up the input
+        val input = EditText(this)
+        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+        input.inputType = InputType.TYPE_TEXT_FLAG_MULTI_LINE
+        builder.setView(input)
+        // Set up the buttons
+        builder.setPositiveButton(
+            "Guardar"
+        ) { dialog, which -> actualizarClase(materia, clase, input.text.toString()) }
+        builder.setNegativeButton(
+            "Cancelar"
+        ) { dialog, which -> dialog.cancel() }
+
+        builder.show()
+    }
+
+
+    fun actualizarClase(materia: Materia, clase: Clase, hitoText: String) {
+        //Obtenemos la longitud del hito
+        val hitoLenght = hitoText.length
+
+        //Si la longitud del hito es mayor que el maximo definido
+        if (hitoLenght > hitoMaxLength) {
+            //Mostramos un mensaje de error
+            Toast.makeText(
+                this,
+                "El Hito no puede ser de una longitud mayor que $hitoMaxLength",
+                Toast.LENGTH_LONG
+            ).show()
+
+            //Si la longitud del hito es menor o igual que la maxima
+        } else {
+            //El hito de la clase lo igualamos al string
+            clase.hito = hitoText
         }
+
+        //Y actualizamos el texto
+        txtHito.text = clase.hito
+        //Y finalmente actualizamos los datos de la clase
+        DAOMaterias.agregarMaterias(materia)
     }
 
 
