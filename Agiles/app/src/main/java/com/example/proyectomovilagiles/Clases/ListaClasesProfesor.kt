@@ -33,6 +33,47 @@ class ListaClasesProfesor : AppCompatActivity(), Observer {
 
         //Esperaremos a que el DAO nos notifique
     }
+
+    //Metodo de observer
+    override fun notificar(name: String) {
+        materia = DAOMaterias.getMateria(idMat)
+
+        horario = materia.horario!!
+        clases = materia.clases
+        var salon = materia.salon
+
+        var adaptador = AdaptadorClientes(this,clases,materia, horario)
+        listasClases.adapter = adaptador
+
+        btnNuevaClaseM.setOnClickListener {
+
+            var idTemp = getIDFechaClase(horario, getDiaActualAsDOW())
+
+            var clase = Clase(idTemp!!, getDiaFromHorario(horario, getDiaActualAsDOW())!!, getFechaActual(),ArrayList(),salon!!, "",ArrayList())
+            materia.clases.add(clase)
+
+            DAOMaterias.agregarMaterias(materia)
+
+            val intent = Intent(this, ListaAsistenciaProfesor::class.java)
+            intent.putExtra("asist",clase.asistencias)
+            intent.putExtra("materia", materia)
+            intent.putExtra("idClase", clase.id)
+            this.startActivityForResult(intent,0)
+
+            /*
+            val intent = Intent(this,GenerarClase::class.java)
+            intent.putExtra("horarioMat",horario)
+            intent.putExtra("salon",salon)
+            intent.putExtra("materia",materia)
+            startActivityForResult(intent,0)
+
+             */
+        }
+
+        //Lo removeremos al final nomas porque si uwu
+        DAOMaterias.observadores.remove(this)
+    }
+
     private class AdaptadorClientes : BaseAdapter {
 
         var context: Context
@@ -90,46 +131,6 @@ class ListaClasesProfesor : AppCompatActivity(), Observer {
         DAOMaterias.observadores.add(this)
         DAOMaterias.crearMateriasScript()
 
-    }
-
-    //Metodo de observer
-    override fun notificar(name: String) {
-        materia = DAOMaterias.getMateria(idMat)
-
-        horario = materia.horario!!
-        clases = materia.clases
-        var salon = materia.salon
-
-        var adaptador = AdaptadorClientes(this,clases,materia, horario)
-        listasClases.adapter = adaptador
-
-        btnNuevaClaseM.setOnClickListener {
-
-            var idTemp = getIDFechaClase(horario, getDiaActualAsDOW())
-
-            var clase = Clase(idTemp!!, getDiaFromHorario(horario, getDiaActualAsDOW())!!, getFechaActual(),ArrayList(),salon!!, "",ArrayList())
-            materia.clases.add(clase)
-
-            DAOMaterias.agregarMaterias(materia)
-
-            val intent = Intent(this, ListaAsistenciaProfesor::class.java)
-            intent.putExtra("asist",clase.asistencias)
-            intent.putExtra("materia", materia)
-            intent.putExtra("idClase", clase.id)
-            this.startActivityForResult(intent,0)
-
-            /*
-            val intent = Intent(this,GenerarClase::class.java)
-            intent.putExtra("horarioMat",horario)
-            intent.putExtra("salon",salon)
-            intent.putExtra("materia",materia)
-            startActivityForResult(intent,0)
-
-             */
-        }
-
-        //Lo removeremos al final nomas porque si uwu
-        DAOMaterias.observadores.remove(this)
     }
 
 }
