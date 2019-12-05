@@ -77,7 +77,7 @@ class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler {
                         llenarAsistencias(clase!!, mat)
                         clases.add(clase!!)
                     }
-                    var adaptador = AdaptadorClases(contexto, clases, alumno!!.id)
+                    var adaptador = AdaptadorClases(contexto, clases, alumno, materia)
                     listasClasesAlumno.adapter = adaptador
 
                 }
