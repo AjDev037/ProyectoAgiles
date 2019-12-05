@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background"
+        android:gravity="center"
+        android:padding="20dp">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:gravity="center">
+
+        <EditText
+                android:id="@+id/txtHito"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text"
+                android:ems="10"
+                android:gravity="start|top"
+                android:inputType="textMultiLine"
+                android:text=""
+                android:hint="Ingrese un hito o mensaje para la clase..."
+                android:textColorHint="@color/hint"
+                android:layout_margin="10dp"/>
+
+    </LinearLayout>
+
+    <!--
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="3"
+            android:gravity="center">
+
+        <Button
+                android:id="@+id/btnDeny"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cancelar"
+                android:layout_weight="1"
+                android:layout_margin="10dp"
+                android:background="@color/colorPrimaryDark"
+                />
+
+        <Button
+                android:id="@+id/btnAccept"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Guardar"
+                android:layout_weight="1"
+                android:layout_margin="10dp"
+                android:background="@color/colorPrimaryDark"
+                />
+
+
+
+    </LinearLayout>
+
+    -->
+</LinearLayout>

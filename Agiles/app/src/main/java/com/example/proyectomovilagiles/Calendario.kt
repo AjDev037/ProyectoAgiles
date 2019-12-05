@@ -11,7 +11,7 @@ import java.time.format.TextStyle
 import java.util.*
 
 @RequiresApi(Build.VERSION_CODES.O)
-fun getHoraActual(): String{
+fun getHoraActual(): String {
     val fechaActual = LocalDateTime.now()
     val formateadorHora = DateTimeFormatter.ofPattern("HH:mm")
     val horaFormateada = fechaActual.format(formateadorHora)
@@ -20,7 +20,7 @@ fun getHoraActual(): String{
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
-fun getFechaActual():String {
+fun getFechaActual(): String {
     val fechaActual = LocalDateTime.now()
     val formateadorFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy")
     val fechaFormateada = fechaActual.format(formateadorFecha)
@@ -29,15 +29,15 @@ fun getFechaActual():String {
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
-fun getDiaActual():String {
+fun getDiaActual(): String {
     val fechaActual = LocalDateTime.now()
-    val diaActual = fechaActual.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale("es","ES"))
+    val diaActual = fechaActual.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale("es", "ES"))
     val diaFormateado = diaActual.toString().capitalize()
 
     return diaFormateado
 }
 
-fun getDiaActualAsDOW():DayOfWeek{
+fun getDiaActualAsDOW(): DayOfWeek {
     val fechaActual = LocalDateTime.now()
     val diaActual = fechaActual.getDayOfWeek()
 
@@ -59,19 +59,19 @@ fun getDiaSemanaAsDOW(dia: Dia): DayOfWeek {
     return DayOfWeek.of(diaValue!!)
 }
 
-fun getIDFechaClase(horario: Horario, dia: DayOfWeek):String? {
+fun getIDFechaClase(horario: Horario, dia: DayOfWeek): String? {
     //Obtenemos la fecha actual y la formateamos a ddMMyy o ([dia][dia][mes][mes][anio][anio])
     val fechaActual = LocalDateTime.now()
     val formateadorFecha = DateTimeFormatter.ofPattern("ddMMyy")
     val fechaFormateada = fechaActual.format(formateadorFecha)
 
     //La hora temporal la asignamos como un string vacio para la comprobacion mas adelante
-    var horaTemp:String = ""
+    var horaTemp: String = ""
 
     //Recorremos los dias en el horario
-    for(i in horario.dias){
+    for (i in horario.dias) {
         //Si un dia (i) del horario (horario) es igual al dia (DayOfWeek)
-        if(getDiaSemanaAsDOW(i) == dia){
+        if (getDiaSemanaAsDOW(i) == dia) {
             //Asignamos la hora temporal a la hora de inicio (ini) de la clase (i)
             horaTemp = i.ini
             //Terminamos el ciclo
@@ -81,23 +81,23 @@ fun getIDFechaClase(horario: Horario, dia: DayOfWeek):String? {
     }
 
     //Si hora temp sigue estando vacio
-    if(horaTemp == ""){
+    if (horaTemp == "") {
         //Si no se encontro la hora del dia actual, se regresa un nulo
         return null
     }
 
     //Quitamos los dos puntos de la hora actual en la hora temporal
-    horaTemp = horaTemp.replace(":","")
+    horaTemp = horaTemp.replace(":", "")
 
     //Regresamos el codigo generado al sumar la fecha formateada y la hora temporal formateada
     return fechaFormateada + horaTemp
 }
 
-fun getDiaFromHorario(horario:Horario, dia: DayOfWeek):Dia? {
+fun getDiaFromHorario(horario: Horario, dia: DayOfWeek): Dia? {
     //Recorremos los dias en el horario
-    for(i in horario.dias){
+    for (i in horario.dias) {
         //Si un dia (i) del horario (horario) es igual al dia (DayOfWeek)
-        if(getDiaSemanaAsDOW(i) == dia){
+        if (getDiaSemanaAsDOW(i) == dia) {
             //Regresamos el dia (i)
             return i
         }
@@ -105,4 +105,19 @@ fun getDiaFromHorario(horario:Horario, dia: DayOfWeek):Dia? {
 
     //Regresa un nulo si el dia actual no se encuentra en el horario
     return null
+}
+
+fun getFechaValueFromFecha(fecha: String): Int {
+    //Separamos la fecha
+    val fechaSplitted = fecha.split("/")
+
+    //Si el tamano de la fecha separada es de 3
+    if (fechaSplitted.size == 3) {
+        //Regresamos un entero conformado por el anio, luego el mes y al final el dia
+        return (fechaSplitted[2] + fechaSplitted[1] + fechaSplitted[0]).toInt()
+
+    } else {
+        //Si el tamano esta mal, regresamos un 0
+        return 0
+    }
 }

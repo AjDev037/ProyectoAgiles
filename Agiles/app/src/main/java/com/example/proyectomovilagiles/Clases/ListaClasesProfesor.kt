@@ -62,7 +62,7 @@ class ListaClasesProfesor : AppCompatActivity(), Observer {
                 val intent = Intent(context, ListaAsistenciaProfesor::class.java)
                 intent.putExtra("asist",cla.asistencias)
                 intent.putExtra("materia", mat)
-                intent.putExtra("idClase", cla.id)
+                intent.putExtra("clase", cla)
                 (context as Activity).startActivityForResult(intent,0)
             }
             return vista
