@@ -9,7 +9,7 @@ class Comparacion(var obs: Observer, var db: DbHandler) : Runnable {
     //pero eso deberia hacer.
     var notificado = false
 
-    var tempTimeToNotify: Long = 20000
+    var tempTimeToNotify: Long = 60000
 
     override fun run() {
         while (true) {
@@ -36,20 +36,21 @@ class Comparacion(var obs: Observer, var db: DbHandler) : Runnable {
 
                     // NOTA: AQUI ES DONDE LA COMPARACION deberia ser de de 15 minutos
                     // DE DIFERENCIA EN LUGAR DE LA MERA HORA>
-                    if (horaMateriaInt - horaActualInt <= 15 * 60 * 1000
-                        && horaMateriaInt - horaActualInt >= 14 * 60 * 1000
+                    if (horaMateriaInt - horaActualInt in 14..15
                         && !notificado
                     ) {
                         //Si cumple la condicion manda a notificar al observador para que
                         // envie el mensaje al telefono.
                         obs.notificar(mat.nombre)
                         notificado = true
+                    } else {
+                        notificado = false
                     }
                 }
-                //Hago dormir el thread un ratito para que no este siempre en segundo plano
-                //haciendo el run.
-                Thread.sleep(tempTimeToNotify)
             }
+            //Hago dormir el thread un ratito para que no este siempre en segundo plano
+            //haciendo el run.
+            Thread.sleep(tempTimeToNotify)
         }
     }
 }
