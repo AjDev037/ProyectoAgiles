@@ -30,26 +30,8 @@ class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler, O
 
 
     override fun notificar(name: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+        materia = DAOMaterias.getMateria(idMateria)
 
-    var clases = ArrayList<Clase>()
-    var alumno = Alumno()
-    var mScanner: ZXingScannerView? = null
-    var materia = Materia()
-
-    val retardoTiempo = 5
-    var faltaTiempo = 15
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_lista_clases_alumno)
-
-        materia = intent.getSerializableExtra("materia") as Materia
-        var idMateria = materia.id
-        //clases = intent.getSerializableExtra("clases") as ArrayList<Clase>
-        alumno = intent.getSerializableExtra("id") as Alumno
-        //llenarClases(idMateria)
         var adaptador = AdaptadorClases(this,materia.clases,alumno,materia)
         listasClasesAlumno.adapter = adaptador
 
@@ -59,7 +41,36 @@ class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler, O
             mScanner?.setResultHandler(this)
             mScanner?.startCamera()
         }
+        DAOMaterias.observadores.remove(this)
     }
+
+    var clases = ArrayList<Clase>()
+    var alumno = Alumno()
+    var mScanner: ZXingScannerView? = null
+    var materia = Materia()
+    var idMateria = ""
+    val retardoTiempo = 5
+    var faltaTiempo = 15
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_lista_clases_alumno)
+
+        var mate = intent.getSerializableExtra("materia") as Materia
+        idMateria = mate.id
+        var idMateria = materia.id
+        //clases = intent.getSerializableExtra("clases") as ArrayList<Clase>
+        alumno = intent.getSerializableExtra("id") as Alumno
+        //llenarClases(idMateria)
+        DAOMaterias.observadores.add(this)
+        DAOMaterias.crearMateriasScript()
+
+
+
+
+    }
+
+
 
     fun llenarClases(mat: String) {
         var contexto = this
@@ -249,7 +260,7 @@ class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler, O
                 intent.putExtra("revisado",revisado)
                 println("EL ESTADO DE REVISION ES $revisado")
 
-                (context as Activity).startActivity(intent)
+                (context as Activity).startActivityForResult(intent,0)
             }
             return vista
 
@@ -270,6 +281,11 @@ class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler, O
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        print("Volvi")
+
+        DAOMaterias.limpiar()
+        DAOMaterias.observadores.add(this)
+        DAOMaterias.crearMateriasScript()
 
 
     }

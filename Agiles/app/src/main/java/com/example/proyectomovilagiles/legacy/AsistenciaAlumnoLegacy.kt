@@ -1,5 +1,7 @@
 package com.example.proyectomovilagiles.legacy
 
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.proyectomovilagiles.R
@@ -66,5 +68,12 @@ class AsistenciaAlumnoLegacy : AppCompatActivity() {
         txtHito.text = hito
 
 
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val resultIntent = Intent()
+        setResult(Activity.RESULT_OK, resultIntent)
+        finish()
     }
 }

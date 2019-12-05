@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.text.InputType
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import android.widget.BaseAdapter
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import com.example.proyectomovilagiles.R
 import com.example.proyectomovilagiles.getFechaActual
 import com.example.proyectomovilagiles.getFechaValueFromFecha
@@ -24,6 +26,7 @@ import objetos.Clase
 import objetos.Horario
 import objetos.Materia
 import java.util.*
+import java.util.jar.Manifest
 import kotlin.collections.ArrayList
 
 
@@ -32,9 +35,12 @@ class ListaAsistenciaProfesor : AppCompatActivity() {
     var asistencias = ArrayList<Asistencia>()
     val hitoMaxLength = 100
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lista_asistencia_profesor)
+
+
 
         asistencias = intent.getSerializableExtra("asist") as ArrayList<Asistencia>
 
@@ -260,4 +266,6 @@ class ListaAsistenciaProfesor : AppCompatActivity() {
         setResult(Activity.RESULT_OK, resultIntent)
         finish()
     }
+
+
 }

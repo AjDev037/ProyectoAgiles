@@ -21,6 +21,8 @@ public class MyService extends Service implements Observer {
 
 
     private final static String CHANNEL_ID = "NOTIFICACION";
+    private final static String CHANNEL_ID2 = "CLASE PROXIMA";
+
     private final static int NOTIFICACION_ID = 0;
     Comparacion hilo;
     //ComparacionCalendarizada cc;
@@ -93,7 +95,7 @@ public class MyService extends Service implements Observer {
         String channelName = CHANNEL_ID;
         NotificationChannel chan = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_NONE);
         chan.setLightColor(Color.BLUE);
-        chan.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+        chan.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         assert manager != null;
         manager.createNotificationChannel(chan);
@@ -101,16 +103,16 @@ public class MyService extends Service implements Observer {
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID);
         Notification notification = notificationBuilder.setOngoing(true)
                 .setContentTitle("App is running in background")
-                .setPriority(NotificationManager.IMPORTANCE_MIN)
-                .setCategory(Notification.CATEGORY_SERVICE)
+                .setPriority(NotificationManager.IMPORTANCE_NONE)
+                .setCategory(Notification.CATEGORY_EVENT)
                 .build();
-        startForeground(2, notification);
+        startForeground(1, notification);
     }
 
     public void notificacionChannel(){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             CharSequence name = "Clase";
-            NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, name, NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, name, NotificationManager.IMPORTANCE_HIGH);
             NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             assert notificationManager != null;
             notificationManager.createNotificationChannel(notificationChannel);

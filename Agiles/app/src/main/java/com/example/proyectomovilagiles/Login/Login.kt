@@ -1,8 +1,11 @@
 package com.example.proyectomovilagiles.Login
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import com.example.proyectomovilagiles.Materias.MenuMateriasAlumno
 import com.example.proyectomovilagiles.Materias.MenuMateriasProfesor
 import com.example.proyectomovilagiles.Preferencias.MyPreference
@@ -26,11 +29,25 @@ class Login : AppCompatActivity() {
     var tipo: Boolean = false
     var maestro = Maestro()
     var alumno = Alumno()
+    val PERMISO_STORAGE = 1923
+    val PERMISO_CAMARA = 1278
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        if(ActivityCompat.checkSelfPermission(this,android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this,
+                arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE),PERMISO_STORAGE)
+
+        }
+
+        if(ActivityCompat.checkSelfPermission(this,android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this,
+                arrayOf(android.Manifest.permission.CAMERA),PERMISO_STORAGE)
+
+        }
 
         DAOMaterias.limpiar()
         DAOMaestro.crearMaestrosScript()
@@ -200,6 +217,27 @@ class Login : AppCompatActivity() {
                 // handler
                 println("NO VALIDE LA CONTRA POR LA EXCEPCION ALUMNO")
                 return false
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if(requestCode == PERMISO_STORAGE){
+            if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                Toast.makeText(this,"Permiso concedido", Toast.LENGTH_LONG).show()
+            }else{
+                Toast.makeText(this,"Permiso negado", Toast.LENGTH_LONG).show()
+            }
+        }else if(requestCode == PERMISO_CAMARA){
+            if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                Toast.makeText(this,"Permiso concedido", Toast.LENGTH_LONG).show()
+            }else{
+                Toast.makeText(this,"Permiso negado", Toast.LENGTH_LONG).show()
             }
         }
     }

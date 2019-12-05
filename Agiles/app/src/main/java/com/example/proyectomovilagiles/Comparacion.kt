@@ -9,7 +9,7 @@ class Comparacion(var obs: Observer, var db: DbHandler) : Runnable {
     //pero eso deberia hacer.
     var notificado = false
 
-    var tempTimeToNotify: Long = 60000
+    var tempTimeToNotify: Long = 20000
 
     override fun run() {
         while (true) {
@@ -42,6 +42,7 @@ class Comparacion(var obs: Observer, var db: DbHandler) : Runnable {
                         //Si cumple la condicion manda a notificar al observador para que
                         // envie el mensaje al telefono.
                         if(!notificado){
+                            println("VOY A NOTIFICAR")
                             val notificacion = "${mat.nombre}.${mat.hora}"
                             obs.notificar(notificacion)
                             notificado = true
@@ -57,6 +58,7 @@ class Comparacion(var obs: Observer, var db: DbHandler) : Runnable {
             //Hago dormir el thread un ratito para que no este siempre en segundo plano
             //haciendo el run.
             //Esto va afuera del for, gracias :)
+            println("TERMINE UN CICLO")
             Thread.sleep(tempTimeToNotify)
         }
     }
