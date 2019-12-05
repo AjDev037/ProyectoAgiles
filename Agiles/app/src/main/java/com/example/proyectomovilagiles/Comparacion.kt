@@ -42,7 +42,8 @@ class Comparacion(var obs: Observer, var db: DbHandler) : Runnable {
                         //Si cumple la condicion manda a notificar al observador para que
                         // envie el mensaje al telefono.
                         if(!notificado){
-                            obs.notificar(mat.nombre)
+                            val notificacion = "${mat.nombre}.${mat.hora}"
+                            obs.notificar(notificacion)
                             notificado = true
                         }
 

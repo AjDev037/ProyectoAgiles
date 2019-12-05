@@ -24,12 +24,14 @@ import dataBaseObjects.DAOMaterias
 import kotlinx.android.synthetic.main.activity_lista_clases_alumno.*
 import kotlinx.android.synthetic.main.llenar_clases.view.*
 import me.dm7.barcodescanner.zxing.ZXingScannerView
-import objetos.Alumno
-import objetos.Asistencia
-import objetos.Clase
-import objetos.Materia
+import objetos.*
 
-class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler {
+class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler, Observer {
+
+
+    override fun notificar(name: String) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     var clases = ArrayList<Clase>()
     var alumno = Alumno()
@@ -120,7 +122,6 @@ class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler {
         val dialogo = builder.create()
         dialogo.show()
         val text = p0?.text.toString()
-
         val codigo = text.split(".").toTypedArray()
         println("VOY A IMPRIMIR")
         //var materia = codigo[0]
@@ -219,7 +220,7 @@ class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler {
             vista.setOnClickListener {
                 val intent = Intent(context, AsistenciaAlumnoLegacy::class.java)
                 var auxiliar = Asistencia()
-                println("DATOS DE LA ASISTENCIA")
+                //println("DATOS DE LA ASISTENCIA")
                 println(cla.asistencias)
 
 
@@ -234,7 +235,7 @@ class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler {
                 intent.putExtra("hito", cla.hito)
                 intent.putExtra("idClase", cla.id)
                 intent.putExtra("alumno",id.nombre)
-                intent.putExtra("idAl",id.id)
+                intent.putExtra("idAL",id.id)
                 intent.putExtra("materia", mate)
                 intent.putExtra("revisado",revisado)
                 println("EL ESTADO DE REVISION ES $revisado")
@@ -256,5 +257,11 @@ class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler {
         override fun getCount(): Int {
             return clases?.size ?: 0
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+
     }
 }

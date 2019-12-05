@@ -24,6 +24,7 @@ class AsistenciaAlumnoLegacy : AppCompatActivity() {
         var nom = intent.getStringExtra("alumno")
         var id = intent.getStringExtra("idClase")
         var idAl = intent.getStringExtra("idAL")
+        println("LA ID DEL ALUMNO ES: $idAl")
         var materia = intent.getSerializableExtra("materia") as Materia
         var revisado = intent.getBooleanExtra("revisado",false)
 
@@ -31,7 +32,8 @@ class AsistenciaAlumnoLegacy : AppCompatActivity() {
             for(c in materia.clases){
                 if(c.id == id){
                     println("ENTRE CON LA COSA ESA")
-                    c.revisados.add(idAl)
+                    println(idAl)
+                    c.revisados.add(idAl!!)
                     DAOMaterias.agregarMaterias(materia)
                     break
                 }

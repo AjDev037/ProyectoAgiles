@@ -44,7 +44,7 @@ public class MyService extends Service implements Observer {
 
         //cc.calendarizar();
 
-        return Service.START_NOT_STICKY;
+        return Service.START_STICKY;
     }
 
     @Override
@@ -57,17 +57,28 @@ public class MyService extends Service implements Observer {
     public void notificar(@NotNull String name) {
         System.out.println("Me Notificaron");
         notificacionChannel();
-        crearNotificacion(name);
+        //String extension = textfile.split("\\.")[1];
+        String clase = name.split("\\.")[0];
+        String hora = name.split("\\.")[1];
+        //String codigo = name.split(".").toTypedArray();
+        //println("VOY A IMPRIMIR")
+        //var materia = codigo[0]
+        //var clase = codigo[1]
+        //var estado = codigo[2]
+        //println(materia)
+        //println(clase)
+        //println(estado)
+        crearNotificacion(clase, hora);
     }
 
-    public void crearNotificacion(String str){
+    public void crearNotificacion(String str,String hora){
         NotificationCompat.Builder notificacion = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID);
         notificacion.setSmallIcon(R.mipmap.ic_launcher);
         notificacion.setTicker("Notificacion por tiempo");
         notificacion.setWhen(System.currentTimeMillis());
         notificacion.setPriority(NotificationCompat.PRIORITY_DEFAULT);
         notificacion.setContentTitle(str);
-        notificacion.setContentText("Tienes una clase pronto");
+        notificacion.setContentText("Tienes una clase pronto a las: " + hora);
 
         NotificationManagerCompat nm = NotificationManagerCompat.from(getApplicationContext());
         assert nm != null;

@@ -9,12 +9,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.Toast
 import com.example.proyectomovilagiles.*
 import com.example.proyectomovilagiles.Asistencia.ListaAsistenciaProfesor
 import dataBaseObjects.DAOMaterias
 import kotlinx.android.synthetic.main.activity_lista_clases_profesor.*
 import kotlinx.android.synthetic.main.llenar_clases.view.*
 import objetos.*
+import java.lang.NullPointerException
 
 class ListaClasesProfesor : AppCompatActivity(), Observer {
 
@@ -33,6 +35,7 @@ class ListaClasesProfesor : AppCompatActivity(), Observer {
 
         //Esperaremos a que el DAO nos notifique
     }
+
     private class AdaptadorClientes : BaseAdapter {
 
         var context: Context
@@ -40,7 +43,12 @@ class ListaClasesProfesor : AppCompatActivity(), Observer {
         var mat = Materia()
         var horario = Horario()
 
-        constructor(context: Context, clases: ArrayList<Clase>, materia:Materia, horario:Horario) {
+        constructor(
+            context: Context,
+            clases: ArrayList<Clase>,
+            materia: Materia,
+            horario: Horario
+        ) {
             this.context = context
             this.clases = clases
             this.horario = horario
@@ -60,10 +68,10 @@ class ListaClasesProfesor : AppCompatActivity(), Observer {
 
             vista.setOnClickListener {
                 val intent = Intent(context, ListaAsistenciaProfesor::class.java)
-                intent.putExtra("asist",cla.asistencias)
+                intent.putExtra("asist", cla.asistencias)
                 intent.putExtra("materia", mat)
                 intent.putExtra("clase", cla)
-                (context as Activity).startActivityForResult(intent,0)
+                (context as Activity).startActivityForResult(intent, 0)
             }
             return vista
 
@@ -98,23 +106,40 @@ class ListaClasesProfesor : AppCompatActivity(), Observer {
         clases = materia.clases
         var salon = materia.salon
 
-        var adaptador = AdaptadorClientes(this,clases,materia, horario)
+        var adaptador = AdaptadorClientes(this, clases, materia, horario)
         listasClases.adapter = adaptador
 
         btnNuevaClaseM.setOnClickListener {
 
             var idTemp = getIDFechaClase(horario, getDiaActualAsDOW())
+            if(idTemp == null || getDiaFromHorario(horario, getDiaActualAsDOW()) == null){
+                Toast.makeText(this,"No hay clases disponibles",Toast.LENGTH_LONG).show()
+            }else{
+                var clase = Clase(
+                    idTemp!!,
+                    getDiaFromHorario(horario, getDiaActualAsDOW())!!,
+                    getFechaActual(),
+                    ArrayList(),
+                    salon!!,
+                    "",
+                    ArrayList()
+                )
 
-            var clase = Clase(idTemp!!, getDiaFromHorario(horario, getDiaActualAsDOW())!!, getFechaActual(),ArrayList(),salon!!, "",ArrayList())
-            materia.clases.add(clase)
+                    materia.clases.add(clase)
 
-            DAOMaterias.agregarMaterias(materia)
+                    DAOMaterias.agregarMaterias(materia)
 
-            val intent = Intent(this, ListaAsistenciaProfesor::class.java)
-            intent.putExtra("asist",clase.asistencias)
-            intent.putExtra("materia", materia)
-            intent.putExtra("idClase", clase.id)
-            this.startActivityForResult(intent,0)
+                    val intent = Intent(this, ListaAsistenciaProfesor::class.java)
+                    intent.putExtra("asist", clase.asistencias)
+                    intent.putExtra("materia", materia)
+                    intent.putExtra("clase", clase)
+
+                    this.startActivityForResult(intent, 0)
+
+            }
+
+
+
 
             /*
             val intent = Intent(this,GenerarClase::class.java)
@@ -124,6 +149,7 @@ class ListaClasesProfesor : AppCompatActivity(), Observer {
             startActivityForResult(intent,0)
 
              */
+
         }
 
         //Lo removeremos al final nomas porque si uwu
