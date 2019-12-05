@@ -21,7 +21,6 @@
                 android:exported="true"></service>
 
         <activity android:name=".Asistencia.TomarAsistencia" />
-        <activity android:name=".legacy.TomarAsistencia" />
         <activity android:name=".legacy.GenerarClaseLegacy" />
         <activity android:name=".legacy.AsistenciaAlumnoLegacy" />
         <activity android:name=".Clases.ListaClasesAlumno" />

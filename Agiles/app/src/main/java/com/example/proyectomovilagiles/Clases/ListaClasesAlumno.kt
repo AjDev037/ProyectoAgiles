@@ -35,7 +35,7 @@ class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler, O
 
     var clases = ArrayList<Clase>()
     var alumno = Alumno()
-    var mScanner : ZXingScannerView? = null
+    var mScanner: ZXingScannerView? = null
     var materia = Materia()
 
     val retardoTiempo = 5
@@ -61,7 +61,7 @@ class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler, O
         }
     }
 
-    fun llenarClases(mat:String){
+    fun llenarClases(mat: String) {
         var contexto = this
         val database = FirebaseDatabase.getInstance()
         val referencia = database.getReference("Materias").child(mat).child("Clases")
@@ -76,10 +76,10 @@ class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler, O
                     for (child in children) {
                         var clase = child.getValue(Clase::class.java)
                         println(clase?.asistencias?.isEmpty())
-                        llenarAsistencias(clase!!,mat)
+                        llenarAsistencias(clase!!, mat)
                         clases.add(clase!!)
                     }
-                    var adaptador = AdaptadorClases(contexto, clases,alumno,materia)
+                    var adaptador = AdaptadorClases(contexto, clases, alumno, materia)
                     listasClasesAlumno.adapter = adaptador
 
                 }
@@ -90,7 +90,9 @@ class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler, O
     fun llenarAsistencias(clase:Clase,mat:String){
         var contexto = this
         val database = FirebaseDatabase.getInstance()
-        val referencia = database.getReference("Materias").child(mat).child("Clases").child(clase.id).child("Asistencias")
+        val referencia =
+            database.getReference("Materias").child(mat).child("Clases").child(clase.id)
+                .child("Asistencias")
         referencia.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {}
 
@@ -114,8 +116,8 @@ class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler, O
     }
 
     override fun handleResult(p0: Result?) {
-
-        Log.v("HanlderResult",p0?.text)
+        mScanner?.stopCamera()
+        Log.v("HanlderResult", p0?.text)
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Clase")
         builder.setMessage(p0?.text)
@@ -141,15 +143,16 @@ class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler, O
         //Separamos la hora actual
         val horaActualSplitted = horaActual.split(":")
         //Multiplicamos las horas por 60 para obtener los minutos y los agregamos a los minutos de la hora
-        val horaActualInt = (horaActualSplitted.get(0).toInt() * 60) + (horaActualSplitted.get(1).toInt())
+        val horaActualInt =
+            (horaActualSplitted.get(0).toInt() * 60) + (horaActualSplitted.get(1).toInt())
 
-        var estadoAsistencia:Int? = null
+        var estadoAsistencia: Int? = null
 
         //Si la hora actual de registro menos la hora del QR, es menor al tiempo definido para el retardo
-        if((horaActualInt - horaEstadoInt) <= retardoTiempo){
+        if ((horaActualInt - horaEstadoInt) <= retardoTiempo) {
             //Lo registramos como asistencia
             estadoAsistencia = 1
-        } else if ((horaActualInt - horaEstadoInt) <= faltaTiempo){
+        } else if ((horaActualInt - horaEstadoInt) <= faltaTiempo) {
             //En caso de que la hora actual de registro sea menor al tiempo definido para la falta
             //Lo tomamos como retardo
             estadoAsistencia = 0
@@ -160,9 +163,9 @@ class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler, O
         }
 
         //Creamos la asistencia
-        var asistencia = Asistencia(alumno,estadoAsistencia!!, estadoAsistencia!!,getHoraActual())
-        for(c in materia.clases){
-            if(c.id == clase){
+        var asistencia = Asistencia(alumno, estadoAsistencia!!, estadoAsistencia!!, getHoraActual())
+        for (c in materia.clases) {
+            if (c.id == clase) {
                 c.asistencias.add(asistencia)
             }
         }
@@ -171,6 +174,12 @@ class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler, O
         DAOMaterias.agregarMaterias(materia)
         dialogo.dismiss()
         finish()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+
+        mScanner?.stopCamera()
     }
 
     private class AdaptadorClases : BaseAdapter {

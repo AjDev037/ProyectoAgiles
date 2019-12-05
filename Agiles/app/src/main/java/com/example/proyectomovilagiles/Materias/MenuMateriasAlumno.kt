@@ -73,6 +73,10 @@ class MenuMateriasAlumno : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     fun getSiguienteCardMateria(): Materia? {
 
