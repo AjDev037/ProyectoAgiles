@@ -45,6 +45,7 @@ object DAOMaterias {
     }
 
     fun agregarMaterias(mate:Materia){
+        println("ENTRE A AGREGAR UNA MATERIA")
         val database = FirebaseDatabase.getInstance()
         val referencia = database.reference.child("Materias").child(mate.id)
         referencia.setValue(mate)

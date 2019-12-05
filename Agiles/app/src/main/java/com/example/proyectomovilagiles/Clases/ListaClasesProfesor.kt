@@ -14,10 +14,7 @@ import com.example.proyectomovilagiles.Asistencia.ListaAsistenciaProfesor
 import dataBaseObjects.DAOMaterias
 import kotlinx.android.synthetic.main.activity_lista_clases_profesor.*
 import kotlinx.android.synthetic.main.llenar_clases.view.*
-import objetos.Clase
-import objetos.Horario
-import objetos.Materia
-import objetos.Observer
+import objetos.*
 
 class ListaClasesProfesor : AppCompatActivity(), Observer {
 
@@ -108,7 +105,7 @@ class ListaClasesProfesor : AppCompatActivity(), Observer {
 
             var idTemp = getIDFechaClase(horario, getDiaActualAsDOW())
 
-            var clase = Clase(idTemp!!, getDiaFromHorario(horario, getDiaActualAsDOW())!!, getFechaActual(),ArrayList(),salon!!, "")
+            var clase = Clase(idTemp!!, getDiaFromHorario(horario, getDiaActualAsDOW())!!, getFechaActual(),ArrayList(),salon!!, "",ArrayList())
             materia.clases.add(clase)
 
             DAOMaterias.agregarMaterias(materia)

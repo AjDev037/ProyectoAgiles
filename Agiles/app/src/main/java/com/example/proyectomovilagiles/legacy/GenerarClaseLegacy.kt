@@ -42,7 +42,7 @@ class GenerarClaseLegacy : AppCompatActivity() {
             println("EL DIA ACTUAL ES NULO")
         }
         
-        var clase = Clase(idTemp!!, getDiaFromHorario(horario, getDiaActualAsDOW())!!, getFechaActual(),ArrayList(),salon!!, "")
+        var clase = Clase(idTemp!!, getDiaFromHorario(horario, getDiaActualAsDOW())!!, getFechaActual(),ArrayList(),salon!!, "",ArrayList())
         materia.clases.add(clase)
 
         DAOMaterias.agregarMaterias(materia)

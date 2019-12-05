@@ -3,6 +3,7 @@ package com.example.proyectomovilagiles.legacy
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.proyectomovilagiles.R
+import dataBaseObjects.DAOMaterias
 import kotlinx.android.synthetic.main.activity_asistencia_alumno.*
 import objetos.Asistencia
 import objetos.Materia
@@ -14,11 +15,38 @@ class AsistenciaAlumnoLegacy : AppCompatActivity() {
         setContentView(R.layout.activity_asistencia_alumno)
 
 
+        //intent.putExtra("idClase", cla.id)
+        //intent.putExtra("alumno",id.nombre)
+        //intent.putExtra("materia", mate)
+
         var asistencia = intent.getSerializableExtra("asist") as Asistencia
         var hito = intent.getStringExtra("hito")
+        var nom = intent.getStringExtra("alumno")
+        var id = intent.getStringExtra("idClase")
+        var idAl = intent.getStringExtra("idAL")
+        var materia = intent.getSerializableExtra("materia") as Materia
+        var revisado = intent.getBooleanExtra("revisado",false)
+
+        if(!revisado){
+            for(c in materia.clases){
+                if(c.id == id){
+                    println("ENTRE CON LA COSA ESA")
+                    c.revisados.add(idAl)
+                    DAOMaterias.agregarMaterias(materia)
+                    break
+                }
+            }
+        }
+
+
+
+        //DAOAsistencias.registrarAsistencia(materia,clase,asistencia)
+        //DAOMaterias.agregarMaterias(materia)
+
+
 
         if(asistencia.hora != ""){
-            nomAlumno.text = asistencia.alumno.nombre
+            nomAlumno.text = nom
             if(asistencia.estado == 0){
                 txtAsistencia.text = "Retardo"
             }else if(asistencia.estado == 1){

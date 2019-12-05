@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -46,8 +47,8 @@ class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler {
         var idMateria = materia.id
         //clases = intent.getSerializableExtra("clases") as ArrayList<Clase>
         alumno = intent.getSerializableExtra("id") as Alumno
-        llenarClases(idMateria)
-        var adaptador = AdaptadorClases(this,materia.clases,alumno.nombre)
+        //llenarClases(idMateria)
+        var adaptador = AdaptadorClases(this,materia.clases,alumno,materia)
         listasClasesAlumno.adapter = adaptador
 
         btnAsistencia.setOnClickListener {
@@ -76,7 +77,7 @@ class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler {
                         llenarAsistencias(clase!!,mat)
                         clases.add(clase!!)
                     }
-                    var adaptador = AdaptadorClases(contexto, clases,alumno!!.id)
+                    var adaptador = AdaptadorClases(contexto, clases,alumno,materia)
                     listasClasesAlumno.adapter = adaptador
 
                 }
@@ -175,12 +176,14 @@ class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler {
 
         var context: Context
         var clases: ArrayList<Clase>? = null
-        var id  = ""
+        var id  = Alumno()
+        var mate = Materia()
 
-        constructor(context: Context, clases: ArrayList<Clase>, nom:String) {
+        constructor(context: Context, clases: ArrayList<Clase>, nom:Alumno,mat:Materia) {
             this.context = context
             this.clases = clases
             id = nom
+            mate = mat
         }
 
 
@@ -188,12 +191,29 @@ class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler {
             var layout = LayoutInflater.from(context)
             var vista = layout?.inflate(R.layout.llenar_clases, null)!!
             var cla = clases!![position]
-
+            var revisado = false
             if (vista != null) {
                 vista.diaClase.text = cla.dia.diaSemana
                 vista.horas.text = cla.dia.ini
                 vista.salonClase.text = cla.salon
                 vista.txtFecha.text = cla.fecha
+
+
+                for( r in cla.revisados){
+                    if(r == id.id){
+                        revisado = true
+                        break
+                    }
+                }
+
+                if(!revisado){
+                   vista.diaClase.setTextColor(Color.GREEN)
+                    vista.horas.setTextColor(Color.GREEN)
+                    vista.salonClase.setTextColor(Color.GREEN)
+                    vista.txtFecha.setTextColor(Color.GREEN)
+                }
+
+
             }
 
             vista.setOnClickListener {
@@ -201,13 +221,24 @@ class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler {
                 var auxiliar = Asistencia()
                 println("DATOS DE LA ASISTENCIA")
                 println(cla.asistencias)
+
+
                 for(x in cla.asistencias){
-                    if(x.alumno.id == id){
+                    if(x.alumno.id == id.id){
                         auxiliar = x
+                        break
                     }
                 }
+
                 intent.putExtra("asist",auxiliar)
                 intent.putExtra("hito", cla.hito)
+                intent.putExtra("idClase", cla.id)
+                intent.putExtra("alumno",id.nombre)
+                intent.putExtra("idAl",id.id)
+                intent.putExtra("materia", mate)
+                intent.putExtra("revisado",revisado)
+                println("EL ESTADO DE REVISION ES $revisado")
+
                 (context as Activity).startActivity(intent)
             }
             return vista

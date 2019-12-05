@@ -29,6 +29,7 @@ public class MyService extends Service implements Observer {
     @Override
     public void onCreate() {
         super.onCreate();
+
         startForeground(1,new Notification());
         DbHandler db = new DbHandler(getApplicationContext());
         hilo = new Comparacion(this,db);
