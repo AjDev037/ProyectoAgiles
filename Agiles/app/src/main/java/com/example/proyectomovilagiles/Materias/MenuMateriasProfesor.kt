@@ -46,6 +46,10 @@ class MenuMateriasProfesor : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+
+    }
+
     fun crearMaterias(){
         var materia1 = Materia("Materia1", "Hoy", "Hora Actual", "1800s",
             R.drawable.ic_backgroundtest

@@ -84,10 +84,12 @@ class ListaClasesProfesor : AppCompatActivity(), Observer {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        println("Volvi!")
 
         DAOMaterias.limpiar()
         DAOMaterias.observadores.add(this)
         DAOMaterias.crearMateriasScript()
+
     }
 
     //Metodo de observer

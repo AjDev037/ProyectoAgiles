@@ -15,8 +15,6 @@ object DAOMaterias {
     var listaMaterias = ArrayList<Materia>()
 
      fun crearMateriasScript(){
-
-
         val database = FirebaseDatabase.getInstance()
         val referencia = database.getReference("Materias")
         referencia.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -98,8 +96,6 @@ object DAOMaterias {
         }
     }
 }
-
-
 
 /*        listaMaterias.clear()
 

@@ -23,6 +23,8 @@ import objetos.Asistencia
 import objetos.Clase
 import objetos.Horario
 import objetos.Materia
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class ListaAsistenciaProfesor : AppCompatActivity() {
@@ -36,10 +38,12 @@ class ListaAsistenciaProfesor : AppCompatActivity() {
 
         asistencias = intent.getSerializableExtra("asist") as ArrayList<Asistencia>
 
+        for (i in asistencias){
+            println(i.estado.toString() + i.alumno)
+        }
+
         var materia = intent.getSerializableExtra("materia") as Materia
         val horario = materia.horario!!
-        val idMat = materia.id
-
 
         var clase = intent.getSerializableExtra("clase") as Clase
         var adaptador =
@@ -180,7 +184,7 @@ class ListaAsistenciaProfesor : AppCompatActivity() {
                     //Le sumamos uno al estado
                     asi.estado += 1
                     this.notifyDataSetChanged()
-                    var posicion: Int = 0
+                    var posicion = 0
                     var posicionC = 0
                     //Aqui puedes poner el llamado a la base de datos uwu
                     for (c in mat.clases) {
@@ -194,6 +198,7 @@ class ListaAsistenciaProfesor : AppCompatActivity() {
                         }
                     }
                     mat.clases[posicionC].asistencias[posicion] = asi
+
                     DAOMaterias.agregarMaterias(mat)
                     //DAOMaterias.crearMateriasScript()
                 }

@@ -4,7 +4,9 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.IBinder;
 
@@ -29,8 +31,10 @@ public class MyService extends Service implements Observer {
     @Override
     public void onCreate() {
         super.onCreate();
-
-        startForeground(1,new Notification());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            startMyOwnForeground();
+        else
+            startForeground(1, new Notification());
         DbHandler db = new DbHandler(getApplicationContext());
         hilo = new Comparacion(this,db);
 
@@ -44,7 +48,7 @@ public class MyService extends Service implements Observer {
 
         //cc.calendarizar();
 
-        return Service.START_NOT_STICKY;
+        return Service.START_STICKY;
     }
 
     @Override
@@ -70,8 +74,26 @@ public class MyService extends Service implements Observer {
         notificacion.setContentText("Tienes una clase pronto");
 
         NotificationManagerCompat nm = NotificationManagerCompat.from(getApplicationContext());
-        assert nm != null;
         nm.notify(NOTIFICACION_ID, notificacion.build());
+    }
+
+    private void startMyOwnForeground(){
+        String NOTIFICATION_CHANNEL_ID = String.valueOf(NOTIFICACION_ID);
+        String channelName = CHANNEL_ID;
+        NotificationChannel chan = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_NONE);
+        chan.setLightColor(Color.BLUE);
+        chan.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        assert manager != null;
+        manager.createNotificationChannel(chan);
+
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID);
+        Notification notification = notificationBuilder.setOngoing(true)
+                .setContentTitle("App is running in background")
+                .setPriority(NotificationManager.IMPORTANCE_MIN)
+                .setCategory(Notification.CATEGORY_SERVICE)
+                .build();
+        startForeground(2, notification);
     }
 
     public void notificacionChannel(){
@@ -79,6 +101,7 @@ public class MyService extends Service implements Observer {
             CharSequence name = "Clase";
             NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, name, NotificationManager.IMPORTANCE_DEFAULT);
             NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            assert notificationManager != null;
             notificationManager.createNotificationChannel(notificationChannel);
         }
     }
