@@ -21,6 +21,7 @@ public class MyService extends Service implements Observer {
     private final static String CHANNEL_ID = "NOTIFICACION";
     private final static int NOTIFICACION_ID = 0;
     Comparacion hilo;
+    //ComparacionCalendarizada cc;
 
     public MyService() {
     }
@@ -31,14 +32,17 @@ public class MyService extends Service implements Observer {
         startForeground(1,new Notification());
         DbHandler db = new DbHandler(getApplicationContext());
         hilo = new Comparacion(this,db);
-        //notificacionChannel();
-        //crearNotificacion();
+
+        //cc = new ComparacionCalendarizada(this, db);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        System.out.println("ESTOY EN EL SERVICIO");
+        System.out.println("Estoy en el servicio");
         new Thread(hilo).start();
+
+        //cc.calendarizar();
+
         return Service.START_NOT_STICKY;
     }
 
@@ -50,7 +54,7 @@ public class MyService extends Service implements Observer {
 
     @Override
     public void notificar(@NotNull String name) {
-        System.out.println("ME NOTIFICARON");
+        System.out.println("Me Notificaron");
         notificacionChannel();
         crearNotificacion(name);
     }
