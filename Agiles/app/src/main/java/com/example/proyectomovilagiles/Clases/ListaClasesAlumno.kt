@@ -29,20 +29,7 @@ import objetos.*
 class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler, Observer {
 
 
-    override fun notificar(name: String) {
-        materia = DAOMaterias.getMateria(idMateria)
 
-        var adaptador = AdaptadorClases(this,materia.clases,alumno,materia)
-        listasClasesAlumno.adapter = adaptador
-
-        btnAsistencia.setOnClickListener {
-            mScanner = ZXingScannerView(this)
-            setContentView(mScanner)
-            mScanner?.setResultHandler(this)
-            mScanner?.startCamera()
-        }
-        DAOMaterias.observadores.remove(this)
-    }
 
     var clases = ArrayList<Clase>()
     var alumno = Alumno()
@@ -68,6 +55,21 @@ class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler, O
 
 
 
+    }
+
+    override fun notificar(name: String) {
+        materia = DAOMaterias.getMateria(idMateria)
+
+        var adaptador = AdaptadorClases(this,materia.clases,alumno,materia)
+        listasClasesAlumno.adapter = adaptador
+
+        btnAsistencia.setOnClickListener {
+            mScanner = ZXingScannerView(this)
+            setContentView(mScanner)
+            mScanner?.setResultHandler(this)
+            mScanner?.startCamera()
+        }
+        DAOMaterias.observadores.remove(this)
     }
 
 
@@ -254,7 +256,8 @@ class ListaClasesAlumno : AppCompatActivity(), ZXingScannerView.ResultHandler, O
                 intent.putExtra("asist",auxiliar)
                 intent.putExtra("hito", cla.hito)
                 intent.putExtra("idClase", cla.id)
-                intent.putExtra("alumno",id.nombre)
+                println(id.nombre)
+                intent.putExtra("nomAl",id.nombre)
                 intent.putExtra("idAL",id.id)
                 intent.putExtra("materia", mate)
                 intent.putExtra("revisado",revisado)

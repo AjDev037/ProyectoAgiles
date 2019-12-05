@@ -20,10 +20,12 @@ class AsistenciaAlumnoLegacy : AppCompatActivity() {
         //intent.putExtra("idClase", cla.id)
         //intent.putExtra("alumno",id.nombre)
         //intent.putExtra("materia", mate)
+        //intent.putExtra("nomAl",id.nombre)
 
         var asistencia = intent.getSerializableExtra("asist") as Asistencia
         var hito = intent.getStringExtra("hito")
-        var nom = intent.getStringExtra("alumno")
+        var nombre = intent.getStringExtra("nomAl")
+        println("EL NOMBRE ES $nombre")
         var id = intent.getStringExtra("idClase")
         var idAl = intent.getStringExtra("idAL")
         println("LA ID DEL ALUMNO ES: $idAl")
@@ -50,7 +52,7 @@ class AsistenciaAlumnoLegacy : AppCompatActivity() {
 
 
         if(asistencia.hora != ""){
-            nomAlumno.text = nom
+            nomAlumno.text = nombre
             if(asistencia.estado == 0){
                 txtAsistencia.text = "Retardo"
             }else if(asistencia.estado == 1){
@@ -60,9 +62,9 @@ class AsistenciaAlumnoLegacy : AppCompatActivity() {
             }
             txtHora.text = asistencia.hora
         }else{
-            nomAlumno.text = ""
+            nomAlumno.text = nombre
             txtAsistencia.text = "No registrada"
-            txtHora.text = ""
+            txtHora.text = "N/A"
         }
 
         txtHito.text = hito
